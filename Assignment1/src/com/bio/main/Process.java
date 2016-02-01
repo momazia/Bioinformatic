@@ -11,13 +11,18 @@ import com.bio.main.pojo.Gene;
 import com.bio.main.pojo.RefSeq;
 import com.bio.main.pojo.Strand;
 
+/**
+ * The main class in charge of the whole process.
+ * 
+ * @author Max
+ *
+ */
 public class Process {
 
+	private static final String SEPARATOR_DOT = ".";
 	private static final char INTRON_N = 'N';
-	private static final String IO_PATH = "../Assignment1/io/";
-	private static final String EXON_ANNOT_FILE_PATH = IO_PATH + "HG19-refseq-exon-annot-chr1-2016";
-	private static final String GENE_ANNOT_FILE_PATH = IO_PATH + "HG19-refseq-gene-annot-filtered";
-	private static final String CHR1_FILE_PATH = IO_PATH + "chr1.fa";
+	public static final String IO_PATH = "../Assignment1/io/";
+
 	private static Process instance;
 
 	private Process() {
@@ -30,12 +35,19 @@ public class Process {
 		return instance;
 	}
 
-	public void run() {
+	/**
+	 * The main method to be invoked to print the final result.
+	 * 
+	 * @param geneAnnotFilePath
+	 * @param exonAnnotFilePath
+	 * @param chrFilePath
+	 */
+	public void run(String geneAnnotFilePath, String exonAnnotFilePath, String chrFilePath) {
 
 		try {
 
-			System.out.println("Loading file [" + GENE_ANNOT_FILE_PATH + "] to read all the gene annotations");
-			List<RefSeq> geneAnnots = FileProcessor.getInstance().readAnnorationFile(GENE_ANNOT_FILE_PATH, null);
+			System.out.println("Loading file [" + geneAnnotFilePath + "] to read all the gene annotations");
+			List<RefSeq> geneAnnots = FileProcessor.getInstance().readAnnorationFile(geneAnnotFilePath, null);
 
 			// The map contains the gene annotation as key and all the exon
 			// annotations as value
@@ -48,12 +60,11 @@ public class Process {
 				gene.setGeneAnn(geneAnnot);
 
 				// Reading exon annotations
-				System.out.println("Loading file [" + EXON_ANNOT_FILE_PATH + "]" + geneAnnot.getId());
-				gene.setExonAnns(
-						FileProcessor.getInstance().readAnnorationFile(EXON_ANNOT_FILE_PATH, geneAnnot.getId()));
+				System.out.println("Loading file [" + exonAnnotFilePath + "]" + geneAnnot.getId());
+				gene.setExonAnns(FileProcessor.getInstance().readAnnorationFile(exonAnnotFilePath, geneAnnot.getId()));
 
 				// Extracting gene string
-				gene.setStr(extractGene(geneAnnot));
+				gene.setStr(extractGene(geneAnnot, chrFilePath));
 
 				// Replacing the Introns with N
 				replaceIntronsWithN(gene);
@@ -71,6 +82,12 @@ public class Process {
 
 	}
 
+	/**
+	 * For a given gene, the method checks its annotation and if the strand is
+	 * -ve, it will apply reverse-complemented.
+	 * 
+	 * @param gene
+	 */
 	public void reverseSequence(Gene gene) {
 		// reversing the sequence if the gene's stand is -ve
 		if (Strand.NEGATIVE.equals(gene.getGeneAnn().getStrand())) {
@@ -83,38 +100,65 @@ public class Process {
 		}
 	}
 
+	/**
+	 * Swaps characters in a sequence, with respect to the letter cases. It will
+	 * ignore N character. If unknown character is passed, it will throw a run
+	 * time exception.
+	 * 
+	 * @param chr
+	 * @return
+	 */
 	private char swapChar(char chr) {
 		if (chr == INTRON_N) {
 			return INTRON_N;
 		}
 		if (Character.toLowerCase(chr) == 't') {
-			return 'A';
+			return Character.isLowerCase(chr) ? 'a' : 'A';
 		}
 		if (Character.toLowerCase(chr) == 'c') {
-			return 'G';
+			return Character.isLowerCase(chr) ? 'g' : 'G';
 		}
 		if (Character.toLowerCase(chr) == 'a') {
-			return 'T';
+			return Character.isLowerCase(chr) ? 't' : 'T';
 		}
 		if (Character.toLowerCase(chr) == 'g') {
-			return 'C';
+			return Character.isLowerCase(chr) ? 'c' : 'C';
 		}
 		throw new RuntimeException("Found an unknown character [" + chr + "]");
 	}
 
+	/**
+	 * Prints the genes given into the following path: {@link Process#IO_PATH} +
+	 * Result.fa with the following format: >chr1.start.end.gene_ID.strand
+	 * 
+	 * @param genes
+	 * @throws FileNotFoundException
+	 */
 	private void printGenes(List<Gene> genes) throws FileNotFoundException {
-		for (Gene gene : genes) {
-			String fileName = IO_PATH + gene.getGeneAnn().getId() + ".txt";
-			System.out.println("Exporting the FilteredChr1RefSeq to file [" + fileName + "]");
+		String fileName = IO_PATH + "Result.fa";
+		System.out.println("Exporting the final result to file [" + fileName + "]");
 
-			try (PrintWriter out = new PrintWriter(fileName)) {
+		try (PrintWriter out = new PrintWriter(fileName)) {
+			for (Gene gene : genes) {
+				String header = ">" + gene.getGeneAnn().getChromosome() + SEPARATOR_DOT + gene.getGeneAnn().getStart()
+						+ SEPARATOR_DOT + gene.getGeneAnn().getEnd() + SEPARATOR_DOT + gene.getGeneAnn().getId()
+						+ SEPARATOR_DOT + gene.getGeneAnn().getStrand().getValue();
+				System.out.println("Printing the header: [" + header + "]");
+				out.println(header);
 				out.println(gene.getStr());
 			}
 		}
 
 	}
 
-	private void replaceIntronsWithN(Gene gene) {
+	/**
+	 * Replaces Introns by looking at the extron annotations given. If the gene
+	 * sequence is not within the extron ranges defind, it will be replaced by N
+	 * (as it is an intron)
+	 * 
+	 * @param gene
+	 */
+	public void replaceIntronsWithN(Gene gene) {
 
 		String str = gene.getStr();
 
@@ -130,6 +174,14 @@ public class Process {
 		gene.setStr(str);
 	}
 
+	/**
+	 * Returns true if the index given is within any of the extrons genes ranges
+	 * in annotation file.
+	 * 
+	 * @param gene
+	 * @param index
+	 * @return
+	 */
 	private boolean isIndexWithinExtron(Gene gene, int index) {
 
 		// We add the starting point of the gene to the current index to find
@@ -138,16 +190,25 @@ public class Process {
 
 		for (RefSeq refSeq : gene.getExonAnns()) {
 
-			if (refSeq.getStart() <= actualIndex && refSeq.getEnd() >= actualIndex) {
+			if (refSeq.getStart() <= actualIndex && refSeq.getEnd() > actualIndex) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private String extractGene(RefSeq refSeq) throws IOException, FileNotFoundException {
-		System.out.println("Loading file [" + CHR1_FILE_PATH + "] to read [" + refSeq.getId() + "]");
-		return FileProcessor.getInstance().readChromosomeFile(CHR1_FILE_PATH, refSeq);
+	/**
+	 * Reads Gene string using the RefSeq (gene annotation) id.
+	 * 
+	 * @param refSeq
+	 * @param chrFilePath
+	 * @return
+	 * @throws IOException
+	 * @throws FileNotFoundException
+	 */
+	private String extractGene(RefSeq refSeq, String chrFilePath) throws IOException, FileNotFoundException {
+		System.out.println("Loading file [" + chrFilePath + "] to read [" + refSeq.getId() + "]");
+		return FileProcessor.getInstance().readChromosomeFile(chrFilePath, refSeq);
 	}
 
 }

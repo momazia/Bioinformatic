@@ -1,6 +1,9 @@
 package com.bio.main.test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -10,25 +13,50 @@ import com.bio.main.pojo.RefSeq;
 
 public class TestProcess {
 
-	private static final String CHR1_ = "chr1	19629201	19638640	NM_003689	0	-	19630718	19638618	0	7	1679,130,100,97,105,188,320,	0,3310,4294,4606,5450,5747,9119,";
-	private static final String CHR1_POS = "chr1	19629201	19638640	NM_003689	0	+	19630718	19638618	0	7	1679,130,100,97,105,188,320,	0,3310,4294,4606,5450,5747,9119,";
+	private static final String EXON_ANNOT_1 = "chr1	2	5	NM_032291_exon_0_0_chr1_66999639_f	0	+";
+	private static final String GENE_ANNOT_2 = "chr1	0	12	NM_003689	0	-	19630718	19638618	0	7	1679,130,100,97,105,188,320,	0,3310,4294,4606,5450,5747,9119,";
+	private static final String SAMPLE_1 = "AAccNNNNNtTggg";
+	private static final String SAMPLE_2 = "aaccAAgttggg";
+	private static final String GENE_ANNOT_1 = "chr1	1	14	NM_003689	0	-	19630718	19638618	0	7	1679,130,100,97,105,188,320,	0,3310,4294,4606,5450,5747,9119,";
+	private static final String GENE_ANNOT_POS = "chr1	1	14	NM_003689	0	+	19630718	19638618	0	7	1679,130,100,97,105,188,320,	0,3310,4294,4606,5450,5747,9119,";
+
+	private static final String EXON_ANNOT_FILE_PATH = Process.IO_PATH + "TestHG19-refseq-exon-annot-chr1-2016";
+	private static final String GENE_ANNOT_FILE_PATH = Process.IO_PATH + "TestHG19-refseq-gene-annot-filtered";
+	private static final String CHR1_FILE_PATH = Process.IO_PATH + "simplecha.fa";
 
 	@Test
 	public void testReverseSeq1() {
 		Gene gene = new Gene();
-		gene.setGeneAnn(new RefSeq(CHR1_));
-		gene.setStr("aaccNNNNNttggg");
+		gene.setGeneAnn(new RefSeq(GENE_ANNOT_1));
+		gene.setStr(SAMPLE_1);
 		Process.getInstance().reverseSequence(gene);
-		assertTrue("cccaaNNNNNggtt".equalsIgnoreCase(gene.getStr()));
+		assertEquals("cccAaNNNNNggTT", gene.getStr());
 	}
 
 	@Test
 	public void testReverseSeq2() {
 		Gene gene = new Gene();
-		gene.setGeneAnn(new RefSeq(CHR1_POS));
-		gene.setStr("aaccNNNNNttggg");
+		gene.setGeneAnn(new RefSeq(GENE_ANNOT_POS));
+		gene.setStr(SAMPLE_1);
 		Process.getInstance().reverseSequence(gene);
-		assertTrue("aaccNNNNNttggg".equalsIgnoreCase(gene.getStr()));
+		assertEquals(SAMPLE_1, gene.getStr());
+	}
+
+	@Test
+	public void test() {
+		Gene gene = new Gene();
+		gene.setStr(SAMPLE_2);
+		List<RefSeq> exonAnns = new ArrayList<>();
+		exonAnns.add(new RefSeq(EXON_ANNOT_1));
+		gene.setExonAnns(exonAnns);
+		gene.setGeneAnn(new RefSeq(GENE_ANNOT_2));
+		Process.getInstance().replaceIntronsWithN(gene);
+		assertEquals("NNccANNNNNNN", gene.getStr());
+	}
+
+	@Test
+	public void testFinalResult() {
+		Process.getInstance().run(GENE_ANNOT_FILE_PATH, EXON_ANNOT_FILE_PATH, CHR1_FILE_PATH);
 	}
 
 }

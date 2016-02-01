@@ -16,6 +16,10 @@ public enum Strand {
 		this.value = value;
 	}
 
+	public String getValue() {
+		return this.value;
+	}
+
 	public static Strand value(String str) {
 
 		for (Strand strand : Strand.values()) {
