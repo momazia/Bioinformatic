@@ -3,7 +3,7 @@ package com.bio.main;
 /**
  * Main class to run the program.
  * 
- * @author Max
+ * @author Mohamad Mahdi Ziaee
  *
  */
 public class MainProcessor {

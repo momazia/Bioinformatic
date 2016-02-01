@@ -14,7 +14,7 @@ import com.bio.main.pojo.Strand;
 /**
  * The main class in charge of the whole process.
  * 
- * @author Max
+ * @author Mohamad Mahdi Ziaee
  *
  */
 public class Process {
