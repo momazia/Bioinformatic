@@ -7,11 +7,12 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.bio.main.PerformanceMonitor;
 import com.bio.main.Process;
 import com.bio.main.pojo.Gene;
 import com.bio.main.pojo.RefSeq;
 
-public class TestProcess {
+public class MainTest {
 
 	private static final String EXON_ANNOT_1 = "chr1	2	5	NM_032291_exon_0_0_chr1_66999639_f	0	+";
 	private static final String GENE_ANNOT_2 = "chr1	0	12	NM_003689	0	-	19630718	19638618	0	7	1679,130,100,97,105,188,320,	0,3310,4294,4606,5450,5747,9119,";
@@ -56,7 +57,10 @@ public class TestProcess {
 
 	@Test
 	public void testFinalResult() {
+		PerformanceMonitor pm = new PerformanceMonitor();
 		Process.getInstance().run(GENE_ANNOT_FILE_PATH, EXON_ANNOT_FILE_PATH, CHR1_FILE_PATH);
+		pm.end();
+		System.out.println("Take took to run the test: " + pm);
 	}
 
 }

@@ -14,7 +14,9 @@ public class MainProcessor {
 
 	public static void main(String[] args) {
 		System.out.println("Starting the process...");
+		PerformanceMonitor mainPm = new PerformanceMonitor();
 		Process.getInstance().run(GENE_ANNOT_FILE_PATH, EXON_ANNOT_FILE_PATH, CHR1_FILE_PATH);
-		System.out.println("Process ended.");
+		mainPm.end();
+		System.out.println("Process ended in " + mainPm);
 	}
 }

@@ -69,7 +69,7 @@ public class Process {
 				// Replacing the Introns with N
 				replaceIntronsWithN(gene);
 
-				// reverse-complemented the -ve stands
+				// reverse-complemented the -ve strands
 				reverseSequence(gene);
 				genes.add(gene);
 			}
@@ -89,15 +89,22 @@ public class Process {
 	 * @param gene
 	 */
 	public void reverseSequence(Gene gene) {
-		// reversing the sequence if the gene's stand is -ve
+		// reversing the sequence if the gene's strand is -ve
 		if (Strand.NEGATIVE.equals(gene.getGeneAnn().getStrand())) {
+
+			System.out.println("Reverse-complement process for geneID [" + gene.getGeneAnn().getId() + "] starts ...");
+			PerformanceMonitor performanceMonitor = new PerformanceMonitor();
+
 			StringBuilder stringBuilder = new StringBuilder(gene.getStr());
 
 			for (int index = 0; index < gene.getStr().length(); index++) {
 				stringBuilder.setCharAt(index, swapChar(stringBuilder.charAt(index)));
 			}
 			gene.setStr(stringBuilder.reverse().toString());
+			performanceMonitor.end();
+			System.out.println("Reverse-complement process ended in " + performanceMonitor);
 		}
+
 	}
 
 	/**
@@ -159,7 +166,8 @@ public class Process {
 	 * @param gene
 	 */
 	public void replaceIntronsWithN(Gene gene) {
-
+		System.out.println("Relacing Intros with N for geneID [" + gene.getGeneAnn().getId() + "] starts ...");
+		PerformanceMonitor pm = new PerformanceMonitor();
 		String str = gene.getStr();
 
 		for (int index = 0; index < str.length(); index++) {
@@ -172,6 +180,8 @@ public class Process {
 			}
 		}
 		gene.setStr(str);
+		pm.end();
+		System.out.println("Replacing Introns with N was done in " + pm);
 	}
 
 	/**
@@ -207,8 +217,14 @@ public class Process {
 	 * @throws FileNotFoundException
 	 */
 	private String extractGene(RefSeq refSeq, String chrFilePath) throws IOException, FileNotFoundException {
-		System.out.println("Loading file [" + chrFilePath + "] to read [" + refSeq.getId() + "]");
-		return FileProcessor.getInstance().readChromosomeFile(chrFilePath, refSeq);
+		System.out.println("Loading file [" + chrFilePath + "] to extract [" + refSeq.getId() + "] gene ...");
+
+		PerformanceMonitor extractGenePm = new PerformanceMonitor();
+		String gene = FileProcessor.getInstance().readChromosomeFile(chrFilePath, refSeq);
+		extractGenePm.end();
+
+		System.out.println("Gene extraction was done in " + extractGenePm);
+		return gene;
 	}
 
 }
