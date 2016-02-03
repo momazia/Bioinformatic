@@ -58,9 +58,7 @@ local.properties
 hs_err_pid*
 
 # io folder
-io/*
-
-
+Assignment1/io/
 
 ### Maven ###
 target/
