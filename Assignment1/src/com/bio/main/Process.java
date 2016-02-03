@@ -160,26 +160,25 @@ public class Process {
 
 	/**
 	 * Replaces Introns by looking at the extron annotations given. If the gene
-	 * sequence is not within the extron ranges defind, it will be replaced by N
-	 * (as it is an intron)
+	 * sequence is not within the extron ranges defined, it will be replaced by
+	 * N (as it is an intron)
 	 * 
 	 * @param gene
 	 */
 	public void replaceIntronsWithN(Gene gene) {
 		System.out.println("Relacing Intros with N for geneID [" + gene.getGeneAnn().getId() + "] starts ...");
 		PerformanceMonitor pm = new PerformanceMonitor();
-		String str = gene.getStr();
 
-		for (int index = 0; index < str.length(); index++) {
+		char[] charArray = gene.getStr().toCharArray();
+		for (int index = 0; index < gene.getStr().length(); index++) {
 			if (!isIndexWithinExtron(gene, index)) {
 				// Replacing N if we are outside the Extron index (if it is
 				// Intron)
-				StringBuilder stringBuilder = new StringBuilder(str);
-				stringBuilder.setCharAt(index, INTRON_N);
-				str = stringBuilder.toString();
+				charArray[index] = INTRON_N;
 			}
 		}
-		gene.setStr(str);
+
+		gene.setStr(new String(charArray));
 		pm.end();
 		System.out.println("Replacing Introns with N was done in " + pm);
 	}
@@ -193,7 +192,6 @@ public class Process {
 	 * @return
 	 */
 	private boolean isIndexWithinExtron(Gene gene, int index) {
-
 		// We add the starting point of the gene to the current index to find
 		// the real index.
 		int actualIndex = index + gene.getGeneAnn().getStart();

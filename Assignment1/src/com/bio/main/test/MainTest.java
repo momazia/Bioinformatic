@@ -1,6 +1,6 @@
 package com.bio.main.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ public class MainTest {
 	}
 
 	@Test
-	public void test() {
+	public void testReplaceIntronsWithN() {
 		Gene gene = new Gene();
 		gene.setStr(SAMPLE_2);
 		List<RefSeq> exonAnns = new ArrayList<>();
