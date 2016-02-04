@@ -3,7 +3,7 @@ package com.bio.main.pojo;
 import java.util.List;
 
 /**
- * Gene class contains gene annotation, the exons annotation related to the gene
+ * Gene class contains gene annotation, the Exons annotation related to the gene
  * and the actual gene sequence data.
  * 
  * @author Max

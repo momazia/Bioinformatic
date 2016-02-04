@@ -49,7 +49,7 @@ public class Process {
 			System.out.println("Loading file [" + geneAnnotFilePath + "] to read all the gene annotations");
 			List<RefSeq> geneAnnots = FileProcessor.getInstance().readAnnorationFile(geneAnnotFilePath, null);
 
-			// The map contains the gene annotation as key and all the exon
+			// The map contains the gene annotation as key and all the Exon
 			// annotations as value
 			List<Gene> genes = new ArrayList<>();
 
@@ -59,7 +59,7 @@ public class Process {
 				Gene gene = new Gene();
 				gene.setGeneAnn(geneAnnot);
 
-				// Reading exon annotations
+				// Reading Exon annotations
 				System.out.println("Loading file [" + exonAnnotFilePath + "]" + geneAnnot.getId());
 				gene.setExonAnns(FileProcessor.getInstance().readAnnorationFile(exonAnnotFilePath, geneAnnot.getId()));
 
@@ -69,7 +69,7 @@ public class Process {
 				// Replacing the Introns with N
 				replaceIntronsWithN(gene);
 
-				// reverse-complemented the -ve strands
+				// reverse-complemented the negative strands
 				reverseSequence(gene);
 				genes.add(gene);
 			}
@@ -84,12 +84,12 @@ public class Process {
 
 	/**
 	 * For a given gene, the method checks its annotation and if the strand is
-	 * -ve, it will apply reverse-complemented.
+	 * negative, it will apply reverse-complemented.
 	 * 
 	 * @param gene
 	 */
 	public void reverseSequence(Gene gene) {
-		// reversing the sequence if the gene's strand is -ve
+		// reversing the sequence if the gene's strand is negative
 		if (Strand.NEGATIVE.equals(gene.getGeneAnn().getStrand())) {
 
 			System.out.println("Reverse-complement process for geneID [" + gene.getGeneAnn().getId() + "] starts ...");
@@ -159,9 +159,9 @@ public class Process {
 	}
 
 	/**
-	 * Replaces Introns by looking at the extron annotations given. If the gene
-	 * sequence is not within the extron ranges defined, it will be replaced by
-	 * N (as it is an intron)
+	 * Replaces Introns by looking at the Exon annotations given. If the gene
+	 * sequence is not within the Exon ranges defined, it will be replaced by N
+	 * (as it is an Intron)
 	 * 
 	 * @param gene
 	 */
@@ -171,8 +171,8 @@ public class Process {
 
 		char[] charArray = gene.getStr().toCharArray();
 		for (int index = 0; index < gene.getStr().length(); index++) {
-			if (!isIndexWithinExtron(gene, index)) {
-				// Replacing N if we are outside the Extron index (if it is
+			if (!isIndexWithinExon(gene, index)) {
+				// Replacing N if we are outside the Exon index (if it is
 				// Intron)
 				charArray[index] = INTRON_N;
 			}
@@ -184,14 +184,14 @@ public class Process {
 	}
 
 	/**
-	 * Returns true if the index given is within any of the extrons genes ranges
-	 * in annotation file.
+	 * Returns true if the index given is within any of the Exon genes ranges in
+	 * annotation file.
 	 * 
 	 * @param gene
 	 * @param index
 	 * @return
 	 */
-	private boolean isIndexWithinExtron(Gene gene, int index) {
+	private boolean isIndexWithinExon(Gene gene, int index) {
 		// We add the starting point of the gene to the current index to find
 		// the real index.
 		int actualIndex = index + gene.getGeneAnn().getStart();
