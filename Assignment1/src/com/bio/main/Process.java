@@ -60,7 +60,7 @@ public class Process {
 				gene.setGeneAnn(geneAnnot);
 
 				// Reading Exon annotations
-				System.out.println("Loading file [" + exonAnnotFilePath + "]" + geneAnnot.getId());
+				System.out.println("Loading file [" + exonAnnotFilePath + "] for geneID [" + geneAnnot.getId() + "]");
 				gene.setExonAnns(FileProcessor.getInstance().readAnnorationFile(exonAnnotFilePath, geneAnnot.getId()));
 
 				// Extracting gene string
