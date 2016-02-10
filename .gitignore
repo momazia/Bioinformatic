@@ -59,6 +59,7 @@ hs_err_pid*
 
 # io folder
 Assignment1/io/
+Assignment2/io/
 
 ### Maven ###
 target/
