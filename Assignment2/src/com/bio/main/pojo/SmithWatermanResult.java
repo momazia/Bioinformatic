@@ -1,5 +1,12 @@
 package com.bio.main.pojo;
 
+/**
+ * The class holds values of the result of running SmithWaterman algorithm. It
+ * contains a maximum score and locations of the found score.
+ * 
+ * @author Mohamad Mahdi Ziaee
+ *
+ */
 public class SmithWatermanResult {
 
 	private int iIndex;

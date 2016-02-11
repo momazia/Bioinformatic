@@ -18,6 +18,12 @@ public class RefSeq {
 	 */
 	private String str;
 
+	/**
+	 * The only constructor of the POJO.
+	 * 
+	 * @param header
+	 * @param str
+	 */
 	public RefSeq(String header, String str) {
 		this.header = header;
 		this.str = str;
@@ -27,16 +33,14 @@ public class RefSeq {
 		return header;
 	}
 
-	public void setHeader(String header) {
-		this.header = header;
-	}
-
+	/**
+	 * Returns the string attached to this RefSeq by prefixing it with an empty
+	 * space first.
+	 * 
+	 * @return
+	 */
 	public String getStr() {
-		return str;
-	}
-
-	public void setStr(String str) {
-		this.str = str;
+		return ' ' + str;
 	}
 
 }

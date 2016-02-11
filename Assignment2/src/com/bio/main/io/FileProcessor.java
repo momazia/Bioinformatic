@@ -1,12 +1,17 @@
 package com.bio.main.io;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import org.apache.commons.io.input.BoundedInputStream;
 
 import com.bio.main.pojo.RefSeq;
 
@@ -19,6 +24,9 @@ import com.bio.main.pojo.RefSeq;
 public class FileProcessor {
 
 	private static FileProcessor instance;
+	private static final int chr_FA_STARTING_BYTES = 6; // Includes '\n' at the
+															// end of the first
+															// line.
 
 	private FileProcessor() {
 	}
@@ -54,7 +62,9 @@ public class FileProcessor {
 	}
 
 	/**
-	 * Reads the chromosome file given and puts it into a string.
+	 * Reads the chromosome file given and puts it into a string. It skips the
+	 * first 6 bytes containing text ">chr" and replaces it with an empty
+	 * space.
 	 * 
 	 * @param chrFilePath
 	 * @return
@@ -62,7 +72,29 @@ public class FileProcessor {
 	 * @throws UnsupportedEncodingException
 	 */
 	public String readChromoseFile(String chrFilePath) throws UnsupportedEncodingException, IOException {
-		return new String(Files.readAllBytes(Paths.get(chrFilePath)), "UTF-8");
+
+		FileInputStream file = new FileInputStream(chrFilePath);
+		// Since the file given is big, that is why we want to skip the
+		// unnecessary part of the file instead of reading the whole file.
+		file.skip(chr_FA_STARTING_BYTES);
+
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(new BoundedInputStream(file)))) {
+
+			int fileChar;
+			StringBuilder response = new StringBuilder();
+
+			// Adding an empty character to the beginning of the string.
+			response.append(' ');
+
+			while ((fileChar = br.read()) != -1) {
+				// Making sure to only put the letters in the string. This is to
+				// exclude '\n' (New lines)
+				if (Character.isLetter(fileChar)) {
+					response.append((char) fileChar);
+				}
+			}
+			return response.toString();
+		}
 	}
 
 }

@@ -28,7 +28,7 @@ public class PerformanceMonitor {
 	public void end() {
 		endTimestamp = System.currentTimeMillis();
 		System.out.println(
-				String.format("Process %s ended in %d milliseconds", processName, endTimestamp - startTimestamp));
+				String.format("Process [%s] ended in %d milliseconds", processName, endTimestamp - startTimestamp));
 	}
 
 }

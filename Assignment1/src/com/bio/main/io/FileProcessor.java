@@ -21,8 +21,8 @@ import com.bio.main.pojo.RefSeq;
  */
 public class FileProcessor {
 
-	private static final int CHR1_FA_STARTING_BYTES = 6;
-	private static final int CHR1_FA_COLUMNS = 50;
+	private static final int chr_FA_STARTING_BYTES = 6;
+	private static final int chr_FA_COLUMNS = 50;
 	private static FileProcessor instance;
 
 	private FileProcessor() {
@@ -73,7 +73,7 @@ public class FileProcessor {
 		int start = refSeq.getStart();
 		int end = refSeq.getEnd();
 
-		int calculatedStartIndex = CHR1_FA_STARTING_BYTES + start + getNumberOfNewLines(start) + 1;// Excluding
+		int calculatedStartIndex = chr_FA_STARTING_BYTES + start + getNumberOfNewLines(start) + 1;// Excluding
 																									// the
 																									// first
 																									// index
@@ -123,7 +123,7 @@ public class FileProcessor {
 	 * @return
 	 */
 	private Integer getNumberOfNewLines(int index) {
-		return index / CHR1_FA_COLUMNS;
+		return index / chr_FA_COLUMNS;
 	}
 
 }

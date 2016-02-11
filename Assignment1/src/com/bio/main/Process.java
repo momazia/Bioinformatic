@@ -136,7 +136,7 @@ public class Process {
 
 	/**
 	 * Prints the genes given into the following path: {@link Process#IO_PATH} +
-	 * Result.fa with the following format: >chr1.start.end.gene_ID.strand
+	 * Result.fa with the following format: >chr.start.end.gene_ID.strand
 	 * 
 	 * @param genes
 	 * @throws FileNotFoundException
