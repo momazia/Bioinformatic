@@ -25,8 +25,8 @@ public class FileProcessor {
 
 	private static FileProcessor instance;
 	private static final int chr_FA_STARTING_BYTES = 6; // Includes '\n' at the
-															// end of the first
-															// line.
+														// end of the first
+														// line.
 
 	private FileProcessor() {
 	}
@@ -63,8 +63,7 @@ public class FileProcessor {
 
 	/**
 	 * Reads the chromosome file given and puts it into a string. It skips the
-	 * first 6 bytes containing text ">chr" and replaces it with an empty
-	 * space.
+	 * first 6 bytes containing text ">chr" and replaces it with an empty space.
 	 * 
 	 * @param chrFilePath
 	 * @return

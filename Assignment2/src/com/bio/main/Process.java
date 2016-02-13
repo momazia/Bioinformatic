@@ -2,6 +2,7 @@ package com.bio.main;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.bio.main.io.FileProcessor;
@@ -51,14 +52,28 @@ public class Process {
 			List<RefSeq> exonRefSeqs = extractRefSeq(exonAnnotFilePath);
 
 			// Looping through each of the Exons and running Smith-Waterman
+			List<SmithWatermanResult> results = new ArrayList<>();
 			for (RefSeq refSeq : exonRefSeqs) {
-				runSmithWaterman(chr, refSeq);
+				results.add(runSmithWaterman(chr, refSeq));
 			}
 
+			// Saving the result into a file
+			printResult(results);
 		} catch (IOException e) {
 			System.out.println("Could not read a file: " + e.getMessage());
 		}
 
+	}
+
+	/**
+	 * Prints the result into console.
+	 * 
+	 * @param results
+	 */
+	private void printResult(List<SmithWatermanResult> results) {
+		for (SmithWatermanResult smithWatermanResult : results) {
+			System.out.println(smithWatermanResult);
+		}
 	}
 
 	/**
@@ -67,11 +82,11 @@ public class Process {
 	 * @param chr
 	 * @param refSeq
 	 */
-	private void runSmithWaterman(String chr, RefSeq refSeq) {
+	private SmithWatermanResult runSmithWaterman(String chr, RefSeq refSeq) {
 		PerformanceMonitor smithWatermanResultPm = new PerformanceMonitor("Running smith - Waterman for [" + refSeq.getHeader() + "]");
 		SmithWatermanResult optimumResult = smithWaterman(refSeq, chr);
-		System.out.println(optimumResult);
 		smithWatermanResultPm.end();
+		return optimumResult;
 	}
 
 	/**
@@ -118,48 +133,35 @@ public class Process {
 
 		char[] charArray = chr.toCharArray();
 
-		int chrSize = charArray.length;
-
-		int patternSize = refSeq.getStr().length();
+		char[] str = refSeq.getStr().toCharArray();
+		int patternSize = str.length;
 		// Creating a vertical Table for the calculation.
 		int[][] vTable = new int[patternSize][2];
 
-		// Printing the progress
-		int progress = 0;
-		System.out.print("Progress: ");
-
-		for (int jIndex = 1; jIndex < chrSize; jIndex++) {
-
-			// Printing the progress to make sure it is going.
-			if (jIndex % (chrSize / 100) == 0) {
-				System.out.printf(" ");
-				progress++;
-				System.out.printf(" %2d", progress);
-			}
+		for (int jIndex = 1; jIndex < charArray.length; jIndex++) {
 
 			for (int iIndex = 0; iIndex < patternSize; iIndex++) {
-
-				int result = 0;
 
 				if (iIndex == 0) {
 					vTable[iIndex][1] = 0; // Initial value for [0][1]
 				} else {
-					result = findMax(vTable, iIndex, charArray[jIndex], refSeq.getStr().charAt(iIndex));
-					vTable[iIndex][1] = result;
+					vTable[iIndex][1] = findMax(vTable, iIndex, charArray[jIndex], str[iIndex]);
 				}
 
 				// Keeping the biggest score if found one.
-				if (vTable[iIndex][1] >= optimumSmithWatermanResult.getScore()) {
+				if (vTable[iIndex][1] > optimumSmithWatermanResult.getScore()) {
 					optimumSmithWatermanResult.setScore(vTable[iIndex][1]);
 					optimumSmithWatermanResult.setiIndex(iIndex);
 					optimumSmithWatermanResult.setjIndex(jIndex);
 				}
 			}
+
 			// Shifting the result to left column prior to repeating for the
 			// next charater in chr.
 			for (int iIndex = 0; iIndex < patternSize; iIndex++) {
 				vTable[iIndex][0] = vTable[iIndex][1];
 			}
+
 		}
 
 		return optimumSmithWatermanResult;
@@ -177,12 +179,9 @@ public class Process {
 	 * @return
 	 */
 	public int findMax(int[][] vTable, int iIndex, char charAtChr, char charAtPattern) {
-
-		boolean isSameChar = charAtChr == charAtPattern;
-
 		int left = vTable[iIndex][0] + SCORE_INDEL;
 		int top = vTable[iIndex - 1][1] + SCORE_INDEL;
-		int diagonal = vTable[iIndex - 1][0] + (isSameChar ? SCORE_MATCH : SCORE_MISMATCH);
+		int diagonal = vTable[iIndex - 1][0] + (charAtChr == charAtPattern ? SCORE_MATCH : SCORE_MISMATCH);
 		return Math.max(Math.max(left, top), Math.max(diagonal, 0));
 	}
 
