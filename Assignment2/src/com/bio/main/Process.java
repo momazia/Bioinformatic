@@ -57,8 +57,6 @@ public class Process {
 				results.add(runSmithWaterman(chr, refSeq));
 			}
 
-			// Saving the result into a file
-			printResult(results);
 		} catch (IOException e) {
 			System.out.println("Could not read a file: " + e.getMessage());
 		}
@@ -66,18 +64,8 @@ public class Process {
 	}
 
 	/**
-	 * Prints the result into console.
-	 * 
-	 * @param results
-	 */
-	private void printResult(List<SmithWatermanResult> results) {
-		for (SmithWatermanResult smithWatermanResult : results) {
-			System.out.println(smithWatermanResult);
-		}
-	}
-
-	/**
-	 * Executes SmithWaterman for the given RefSeq on chromosome string.
+	 * Executes SmithWaterman for the given RefSeq on chromosome string and
+	 * prints the result in console.
 	 * 
 	 * @param chr
 	 * @param refSeq
@@ -85,6 +73,7 @@ public class Process {
 	private SmithWatermanResult runSmithWaterman(String chr, RefSeq refSeq) {
 		PerformanceMonitor smithWatermanResultPm = new PerformanceMonitor("Running smith - Waterman for [" + refSeq.getHeader() + "]");
 		SmithWatermanResult optimumResult = smithWaterman(refSeq, chr);
+		System.out.println(optimumResult);
 		smithWatermanResultPm.end();
 		return optimumResult;
 	}
