@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.bio.main.PerformanceMonitor;
 import com.bio.main.Process;
+import com.bio.main.io.FileProcessor;
 
 /**
  * Main class for running couple of tests, targeting the whole assignment 2.
@@ -15,8 +16,8 @@ import com.bio.main.Process;
  */
 public class MainTest {
 
-	private static final String EXON_ANNOT_FILE_PATH = Process.IO_PATH + "simple_Prog2-input-NM_032291-10exon-seqs.fa";
-	private static final String chr_FILE_PATH = Process.IO_PATH + "simple_chr.fa";
+	private static final String EXON_ANNOT_FILE_PATH = FileProcessor.IO_PATH + "simple_Prog2-input-NM_032291-10exon-seqs.fa";
+	private static final String chr_FILE_PATH = FileProcessor.IO_PATH + "simple_chr.fa";
 
 	@Test
 	public void testMainProcess() {

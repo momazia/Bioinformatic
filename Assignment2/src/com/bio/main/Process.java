@@ -17,8 +17,6 @@ import com.bio.main.pojo.SmithWatermanResult;
  */
 public class Process {
 
-	public static final String IO_PATH = "../Assignment2/io/";
-
 	private static Process instance;
 
 	// Constants to for scoring purposes.
@@ -121,9 +119,9 @@ public class Process {
 		SmithWatermanResult optimumSmithWatermanResult = new SmithWatermanResult();
 
 		char[] charArray = chr.toCharArray();
-
 		char[] str = refSeq.getStr().toCharArray();
 		int patternSize = str.length;
+
 		// Creating a vertical Table for the calculation.
 		int[][] vTable = new int[patternSize][2];
 

@@ -23,6 +23,8 @@ import com.bio.main.pojo.RefSeq;
  */
 public class FileProcessor {
 
+	public static final String IO_PATH = "../Assignment2/io/";
+
 	private static FileProcessor instance;
 	private static final int chr_FA_STARTING_BYTES = 6; // Includes '\n' at the
 														// end of the first
