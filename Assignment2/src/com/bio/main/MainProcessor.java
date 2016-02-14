@@ -19,7 +19,7 @@ public class MainProcessor {
 	private static final String chr_FILE_PATH = FileProcessor.IO_PATH + "chr1.fa";
 
 	public static void main(String[] args) {
-		PerformanceMonitor mainPm = new PerformanceMonitor("Main Process");
+		PerformanceMonitor mainPm = new PerformanceMonitor("Main");
 		Process.getInstance().run(EXON_ANNOT_FILE_PATH, chr_FILE_PATH);
 		mainPm.end();
 	}

@@ -2,7 +2,6 @@ package com.bio.main;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.bio.main.io.FileProcessor;
@@ -44,15 +43,14 @@ public class Process {
 
 		try {
 			// Read the db file.
-			String chr = extractChromosome(chrFilePath);
+			char[] chrArray = extractChromosome(chrFilePath);
 
 			// Reading all the exonRefSeqs + strings to look up
 			List<RefSeq> exonRefSeqs = extractRefSeq(exonAnnotFilePath);
 
 			// Looping through each of the Exons and running Smith-Waterman
-			List<SmithWatermanResult> results = new ArrayList<>();
 			for (RefSeq refSeq : exonRefSeqs) {
-				results.add(runSmithWaterman(chr, refSeq));
+				runSmithWaterman(chrArray, refSeq);
 			}
 
 		} catch (IOException e) {
@@ -65,15 +63,15 @@ public class Process {
 	 * Executes SmithWaterman for the given RefSeq on chromosome string and
 	 * prints the result in console.
 	 * 
-	 * @param chr
+	 * @param chrArray
 	 * @param refSeq
 	 */
-	private SmithWatermanResult runSmithWaterman(String chr, RefSeq refSeq) {
-		PerformanceMonitor smithWatermanResultPm = new PerformanceMonitor("Running smith - Waterman for [" + refSeq.getHeader() + "]");
-		SmithWatermanResult optimumResult = smithWaterman(refSeq, chr);
+	private void runSmithWaterman(char[] chrArray, RefSeq refSeq) {
+
+		System.out.println(refSeq.getHeader());
+		SmithWatermanResult optimumResult = smithWaterman(refSeq.getStr().toCharArray(), chrArray);
 		System.out.println(optimumResult);
-		smithWatermanResultPm.end();
-		return optimumResult;
+
 	}
 
 	/**
@@ -84,55 +82,48 @@ public class Process {
 	 * @throws IOException
 	 */
 	private List<RefSeq> extractRefSeq(String exonAnnotFilePath) throws IOException {
-		PerformanceMonitor readingExonAnnotationFilePm = new PerformanceMonitor("Parsing [" + exonAnnotFilePath + "] file");
-		List<RefSeq> exonRefSeqs = FileProcessor.getInstance().readAnnorationFile(exonAnnotFilePath);
-		readingExonAnnotationFilePm.end();
-		return exonRefSeqs;
+		return FileProcessor.getInstance().readAnnorationFile(exonAnnotFilePath);
 	}
 
 	/**
-	 * Extracts the Chromosome file path given and returns its string.
+	 * Extracts the Chromosome file path given and returns its array of
+	 * characters.
 	 * 
 	 * @param chrFilePath
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 * @throws IOException
 	 */
-	private String extractChromosome(String chrFilePath) throws UnsupportedEncodingException, IOException {
-		PerformanceMonitor readingchrFilePm = new PerformanceMonitor("Reading [" + chrFilePath + "] file");
-		String chr = FileProcessor.getInstance().readChromoseFile(chrFilePath);
-		readingchrFilePm.end();
-		return chr;
+	private char[] extractChromosome(String chrFilePath) throws UnsupportedEncodingException, IOException {
+		return FileProcessor.getInstance().readChromoseFile(chrFilePath).toCharArray();
 	}
 
 	/**
 	 * The method runs Smith Waterman algorithm on chr string using the RefSeq's
 	 * string.
 	 * 
-	 * @param refSeq
-	 * @param chr
+	 * @param strArray
+	 * @param chrArray
 	 * @return returns the optimum score together with the position of it in
 	 *         both strings in terms of i and j indexes.
 	 */
-	private SmithWatermanResult smithWaterman(RefSeq refSeq, String chr) {
+	private SmithWatermanResult smithWaterman(char[] strArray, char[] chrArray) {
 
 		SmithWatermanResult optimumSmithWatermanResult = new SmithWatermanResult();
 
-		char[] charArray = chr.toCharArray();
-		char[] str = refSeq.getStr().toCharArray();
-		int patternSize = str.length;
+		int patternSize = strArray.length;
 
 		// Creating a vertical Table for the calculation.
 		int[][] vTable = new int[patternSize][2];
 
-		for (int jIndex = 1; jIndex < charArray.length; jIndex++) {
+		for (int jIndex = 1; jIndex < chrArray.length; jIndex++) {
 
 			for (int iIndex = 0; iIndex < patternSize; iIndex++) {
 
 				if (iIndex == 0) {
 					vTable[iIndex][1] = 0; // Initial value for [0][1]
 				} else {
-					vTable[iIndex][1] = findMax(vTable, iIndex, charArray[jIndex], str[iIndex]);
+					vTable[iIndex][1] = findMax(vTable, iIndex, chrArray[jIndex], strArray[iIndex]);
 				}
 
 				// Keeping the biggest score if found one.
