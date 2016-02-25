@@ -17,6 +17,7 @@ public class BnBMainUtil {
 	private int k;
 	private char[] s;
 	private static final int PRIORITY_QUEUE_SIZE = 5;
+	private int numOfLeafsVisited = 0;
 	PriorityQueue<Median> priorityQueue = new PriorityQueue<>(PRIORITY_QUEUE_SIZE, new Comparator<Median>() {
 
 		@Override
@@ -53,7 +54,12 @@ public class BnBMainUtil {
 
 			} else {
 				String word = getActualText(s);
-				priorityQueue.add(new Median(word, getTotalDistance(word)));
+				numOfLeafsVisited++;
+				int totalDistance = getTotalDistance(word);
+				if (totalDistance < bestDistance) {
+					bestDistance = totalDistance;
+				}
+				priorityQueue.add(new Median(word, totalDistance));
 				nextVertex();
 			}
 		}
@@ -172,5 +178,13 @@ public class BnBMainUtil {
 			chr[i] = '1';
 		}
 		return chr;
+	}
+
+	public int getNumOfLeafsVisited() {
+		return numOfLeafsVisited;
+	}
+
+	public void setNumOfLeafsVisited(int numOfLeafsVisited) {
+		this.numOfLeafsVisited = numOfLeafsVisited;
 	}
 }

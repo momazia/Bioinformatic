@@ -10,11 +10,13 @@ Median String: GCCAGA (tot_dist = 2)
 Motif consensus string: GCCAGA (consensus_score = 28)
 Motif positions/string s=(s1..st):
   39(GCCAGA), 6(GTCAGA), 49(GCCAGA), 97(GCCAGA), 196(GCGAGA), 
-Median String: CAGATT (tot_dist = 3)
-Motif consensus string: CAGATT (consensus_score = 27)
+Median String: TACCGC (tot_dist = 3)
+Motif consensus string: TACCGC (consensus_score = 27)
 Motif positions/string s=(s1..st):
-  41(CAGATT), 8(CAGATT), 103(CAGATA), 6(GTGATT), 159(CAGATT), 
-Median String: GAAGCG (tot_dist = 3)
-Motif consensus string: GAAGCG (consensus_score = 27)
+  214(TACCGC), 135(TACCGC), 144(TACCGC), 71(TACCCC), 79(TAGCGA), 
+Median String: TGATTA (tot_dist = 3)
+Motif consensus string: TGATTA (consensus_score = 27)
 Motif positions/string s=(s1..st):
-  234(GAAGCG), 184(GAAGCG), 46(GAAGCC), 0(GTGGCG), 237(GAAGCG), 
+  220(TGATTA), 9(AGATTT), 1(TGACTA), 7(TGATTA), 260(TGATTA), 
+Number of leafs visited: 572
+Number of leafs skipped: 3524.0

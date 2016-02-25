@@ -34,6 +34,8 @@ public class BnBMainApp {
 				}
 				System.out.println(motifs);
 			}
+			System.out.printf("Number of leafs visited: %d\n", mp.getNumOfLeafsVisited());
+			System.out.printf("Number of leafs skipped: %d", Double.valueOf(Math.pow(K, L_MER) - mp.getNumOfLeafsVisited()).intValue());
 
 		} catch (IOException e) {
 			System.out.println("Cannot read the file: " + e.getMessage());
