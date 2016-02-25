@@ -11,19 +11,19 @@ import com.bio.main.pojo.MotifBrutForce;
 import com.bio.main.pojo.Sequence;
 import com.bio.main.pojo.TCGA;
 
-public class BranchAndBound {
+public class BrutForceSearch {
 
 	private static final int PRIORITY_QUEUE_SIZE = 5;
 	public static final int L_MER = 6;
-	private static BranchAndBound instance = null;
+	private static BrutForceSearch instance = null;
 
-	private BranchAndBound() {
+	private BrutForceSearch() {
 		super();
 	}
 
-	public static BranchAndBound getInstance() {
+	public static BrutForceSearch getInstance() {
 		if (instance == null) {
-			instance = new BranchAndBound();
+			instance = new BrutForceSearch();
 		}
 		return instance;
 	}

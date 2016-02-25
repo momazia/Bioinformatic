@@ -7,13 +7,13 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.bio.main.MainProcess;
+import com.bio.main.BnBMainProcess;
 
 public class TestMainProcess {
 
 	@Test
 	public void testNextChar() {
-		MainProcess mp = new MainProcess();
+		BnBMainProcess mp = new BnBMainProcess();
 		assertEquals('2', mp.nextCharacter('1'));
 		assertEquals('3', mp.nextCharacter('2'));
 		assertEquals('4', mp.nextCharacter('3'));
@@ -22,14 +22,14 @@ public class TestMainProcess {
 	@Test
 	public void testCreateInitialLmer() {
 		char[] ans1 = new char[] { ' ', '1', '1' };
-		MainProcess mp = new MainProcess();
+		BnBMainProcess mp = new BnBMainProcess();
 		assertTrue(Arrays.equals(ans1, mp.createInitialLmer(2)));
 	}
 
 	@Test
 	public void testGetActualText() {
 		char[] chrs = new char[] { ' ', '1', '2', '3', '4' };
-		MainProcess mp = new MainProcess();
+		BnBMainProcess mp = new BnBMainProcess();
 		assertEquals("ACGT", mp.getActualText(chrs));
 	}
 }

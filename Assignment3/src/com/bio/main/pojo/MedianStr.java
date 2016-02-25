@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.bio.main.BranchAndBound;
+import com.bio.main.BrutForceSearch;
 
 public class MedianStr {
 
@@ -66,7 +66,7 @@ public class MedianStr {
 	}
 
 	public Integer getConsensusScore() {
-		return this.motifs.size() * BranchAndBound.L_MER - getTotalDistance();
+		return this.motifs.size() * BrutForceSearch.L_MER - getTotalDistance();
 	}
 
 }

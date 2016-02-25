@@ -5,10 +5,10 @@ import java.util.List;
 public class Median {
 
 	private String str;
+	private int totalDistance;
 	private String consensusStr;
 	private int consensusScore;
-	private int totalDistance;
-	List<Motif> sequences;
+	private List<Motif> motifs;
 
 	public Median(String str, int totalDistance) {
 		super();
@@ -46,5 +46,13 @@ public class Median {
 
 	public void setConsensusScore(int consensusScore) {
 		this.consensusScore = consensusScore;
+	}
+
+	public List<Motif> getMotifs() {
+		return motifs;
+	}
+
+	public void setMotifs(List<Motif> motifs) {
+		this.motifs = motifs;
 	}
 }

@@ -1,0 +1,20 @@
+Median String: CAGTGA (tot_dist = 2)
+Motif consensus string: CAGTGA (consensus_score = 28)
+Motif positions/string s=(s1..st):
+  249(CAGTGA), 173(CAGTGA), 176(CGGTGA), 4(CGGTGA), 71(CAGTGA), 
+Median String: GACGCG (tot_dist = 2)
+Motif consensus string: GACGCG (consensus_score = 28)
+Motif positions/string s=(s1..st):
+  203(GACGCG), 218(GACGCG), 87(GACGCG), 101(GACCCG), 237(GAAGCG), 
+Median String: GCCAGA (tot_dist = 2)
+Motif consensus string: GCCAGA (consensus_score = 28)
+Motif positions/string s=(s1..st):
+  39(GCCAGA), 6(GTCAGA), 49(GCCAGA), 97(GCCAGA), 196(GCGAGA), 
+Median String: CAGATT (tot_dist = 3)
+Motif consensus string: CAGATT (consensus_score = 27)
+Motif positions/string s=(s1..st):
+  41(CAGATT), 8(CAGATT), 103(CAGATA), 6(GTGATT), 159(CAGATT), 
+Median String: GAAGCG (tot_dist = 3)
+Motif consensus string: GAAGCG (consensus_score = 27)
+Motif positions/string s=(s1..st):
+  234(GAAGCG), 184(GAAGCG), 46(GAAGCC), 0(GTGGCG), 237(GAAGCG), 

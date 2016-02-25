@@ -9,7 +9,7 @@ import java.util.PriorityQueue;
 import com.bio.main.pojo.Median;
 import com.bio.main.pojo.Sequence;
 
-public class MainProcess {
+public class BnBMainProcess {
 
 	private int i;
 	private List<Sequence> dnaSeq;
@@ -26,14 +26,14 @@ public class MainProcess {
 
 	});
 
-	public MainProcess(List<Sequence> dnaSeq, int l, int k) {
+	public BnBMainProcess(List<Sequence> dnaSeq, int l, int k) {
 		super();
 		this.dnaSeq = dnaSeq;
 		this.l = l;
 		this.k = k;
 	}
 
-	public MainProcess() {
+	public BnBMainProcess() {
 
 	}
 
