@@ -1,4 +1,4 @@
-package com.bio.main;
+package com.bio.main.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,7 +9,7 @@ import java.util.PriorityQueue;
 import com.bio.main.pojo.Median;
 import com.bio.main.pojo.Sequence;
 
-public class BnBMainProcess {
+public class BnBMainUtil {
 
 	private int i;
 	private List<Sequence> dnaSeq;
@@ -26,14 +26,14 @@ public class BnBMainProcess {
 
 	});
 
-	public BnBMainProcess(List<Sequence> dnaSeq, int l, int k) {
+	public BnBMainUtil(List<Sequence> dnaSeq, int l, int k) {
 		super();
 		this.dnaSeq = dnaSeq;
 		this.l = l;
 		this.k = k;
 	}
 
-	public BnBMainProcess() {
+	public BnBMainUtil() {
 
 	}
 

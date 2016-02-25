@@ -7,6 +7,8 @@ import com.bio.main.io.FileProcessor;
 import com.bio.main.pojo.Median;
 import com.bio.main.pojo.Motif;
 import com.bio.main.pojo.Sequence;
+import com.bio.main.util.BnBMainUtil;
+import com.bio.main.util.MotifUtil;
 
 public class BnBMainApp {
 
@@ -16,11 +18,11 @@ public class BnBMainApp {
 	public static void main(String[] args) {
 
 		try {
-			List<Sequence> sequences = FileProcessor.getInstance().readSequences("Sample-HMP-617.fa");
-			BnBMainProcess mp = new BnBMainProcess(sequences, L_MER, K);
+			List<Sequence> sequences = FileProcessor.getInstance().readSequences("HMP-617.fa");
+			BnBMainUtil mp = new BnBMainUtil(sequences, L_MER, K);
 			List<Median> medians = mp.medianSearch();
-			MotifProcess.getInstance().calculateMotifs(medians, sequences, L_MER);
-			MotifProcess.getInstance().calculateConsensus(medians, L_MER);
+			MotifUtil.getInstance().calculateMotifs(medians, sequences, L_MER);
+			MotifUtil.getInstance().calculateConsensus(medians, L_MER);
 
 			for (Median median : medians) {
 				System.out.println("Median String: " + median.getStr() + " (tot_dist = " + median.getTotalDistance() + ")");

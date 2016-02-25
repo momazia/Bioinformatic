@@ -1,4 +1,4 @@
-package com.bio.main;
+package com.bio.main.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,17 +13,17 @@ import com.bio.main.pojo.Motif;
 import com.bio.main.pojo.Sequence;
 import com.bio.main.pojo.TCGA;
 
-public class MotifProcess {
+public class MotifUtil {
 
-	private static MotifProcess instance = null;
+	private static MotifUtil instance = null;
 
-	private MotifProcess() {
+	private MotifUtil() {
 		super();
 	}
 
-	public static MotifProcess getInstance() {
+	public static MotifUtil getInstance() {
 		if (instance == null) {
-			instance = new MotifProcess();
+			instance = new MotifUtil();
 		}
 		return instance;
 	}
