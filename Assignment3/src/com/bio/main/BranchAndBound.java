@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 import com.bio.main.pojo.MedianStr;
-import com.bio.main.pojo.Motif;
+import com.bio.main.pojo.MotifBrutForce;
 import com.bio.main.pojo.Sequence;
 import com.bio.main.pojo.TCGA;
 
@@ -64,9 +64,9 @@ public class BranchAndBound {
 
 		for (String leaf : leafNodes) {
 
-			List<Motif> motifs = new ArrayList<>();
+			List<MotifBrutForce> motifs = new ArrayList<>();
 			for (Sequence seq : sequences) {
-				Motif motif = createMotif(seq.getStr().toCharArray(), leaf.toCharArray(), lmer);
+				MotifBrutForce motif = createMotif(seq.getStr().toCharArray(), leaf.toCharArray(), lmer);
 				motifs.add(motif);
 			}
 
@@ -86,7 +86,7 @@ public class BranchAndBound {
 		return result;
 	}
 
-	public Motif createMotif(char[] seqChars, char[] leafChars, int lmer) {
+	public MotifBrutForce createMotif(char[] seqChars, char[] leafChars, int lmer) {
 
 		int bestDistance = lmer + 1;
 		String motifStr = null;
@@ -104,7 +104,7 @@ public class BranchAndBound {
 			}
 		}
 
-		return new Motif(motifStr, location, bestDistance);
+		return new MotifBrutForce(motifStr, location, bestDistance);
 	}
 
 	private int getDistance(char[] seqChars, char[] leafChars) {

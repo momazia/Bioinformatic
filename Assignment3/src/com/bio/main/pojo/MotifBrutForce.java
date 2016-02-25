@@ -1,14 +1,15 @@
 package com.bio.main.pojo;
 
-public class Motif {
+public class MotifBrutForce {
 
 	private String str;
 	private int location;
+	private int distance;
 
-	public Motif(String str, int location) {
-		super();
-		this.str = str;
+	public MotifBrutForce(String motif, int location, int distance) {
+		str = motif;
 		this.location = location;
+		this.distance = distance;
 	}
 
 	public String getStr() {
@@ -25,5 +26,13 @@ public class Motif {
 
 	public void setLocation(int location) {
 		this.location = location;
+	}
+
+	public int getDistance() {
+		return distance;
+	}
+
+	public void setDistance(int distance) {
+		this.distance = distance;
 	}
 }

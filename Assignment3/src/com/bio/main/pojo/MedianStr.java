@@ -9,16 +9,16 @@ import com.bio.main.BranchAndBound;
 public class MedianStr {
 
 	private String leaf;
-	private List<Motif> motifs;
+	private List<MotifBrutForce> motifs;
 
-	public MedianStr(String leaf, List<Motif> motifs) {
+	public MedianStr(String leaf, List<MotifBrutForce> motifs) {
 		this.leaf = leaf;
 		this.motifs = motifs;
 	}
 
 	public int getTotalDistance() {
 		int total = 0;
-		for (Motif motif : motifs) {
+		for (MotifBrutForce motif : motifs) {
 			total += motif.getDistance();
 		}
 		return total;
@@ -28,7 +28,7 @@ public class MedianStr {
 		return leaf;
 	}
 
-	public List<Motif> getMotifs() {
+	public List<MotifBrutForce> getMotifs() {
 		return motifs;
 	}
 
@@ -40,7 +40,7 @@ public class MedianStr {
 
 			Map<TCGA, Integer> map = new HashMap<>();
 
-			for (Motif motif : motifs) {
+			for (MotifBrutForce motif : motifs) {
 				TCGA key = TCGA.valueOf(String.valueOf(motif.getStr().charAt(i)));
 				Integer score = map.get(key);
 				map.put(key, score == null ? 1 : score + 1);
