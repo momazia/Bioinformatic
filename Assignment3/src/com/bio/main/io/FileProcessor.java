@@ -17,10 +17,16 @@ import com.bio.main.pojo.Sequence;
  */
 public class FileProcessor {
 
+	/**
+	 * Default path to read the file from
+	 */
 	public static final String IO_PATH = "../Assignment3/io/";
 
 	private static FileProcessor instance = null;
 
+	/**
+	 * Not accessible because of Singleton Design Pattern.
+	 */
 	private FileProcessor() {
 		super();
 	}
@@ -32,6 +38,14 @@ public class FileProcessor {
 		return instance;
 	}
 
+	/**
+	 * For the given file name, it will read the sequences headers and strings from the file and return them in a list.
+	 * 
+	 * @param fileName
+	 * @return
+	 * @throws IOException
+	 *             If file cannot be read
+	 */
 	public List<Sequence> readSequences(String fileName) throws IOException {
 
 		List<Sequence> result = new ArrayList<>();

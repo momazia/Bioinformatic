@@ -1,8 +1,20 @@
 package com.bio.main.pojo;
 
+/**
+ * Motif holds the data related to the each of the tiles found. It contains a string and its location in the sequence.
+ * 
+ * @author Mohamad Mahdi Ziaee
+ *
+ */
 public class Motif {
 
+	/**
+	 * Motif string
+	 */
 	private String str;
+	/**
+	 * Motif location in the sequence
+	 */
 	private int location;
 
 	public Motif(String str, int location) {
