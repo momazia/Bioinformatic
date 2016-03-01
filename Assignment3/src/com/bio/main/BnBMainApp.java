@@ -11,7 +11,7 @@ import com.bio.main.util.BnBMainUtil;
 import com.bio.main.util.MotifUtil;
 
 /**
- * The main application to be executed in order to find median string, motif consensus string and its score, location and each of the tiles in a given
+ * The main application to be executed in order to find top best median strings, motif consensus strings and their scores, locations and each of the tiles in a given
  * DNA sequence and number of leafs visited in BnB approach and how many were skipped. <br>
  * In order to execute the program, put the DNA sequence file under "/Assignment3/io" and run this application. <br>
  * <b>Configurations:</b> <br>
