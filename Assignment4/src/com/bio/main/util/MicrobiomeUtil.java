@@ -7,19 +7,19 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.bio.main.pojo.Query;
 
-public class Microbiome {
+public class MicrobiomeUtil {
 
 	private static final int LOWER_BOUND_PERCENTAGE = 90;
 	private static final int UPPER_BOUND_PERCENTAGE = 110;
-	private static Microbiome instance = null;
+	private static MicrobiomeUtil instance = null;
 
-	private Microbiome() {
+	private MicrobiomeUtil() {
 		super();
 	}
 
-	public static Microbiome getInstance() {
+	public static MicrobiomeUtil getInstance() {
 		if (instance == null) {
-			instance = new Microbiome();
+			instance = new MicrobiomeUtil();
 		}
 		return instance;
 	}
