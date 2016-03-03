@@ -61,8 +61,7 @@ hs_err_pid*
 Assignment1/io/
 Assignment2/io/
 Assignment4/io/blastn-out-95
-Assignment4/io/copy-of-blastn-out-95
-Assignment4/io/Result-Simple-Test-blastn-out-95
+Assignment4/io/MetaHIT-nr-HMP.fa
 
 ### Maven ###
 target/
