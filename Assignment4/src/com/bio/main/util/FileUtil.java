@@ -6,13 +6,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
 
-import com.bio.main.pojo.MicrobiomeDB;
-import com.bio.main.pojo.Query;
+import com.bio.main.pojo.Database;
+import com.bio.main.pojo.BlastNRecord;
 
 public class FileUtil {
 
@@ -31,42 +32,34 @@ public class FileUtil {
 		return instance;
 	}
 
-	public MicrobiomeDB readQueries(String fileName) throws IOException {
+	public Database readBlastNRecords(String fileName) throws IOException {
 		// Reading the file line by line
-		List<Query> queries = new ArrayList<>();
+		List<BlastNRecord> records = new ArrayList<>();
 		List<String> fileLines = Files.readAllLines(Paths.get(IO_PATH + fileName));
-		boolean isHeader = true;
-		StringBuffer header = new StringBuffer();
 		for (int fileIndex = 0; fileIndex < fileLines.size(); fileIndex++) {
 			String line = fileLines.get(fileIndex);
 			// If it is it contains query string
-			if (isQueryStr(line)) {
-				Query query = new Query();
+			if (isQueryString(line)) {
+				BlastNRecord record = new BlastNRecord();
 				MutableInt mutableIndex = new MutableInt(fileIndex);
-				findQuery(fileLines, mutableIndex, query);
+				findQuery(fileLines, mutableIndex, record);
 				fileIndex = mutableIndex.getValue();
-				queries.add(query);
-				isHeader = false;
-			}
-			// Including the header of the file
-			if (isHeader == true) {
-				header.append(line);
-				header.append(System.getProperty("line.separator"));
+				records.add(record);
 			}
 		}
-		return new MicrobiomeDB(queries, header);
+		return new Database(records);
 	}
 
-	private void findQuery(List<String> fileLines, MutableInt fileIndex, Query query) {
+	private void findQuery(List<String> fileLines, MutableInt fileIndex, BlastNRecord record) {
 		// Adding the first line containing the query itself
 		String line = fileLines.get(fileIndex.getValue());
-		addLine(query, line, fileLines, fileIndex);
+		addLine(record, line, fileLines, fileIndex, true);
 		fileIndex.increment();
-		// Finding the rest of the query data from file.
+		// Finding the rest of the record data from file.
 		while (!endOfFile(fileLines, fileIndex.getValue())) {
 			line = fileLines.get(fileIndex.getValue());
-			if (!isQueryStr(line)) {
-				addLine(query, line, fileLines, fileIndex);
+			if (!isQueryString(line)) {
+				addLine(record, line, fileLines, fileIndex, false);
 				fileIndex.increment();
 			} else {
 				fileIndex.decrement();
@@ -75,24 +68,45 @@ public class FileUtil {
 		}
 	}
 
-	private void addLine(Query query, String line, List<String> fileLines, MutableInt fileIndex) {
-		query.getStr().append(line);
-		query.getStr().append(System.getProperty("line.separator"));
+	private void addLine(BlastNRecord record, String line, List<String> fileLines, MutableInt fileIndex, boolean isQueryString) {
+		if (isQueryString) {
+			record.setQueryString(StringUtils.substringAfter(line, QUERY));
+		}
+		record.getStr().append(line);
+		record.getStr().append(System.getProperty("line.separator"));
 	}
 
 	private boolean endOfFile(List<String> fileLines, int fileIndex) {
 		return fileIndex >= fileLines.size();
 	}
 
-	private boolean isQueryStr(String line) {
+	private boolean isQueryString(String line) {
 		return StringUtils.contains(line, QUERY);
 	}
 
-	public void saveQuery(String fileName, Query query) throws IOException {
-		FileUtils.write(new File(IO_PATH + fileName), query.getStr(), true);
+	public void copyFileExcludeRedundantQueries(String targetFilePath, String sourceFilePath, Set<String> duplicateQueries) throws IOException {
+		// Reading the source file line by line.
+		List<String> sourceFileLines = Files.readAllLines(Paths.get(IO_PATH + sourceFilePath));
+		for (int fileIndex = 0; fileIndex < sourceFileLines.size();) {
+			String queryFromFile = getQueryString(sourceFileLines, fileIndex);
+			while (hasMoreQueries(sourceFileLines, fileIndex)) {
+				if (!duplicateQueries.contains(queryFromFile)) {
+					FileUtils.write(new File(IO_PATH + targetFilePath), sourceFileLines.get(fileIndex) + System.getProperty("line.separator"), true);
+				}
+				fileIndex++;
+			}
+		}
 	}
 
-	public void saveHeaderFile(String fileName, String header) throws IOException {
-		FileUtils.write(new File(IO_PATH + fileName), header);
+	private boolean hasMoreQueries(List<String> sourceFileLines, int fileIndex) {
+		return !endOfFile(sourceFileLines, fileIndex) && StringUtils.isNotBlank(getQueryString(sourceFileLines, fileIndex));
 	}
+
+	private String getQueryString(List<String> sourceFileLines, int fileIndex) {
+		if (fileIndex >= sourceFileLines.size()) {
+			return null;
+		}
+		return StringUtils.substringAfter(sourceFileLines.get(fileIndex), ">");
+	}
+
 }
