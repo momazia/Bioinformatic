@@ -2,7 +2,6 @@ package com.bio.main.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ import com.bio.main.pojo.Query;
 
 public class FileUtil {
 
-	private static final String SEPARATOR = ">";
+	public static final String SEPARATOR = ">";
 	private static final String QUERY = "Query= ";
 	public static final String IO_PATH = "../Assignment4/io/";
 	private static FileUtil instance = null;
@@ -100,8 +99,8 @@ public class FileUtil {
 
 	public List<Query> readQueries(String sourceFilePath) throws IOException {
 		List<Query> result = new ArrayList<>();
-		String fileContent = new String(Files.readAllBytes(Paths.get(IO_PATH + sourceFilePath)));
-		String[] splitStrs = StringUtils.split(fileContent, SEPARATOR);
+		List<String> fileContent = Files.readAllLines(Paths.get(IO_PATH + sourceFilePath));
+		List<String> splitStrs = split(fileContent, SEPARATOR);
 		for (String str : splitStrs) {
 			String queryName = StringUtils.substringBefore(str, System.getProperty("line.separator"));
 			StringBuffer strBuffer = new StringBuffer();
@@ -111,6 +110,26 @@ public class FileUtil {
 			result.add(new Query(queryName, queryStr));
 		}
 		return result;
+	}
+
+	public List<String> split(List<String> content, String separator) {
+		List<String> finalResult = new ArrayList<>();
+		StringBuffer resultStrBuffer = new StringBuffer();
+		for (String line : content) {
+			if (line.contains(separator)) {
+				resultStrBuffer.append(StringUtils.substringBefore(line, separator));
+				if (StringUtils.isNotBlank(resultStrBuffer.toString())) {
+					finalResult.add(StringUtils.removeEnd(resultStrBuffer.toString(), System.getProperty("line.separator")));
+				}
+				resultStrBuffer = new StringBuffer();
+				resultStrBuffer.append(StringUtils.substringAfter(line, separator) + System.getProperty("line.separator"));
+			} else {
+				resultStrBuffer.append(line + System.getProperty("line.separator"));
+			}
+
+		}
+		finalResult.add(resultStrBuffer.toString());
+		return finalResult;
 	}
 
 }

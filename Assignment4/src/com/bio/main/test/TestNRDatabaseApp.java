@@ -7,6 +7,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.junit.Test;
@@ -17,13 +19,29 @@ import com.bio.main.pojo.Query;
 import com.bio.main.util.DatabaseUtil;
 import com.bio.main.util.FileUtil;
 
-public class TestFileProcessor {
+public class TestNRDatabaseApp {
 
 	private static final String SIMPLE_RESULT_META_HIT_NR_HMP_FA = "Simple_Result_META_HIT_NR_HMP.FA";
 	private static final String _2_SIMPLE_TEST_BLASTN_OUT_95 = "2_Simple-Test-blastn-out-95";
 	private static final String _1_SIMPLE_TEST_BLASTN_OUT_95 = "1_Simple-Test-blastn-out-95";
 	private static final String _1_SIMPLE_HMP_2000_FA = "1_Simple-HMP-2000.fa";
 	private static final String _3_SIMPLE_TEST_BLASTN_OUT_95 = "3_Simple-Test-blastn-out-95";
+
+	@Test
+	public void testSplit() {
+		List<String> contents;
+		try {
+			contents = Files.readAllLines(Paths.get(FileUtil.IO_PATH + _1_SIMPLE_HMP_2000_FA));
+			List<String> result = FileUtil.getInstance().split(contents, FileUtil.SEPARATOR);
+			assertEquals(8, result.size());
+			for (String str : result) {
+				System.out.println(str);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			fail("Something went wrong, while (reading from/writing into) the file!");
+		}
+	}
 
 	@Test
 	public void testQueriesFromFile() {
