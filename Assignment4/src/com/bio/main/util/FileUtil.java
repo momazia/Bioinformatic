@@ -89,6 +89,7 @@ public class FileUtil {
 	}
 
 	public void copyFileExcludeRedundantQueries(String targetFilePath, String sourceFilePath, Set<String> duplicateQueries) throws IOException {
+		System.out.println("Copying the unique queries into [" + targetFilePath + "]..");
 		List<Query> queries = readQueries(sourceFilePath);
 		for (Query query : queries) {
 			if (!duplicateQueries.contains(query.getName())) {
