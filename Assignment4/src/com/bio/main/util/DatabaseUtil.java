@@ -58,6 +58,7 @@ public class DatabaseUtil {
 			findQueryLength(record);
 			findFindAlignments(record);
 			if (isRedundant(record)) {
+				System.out.println("Redundant query: [" + record.getQueryString() + "]");
 				db.addRedundantQuery(record.getQueryString());
 			}
 		}
