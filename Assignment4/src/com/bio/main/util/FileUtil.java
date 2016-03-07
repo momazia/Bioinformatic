@@ -2,6 +2,7 @@ package com.bio.main.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -12,11 +13,13 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
 
-import com.bio.main.pojo.Database;
 import com.bio.main.pojo.BlastNRecord;
+import com.bio.main.pojo.Database;
+import com.bio.main.pojo.Query;
 
 public class FileUtil {
 
+	private static final String SEPARATOR = ">";
 	private static final String QUERY = "Query= ";
 	public static final String IO_PATH = "../Assignment4/io/";
 	private static FileUtil instance = null;
@@ -33,6 +36,7 @@ public class FileUtil {
 	}
 
 	public Database readBlastNRecords(String fileName) throws IOException {
+		System.out.println("Reading file [" + fileName + "]...");
 		// Reading the file line by line
 		List<BlastNRecord> records = new ArrayList<>();
 		List<String> fileLines = Files.readAllLines(Paths.get(IO_PATH + fileName));
@@ -85,28 +89,27 @@ public class FileUtil {
 	}
 
 	public void copyFileExcludeRedundantQueries(String targetFilePath, String sourceFilePath, Set<String> duplicateQueries) throws IOException {
-		// Reading the source file line by line.
-		List<String> sourceFileLines = Files.readAllLines(Paths.get(IO_PATH + sourceFilePath));
-		for (int fileIndex = 0; fileIndex < sourceFileLines.size();) {
-			String queryFromFile = getQueryString(sourceFileLines, fileIndex);
-			while (hasMoreQueries(sourceFileLines, fileIndex)) {
-				if (!duplicateQueries.contains(queryFromFile)) {
-					FileUtils.write(new File(IO_PATH + targetFilePath), sourceFileLines.get(fileIndex) + System.getProperty("line.separator"), true);
-				}
-				fileIndex++;
+		List<Query> queries = readQueries(sourceFilePath);
+		for (Query query : queries) {
+			if (!duplicateQueries.contains(query.getName())) {
+				FileUtils.writeStringToFile(new File(IO_PATH + targetFilePath), query.getStr(), true);
 			}
 		}
 	}
 
-	private boolean hasMoreQueries(List<String> sourceFileLines, int fileIndex) {
-		return !endOfFile(sourceFileLines, fileIndex) && StringUtils.isNotBlank(getQueryString(sourceFileLines, fileIndex));
-	}
-
-	private String getQueryString(List<String> sourceFileLines, int fileIndex) {
-		if (fileIndex >= sourceFileLines.size()) {
-			return null;
+	public List<Query> readQueries(String sourceFilePath) throws IOException {
+		List<Query> result = new ArrayList<>();
+		String fileContent = new String(Files.readAllBytes(Paths.get(IO_PATH + sourceFilePath)), StandardCharsets.UTF_8);
+		String[] splitStrs = StringUtils.split(fileContent, SEPARATOR);
+		for (String str : splitStrs) {
+			String queryName = StringUtils.substringBefore(str, System.getProperty("line.separator"));
+			StringBuffer strBuffer = new StringBuffer();
+			strBuffer.append(SEPARATOR);
+			strBuffer.append(str);
+			String queryStr = strBuffer.toString();
+			result.add(new Query(queryName, queryStr));
 		}
-		return StringUtils.substringAfter(sourceFileLines.get(fileIndex), ">");
+		return result;
 	}
 
 }

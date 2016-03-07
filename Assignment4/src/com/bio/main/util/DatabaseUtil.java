@@ -61,5 +61,6 @@ public class DatabaseUtil {
 				db.addRedundantQuery(record.getQueryString());
 			}
 		}
+		System.out.println("Number of Duplicate Records found: [" + db.getDuplicateQueries().size() + "]");
 	}
 }
