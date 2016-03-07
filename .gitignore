@@ -65,6 +65,7 @@ Assignment4/io/MetaHIT-nr-HMP.fa
 Assignment4/io/HMP-2000.fa
 Assignment4/io/MetaHIT-20000.fa
 Assignment4/io/Q-MetaHIT-DB-HMP-output
+Assignment4/io/Q-HMP-DB-MetaHIT-nr-HMP-output
 
 ### Maven ###
 target/
