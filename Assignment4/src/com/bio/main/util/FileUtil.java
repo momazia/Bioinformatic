@@ -99,10 +99,10 @@ public class FileUtil {
 
 	public List<Query> readQueries(String sourceFilePath) throws IOException {
 		List<Query> result = new ArrayList<>();
-		List<String> fileContent = Files.readAllLines(Paths.get(IO_PATH + sourceFilePath));
-		List<String> splitStrs = split(fileContent, SEPARATOR);
+		String fileContent = new String(Files.readAllBytes(Paths.get(IO_PATH + sourceFilePath)));
+		String[] splitStrs = StringUtils.split(fileContent, SEPARATOR);
 		for (String str : splitStrs) {
-			String queryName = StringUtils.substringBefore(str, System.getProperty("line.separator"));
+			String queryName = StringUtils.substringBefore(str, "\n");
 			StringBuffer strBuffer = new StringBuffer();
 			strBuffer.append(SEPARATOR);
 			strBuffer.append(str);
