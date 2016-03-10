@@ -2,11 +2,29 @@ package com.bio.main.pojo;
 
 import java.util.List;
 
+/**
+ * POJO to hold the values read from the BlastN file output
+ * 
+ * @author Mohamad Mahdi Ziaee
+ *
+ */
 public class BlastNRecord {
 
+	/**
+	 * Holds the whole raw record string
+	 */
 	private StringBuffer str = new StringBuffer();
+	/**
+	 * length of the query
+	 */
 	private Integer length;
+	/**
+	 * List of all the alignment lengths given for each query
+	 */
 	private List<Integer> alignmentLengths;
+	/**
+	 * Query string
+	 */
 	private String queryString;
 
 	public Integer getLength() {

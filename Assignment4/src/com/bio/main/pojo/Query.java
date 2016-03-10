@@ -1,5 +1,11 @@
 package com.bio.main.pojo;
 
+/**
+ * POJO to hold information about the queries read from the files.
+ * 
+ * @author Mohamad Mahdi Ziaee
+ *
+ */
 public class Query {
 
 	private String name;

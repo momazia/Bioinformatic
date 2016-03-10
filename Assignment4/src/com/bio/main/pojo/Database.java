@@ -4,6 +4,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The main DB class which holds BlastN records read from the output and a unique set of the duplicate queries.
+ * 
+ * @author Mohamad Mahdi Ziaee
+ *
+ */
 public class Database {
 
 	private List<BlastNRecord> blastNRecords;

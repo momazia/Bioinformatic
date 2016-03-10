@@ -7,8 +7,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 import org.junit.Test;
@@ -26,22 +24,6 @@ public class TestNRDatabaseApp {
 	private static final String _1_SIMPLE_TEST_BLASTN_OUT_95 = "1_Simple-Test-blastn-out-95";
 	private static final String _1_SIMPLE_HMP_2000_FA = "1_Simple-HMP-2000.fa";
 	private static final String _3_SIMPLE_TEST_BLASTN_OUT_95 = "3_Simple-Test-blastn-out-95";
-
-	@Test
-	public void testSplit() {
-		List<String> contents;
-		try {
-			contents = Files.readAllLines(Paths.get(FileUtil.IO_PATH + _1_SIMPLE_HMP_2000_FA));
-			List<String> result = FileUtil.getInstance().split(contents, FileUtil.SEPARATOR);
-			assertEquals(8, result.size());
-			for (String str : result) {
-				System.out.println(str);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			fail("Something went wrong, while (reading from/writing into) the file!");
-		}
-	}
 
 	@Test
 	public void testQueriesFromFile() {
@@ -76,7 +58,7 @@ public class TestNRDatabaseApp {
 		try {
 			db = FileUtil.getInstance().readBlastNRecords(_2_SIMPLE_TEST_BLASTN_OUT_95);
 			for (BlastNRecord record : db.getBlastNRecords()) {
-				DatabaseUtil.getInstance().findFindAlignments(record);
+				DatabaseUtil.getInstance().findAlignmentLengths(record);
 			}
 			assertNull(db.getBlastNRecords().get(0).getAlignmentLengths());
 			assertEquals(4, db.getBlastNRecords().get(1).getAlignmentLengths().size());
@@ -97,7 +79,7 @@ public class TestNRDatabaseApp {
 			db = FileUtil.getInstance().readBlastNRecords(_3_SIMPLE_TEST_BLASTN_OUT_95);
 			for (BlastNRecord record : db.getBlastNRecords()) {
 				DatabaseUtil.getInstance().findQueryLength(record);
-				DatabaseUtil.getInstance().findFindAlignments(record);
+				DatabaseUtil.getInstance().findAlignmentLengths(record);
 			}
 			assertFalse(DatabaseUtil.getInstance().isRedundant(db.getBlastNRecords().get(0)));
 			assertTrue(DatabaseUtil.getInstance().isRedundant(db.getBlastNRecords().get(1)));
@@ -116,7 +98,7 @@ public class TestNRDatabaseApp {
 			db = FileUtil.getInstance().readBlastNRecords(_3_SIMPLE_TEST_BLASTN_OUT_95);
 			for (BlastNRecord record : db.getBlastNRecords()) {
 				DatabaseUtil.getInstance().findQueryLength(record);
-				DatabaseUtil.getInstance().findFindAlignments(record);
+				DatabaseUtil.getInstance().findAlignmentLengths(record);
 			}
 			assertEquals("scaffold14_2_MH0001", db.getBlastNRecords().get(0).getQueryString());
 			assertEquals("scaffold33_1_MH0001", db.getBlastNRecords().get(1).getQueryString());

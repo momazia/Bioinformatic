@@ -16,8 +16,17 @@ import com.bio.main.pojo.BlastNRecord;
 import com.bio.main.pojo.Database;
 import com.bio.main.pojo.Query;
 
+/**
+ * This is a utility class in charge of the operations related to reading/saving to files.
+ * 
+ * @author Mohamad Mahdi Ziaee
+ *
+ */
 public class FileUtil {
 
+	/**
+	 * List of constants
+	 */
 	public static final String SEPARATOR = ">";
 	private static final String QUERY = "Query= ";
 	public static final String IO_PATH = "../Assignment4/io/";
@@ -34,6 +43,13 @@ public class FileUtil {
 		return instance;
 	}
 
+	/**
+	 * Creates a database by reading the BlastN output file name given.
+	 * 
+	 * @param fileName
+	 * @return
+	 * @throws IOException
+	 */
 	public Database readBlastNRecords(String fileName) throws IOException {
 		System.out.println("Reading file [" + fileName + "]...");
 		// Reading the file line by line
@@ -41,7 +57,7 @@ public class FileUtil {
 		List<String> fileLines = Files.readAllLines(Paths.get(IO_PATH + fileName));
 		for (int fileIndex = 0; fileIndex < fileLines.size(); fileIndex++) {
 			String line = fileLines.get(fileIndex);
-			// If it is it contains query string
+			// If it contains query string
 			if (isQueryString(line)) {
 				BlastNRecord record = new BlastNRecord();
 				MutableInt mutableIndex = new MutableInt(fileIndex);
@@ -53,6 +69,13 @@ public class FileUtil {
 		return new Database(records);
 	}
 
+	/**
+	 * Populates the record object passed. It also changes the fileIndex as it reads through the file lines passed.
+	 * 
+	 * @param fileLines
+	 * @param fileIndex
+	 * @param record
+	 */
 	private void findQuery(List<String> fileLines, MutableInt fileIndex, BlastNRecord record) {
 		// Adding the first line containing the query itself
 		String line = fileLines.get(fileIndex.getValue());
@@ -71,6 +94,16 @@ public class FileUtil {
 		}
 	}
 
+	/**
+	 * Populates str property of the given BlastN record. If it is a query string line we are looking at, it will also populate Query string property
+	 * of BlastN record.
+	 * 
+	 * @param record
+	 * @param line
+	 * @param fileLines
+	 * @param fileIndex
+	 * @param isQueryString
+	 */
 	private void addLine(BlastNRecord record, String line, List<String> fileLines, MutableInt fileIndex, boolean isQueryString) {
 		if (isQueryString) {
 			record.setQueryString(StringUtils.substringAfter(line, QUERY));
@@ -79,14 +112,36 @@ public class FileUtil {
 		record.getStr().append(System.getProperty("line.separator"));
 	}
 
+	/**
+	 * Checks to see if we are looking at the last line of the list given.
+	 * 
+	 * @param fileLines
+	 * @param fileIndex
+	 * @return
+	 */
 	private boolean endOfFile(List<String> fileLines, int fileIndex) {
 		return fileIndex >= fileLines.size();
 	}
 
+	/**
+	 * Checks to see if constant {@link FileUtil#QUERY} exists in the line passed.
+	 * 
+	 * @param line
+	 * @return
+	 */
 	private boolean isQueryString(String line) {
 		return StringUtils.contains(line, QUERY);
 	}
 
+	/**
+	 * Reads the query list from the source file path given and for each of them, it writes them into the target file path if they are not registered
+	 * as a duplicate query.
+	 * 
+	 * @param targetFilePath
+	 * @param sourceFilePath
+	 * @param duplicateQueries
+	 * @throws IOException
+	 */
 	public void copyFileExcludeRedundantQueries(String targetFilePath, String sourceFilePath, Set<String> duplicateQueries) throws IOException {
 		System.out.println("Copying the unique queries into [" + targetFilePath + "]..");
 		List<Query> queries = readQueries(sourceFilePath);
@@ -97,9 +152,17 @@ public class FileUtil {
 		}
 	}
 
+	/**
+	 * Creates a list of queries from the source file path given.
+	 * 
+	 * @param sourceFilePath
+	 * @return
+	 * @throws IOException
+	 */
 	public List<Query> readQueries(String sourceFilePath) throws IOException {
 		List<Query> result = new ArrayList<>();
 		String fileContent = new String(Files.readAllBytes(Paths.get(IO_PATH + sourceFilePath)));
+		// Splitting the file content using ">"
 		String[] splitStrs = StringUtils.split(fileContent, SEPARATOR);
 		for (String str : splitStrs) {
 			String queryName = StringUtils.substringBefore(str, "\n");
@@ -110,26 +173,6 @@ public class FileUtil {
 			result.add(new Query(queryName, queryStr));
 		}
 		return result;
-	}
-
-	public List<String> split(List<String> content, String separator) {
-		List<String> finalResult = new ArrayList<>();
-		StringBuffer resultStrBuffer = new StringBuffer();
-		for (String line : content) {
-			if (line.contains(separator)) {
-				resultStrBuffer.append(StringUtils.substringBefore(line, separator));
-				if (StringUtils.isNotBlank(resultStrBuffer.toString())) {
-					finalResult.add(StringUtils.removeEnd(resultStrBuffer.toString(), System.getProperty("line.separator")));
-				}
-				resultStrBuffer = new StringBuffer();
-				resultStrBuffer.append(StringUtils.substringAfter(line, separator) + System.getProperty("line.separator"));
-			} else {
-				resultStrBuffer.append(line + System.getProperty("line.separator"));
-			}
-
-		}
-		finalResult.add(resultStrBuffer.toString());
-		return finalResult;
 	}
 
 }
