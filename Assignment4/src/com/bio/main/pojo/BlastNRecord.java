@@ -9,7 +9,6 @@ import java.util.List;
  *
  */
 public class BlastNRecord {
-
 	/**
 	 * Holds the whole raw record string
 	 */
@@ -58,5 +57,4 @@ public class BlastNRecord {
 	public void setQueryString(String queryString) {
 		this.queryString = queryString;
 	}
-
 }

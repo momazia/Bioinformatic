@@ -7,7 +7,6 @@ package com.bio.main.pojo;
  *
  */
 public class Query {
-
 	private String name;
 	private String str;
 
@@ -32,5 +31,4 @@ public class Query {
 	public void setStr(String str) {
 		this.str = str;
 	}
-
 }

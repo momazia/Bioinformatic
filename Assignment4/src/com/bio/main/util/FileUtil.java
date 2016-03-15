@@ -23,7 +23,6 @@ import com.bio.main.pojo.Query;
  *
  */
 public class FileUtil {
-
 	/**
 	 * List of constants
 	 */
@@ -179,5 +178,4 @@ public class FileUtil {
 		}
 		return result;
 	}
-
 }

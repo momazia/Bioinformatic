@@ -15,7 +15,6 @@ import com.bio.main.pojo.BlastNRecord;
  *
  */
 public class DatabaseUtil {
-
 	/**
 	 * List of constants
 	 */

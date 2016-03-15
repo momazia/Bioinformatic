@@ -11,7 +11,6 @@ import java.util.Set;
  *
  */
 public class Database {
-
 	private List<BlastNRecord> blastNRecords;
 	private Set<String> duplicateQueries;
 
