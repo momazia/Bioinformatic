@@ -147,7 +147,12 @@ public class FileUtil {
 		List<Query> queries = readQueries(sourceFilePath);
 		for (Query query : queries) {
 			if (!duplicateQueries.contains(query.getName())) {
-				FileUtils.writeStringToFile(new File(IO_PATH + targetFilePath), query.getStr(), true);
+				// FileUtils.writeStringToFile(new File(IO_PATH + targetFilePath), query.getStr(), true);
+				StringBuffer strBuffer = new StringBuffer();
+				strBuffer.append(SEPARATOR);
+				strBuffer.append(query.getName());
+				strBuffer.append(System.getProperty("line.separator"));
+				FileUtils.writeStringToFile(new File(IO_PATH + targetFilePath), strBuffer.toString(), true);
 			}
 		}
 	}
