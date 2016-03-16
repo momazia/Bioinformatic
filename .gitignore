@@ -61,6 +61,9 @@ hs_err_pid*
 Assignment1/io/
 Assignment2/io/
 Assignment4/io/
+Assignment5/io/*
+!Assignment5/io/Test*
+!Assignment5/io/*.zip
 
 ### Maven ###
 target/
