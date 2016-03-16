@@ -36,7 +36,7 @@ public class FileUtils {
 
 		String outputPath = FileUtils.IO_PATH + outputFileName;
 		Files.deleteIfExists(Paths.get(outputPath));
-		List<String> lines = Files.readAllLines(Paths.get(FileUtils.IO_PATH + chr1FileName));
+		List<String> lines = readFile(chr1FileName);
 		String header = null;
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(outputPath, true)));
 		for (int i = 0; i < lines.size(); i++) {
@@ -79,6 +79,10 @@ public class FileUtils {
 			result.add(line);
 		}
 		return result;
+	}
+
+	public List<String> readFile(String fileName) throws IOException {
+		return Files.readAllLines(Paths.get(FileUtils.IO_PATH + fileName));
 	}
 
 }

@@ -1,10 +1,9 @@
 package com.bio.main.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 import org.junit.Test;
@@ -39,7 +38,7 @@ public class ReadsTest {
 	public void testCreateReads() {
 		try {
 			FileUtils.getInstance().createReads(5, "Test_Reads5.fa", "Test_chr1-2.fa");
-			List<String> lines = Files.readAllLines(Paths.get(FileUtils.IO_PATH + "Test_Reads5.fa"));
+			List<String> lines = FileUtils.getInstance().readFile("Test_Reads5.fa");
 			assertEquals(80, lines.size());
 		} catch (IOException e) {
 			e.printStackTrace();
