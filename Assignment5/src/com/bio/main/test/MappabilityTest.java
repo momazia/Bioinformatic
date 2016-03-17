@@ -13,7 +13,7 @@ public class MappabilityTest {
 	@Test
 	public void testCheckMappability() {
 		try {
-			MappabilityUtils.getInstance().checkMappability("Test_BTout-5", 5, "Test_final-output-5");
+			MappabilityUtils.getInstance().checkMappability("Test_BTout-5", 5, "Test_final-output-5", "Test_Reads5.fa");
 		} catch (IOException e) {
 			e.printStackTrace();
 			fail("Failed to load/read a file: " + e.getMessage());

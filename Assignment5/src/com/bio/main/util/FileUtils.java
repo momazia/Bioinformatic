@@ -8,9 +8,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.time.StopWatch;
+
+import com.bio.pojo.Output;
 
 public class FileUtils {
 	private static final String DOT = ".";
@@ -83,6 +86,20 @@ public class FileUtils {
 
 	public List<String> readFile(String fileName) throws IOException {
 		return Files.readAllLines(Paths.get(FileUtils.IO_PATH + fileName));
+	}
+
+	public void writeFile(Map<String, Output> result, String outputFileName, int fileTileLength) throws IOException {
+		String path = FileUtils.IO_PATH + outputFileName;
+		Files.deleteIfExists(Paths.get(path));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(path, true)));
+		// Printing the header
+		String formatStr = "%-20s %-15s";
+		out.println(String.format(formatStr, "geneID", "readLen" + fileTileLength));
+		for (String geneName : result.keySet()) {
+			Output output = result.get(geneName);
+			out.println(String.format(formatStr, geneName, output.getMappability()));
+		}
+		out.close();
 	}
 
 }
