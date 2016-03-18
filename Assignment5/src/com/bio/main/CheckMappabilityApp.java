@@ -1,11 +1,14 @@
 package com.bio.main;
 
 import java.io.IOException;
+import java.util.List;
 
+import com.bio.main.util.FileUtils;
 import com.bio.main.util.MappabilityUtils;
 
 public class CheckMappabilityApp {
 
+	private static final String CHR1_250_FA = "chr1-250.fa";
 	private static final int TILE_LENGTH_50 = 50;
 	public static final String FINAL_OUTPUT_50 = "final-output-50";
 	private static final String FINAL_B_TOUT50_V2_M1 = "final-BTout50-v2-m1";
@@ -20,9 +23,10 @@ public class CheckMappabilityApp {
 
 	public static void main(String[] args) {
 		try {
-			MappabilityUtils.getInstance().checkMappability(FINAL_B_TOUT50_V2_M1, TILE_LENGTH_50, FINAL_OUTPUT_50, GenerateReadsApp.READS_50_FA);
-			MappabilityUtils.getInstance().checkMappability(FINAL_B_TOUT70_V2_M1, TILE_LENGTH_70, FINAL_OUTPUT_70, GenerateReadsApp.READS_70_FA);
-			MappabilityUtils.getInstance().checkMappability(FINAL_B_TOUT100_V2_M1, TILE_LENGTH_100, FINAL_OUTPUT_100, GenerateReadsApp.READS_100_FA);
+			List<String> chr1FileLines = FileUtils.getInstance().readFile(CHR1_250_FA);
+			MappabilityUtils.getInstance().checkMappability(FINAL_B_TOUT50_V2_M1, TILE_LENGTH_50, FINAL_OUTPUT_50, GenerateReadsApp.READS_50_FA, chr1FileLines);
+			MappabilityUtils.getInstance().checkMappability(FINAL_B_TOUT70_V2_M1, TILE_LENGTH_70, FINAL_OUTPUT_70, GenerateReadsApp.READS_70_FA, chr1FileLines);
+			MappabilityUtils.getInstance().checkMappability(FINAL_B_TOUT100_V2_M1, TILE_LENGTH_100, FINAL_OUTPUT_100, GenerateReadsApp.READS_100_FA, chr1FileLines);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -12,12 +12,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.StopWatch;
 
-import com.bio.pojo.Output;
+import com.bio.pojo.Mappability;
 
 public class FileUtils {
-	private static final String DOT = ".";
+	private static final String ZERO = "0.00";
+	private static final String GENE_ID_HEADER = "geneID";
+	public static final String SEPARATOR_DOT = ".";
+	public static final String SEPARATOR_TAB = "\t";
+	public static final String CHR_INDICATOR = ">";
 	private static FileUtils instance = null;
 	public static final String IO_PATH = "../Assignment5/io/";
 
@@ -66,7 +71,7 @@ public class FileUtils {
 			// Writing the header
 			StringBuffer buffer = new StringBuffer();
 			buffer.append(header);
-			buffer.append(DOT);
+			buffer.append(SEPARATOR_DOT);
 			buffer.append(counter++);
 			out.println(buffer.toString());
 			out.println(tile);
@@ -89,39 +94,64 @@ public class FileUtils {
 		return Files.readAllLines(Paths.get(FileUtils.IO_PATH + fileName));
 	}
 
-	public void writeFile(Map<String, Output> result, String outputFileName, int fileTileLength) throws IOException {
+	public void writeFile(Map<String, Mappability> result, String outputFileName, int fileTileLength) throws IOException {
 		String path = FileUtils.IO_PATH + outputFileName;
 		Files.deleteIfExists(Paths.get(path));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(path, true)));
 		// Printing the header
-		out.println(String.join("\t", "geneID", "readLen" + fileTileLength));
+		out.println(String.join(SEPARATOR_TAB, GENE_ID_HEADER, "readLen" + fileTileLength));
 		for (String geneName : result.keySet()) {
-			Output output = result.get(geneName);
-			out.println(String.join("\t", geneName, output.getMappability()));
+			Mappability output = result.get(geneName);
+			if (output == null) {
+				out.println(String.join(SEPARATOR_TAB, geneName, ZERO));
+			} else {
+				out.println(String.join(SEPARATOR_TAB, geneName, output.getMappability()));
+			}
 		}
 		out.close();
 	}
 
 	public void merge(String outputFileName, String... inputFileNames) throws IOException {
-		List<Map<String, String>> files = new ArrayList<>();
-		// Reading the files
-		for (String fileName : inputFileNames) {
-			files.add(readFileIntoMap(fileName));
-		}
-
+		Map<String, List<String>> file = readFileIntoMap(inputFileNames);
 		String path = FileUtils.IO_PATH + outputFileName;
 		Files.deleteIfExists(Paths.get(path));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(path, true)));
-
+		// Printing the header
+		StringBuffer stringBuffer = createLine(file, GENE_ID_HEADER);
+		out.println(stringBuffer);
+		file.remove(GENE_ID_HEADER);
+		// Printing the body
+		for (String geneId : file.keySet()) {
+			stringBuffer = createLine(file, geneId);
+			out.println(stringBuffer);
+		}
+		out.close();
 	}
 
-	private Map<String, String> readFileIntoMap(String fileName) throws IOException {
-		List<String> lines = readFile(fileName);
-		Map<String,String> result = new HashMap<>();
-		for (String line : lines) {
-			
+	private StringBuffer createLine(Map<String, List<String>> file, String geneId) {
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(geneId);
+		stringBuffer.append(SEPARATOR_TAB);
+		stringBuffer.append(String.join(SEPARATOR_TAB, file.get(geneId)));
+		return stringBuffer;
+	}
+
+	private Map<String, List<String>> readFileIntoMap(String[] inputFileNames) throws IOException {
+		Map<String, List<String>> result = new HashMap<>();
+		for (String fileName : inputFileNames) {
+			List<String> lines = readFile(fileName);
+			for (String line : lines) {
+				String[] splittedLine = StringUtils.splitByWholeSeparator(line, SEPARATOR_TAB);
+				String geneId = splittedLine[0];
+				if (!result.containsKey(geneId)) {
+					result.put(geneId, new ArrayList<>());
+				}
+				List<String> existingMappabilities = result.get(geneId);
+				existingMappabilities.add(splittedLine[1]);
+				result.put(geneId, existingMappabilities);
+			}
 		}
-		return null;
+		return result;
 	}
 
 }

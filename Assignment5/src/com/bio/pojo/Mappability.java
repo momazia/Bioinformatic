@@ -2,13 +2,13 @@ package com.bio.pojo;
 
 import java.text.DecimalFormat;
 
-public class Output {
+public class Mappability {
 
 	private Integer numberOfMatches;
 	private Integer numberOfTiles;
-	private static final DecimalFormat df = new DecimalFormat("000.0000");
+	private static final DecimalFormat df = new DecimalFormat("#0.00##");
 
-	public Output(Integer numberOfMatches, Integer numberOfTiles) {
+	public Mappability(Integer numberOfMatches, Integer numberOfTiles) {
 		this.numberOfMatches = numberOfMatches;
 		this.numberOfTiles = numberOfTiles;
 	}

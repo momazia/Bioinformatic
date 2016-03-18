@@ -10,11 +10,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.StopWatch;
 
 import com.bio.pojo.Gene;
-import com.bio.pojo.Output;
+import com.bio.pojo.Mappability;
 
 public class MappabilityUtils {
-	private static final String SEPARATOR_DOT = ".";
-	private static final String SEPARATOR_TAB = "\t";
 	private static MappabilityUtils instance = null;
 
 	private MappabilityUtils() {
@@ -28,35 +26,51 @@ public class MappabilityUtils {
 		return instance;
 	}
 
-	public void checkMappability(String btOutputFileName, int fileTileLength, String outputFileName, String readFileName) throws IOException {
+	public void checkMappability(String btOutputFileName, int fileTileLength, String outputFileName, String readFileName, List<String> chr1FileLines) throws IOException {
 		System.out.println("Creating [" + outputFileName + "]...");
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
-		Map<String, Output> result = new HashMap<>();
 		System.out.println("Reading [" + btOutputFileName + "]");
-		List<String> fileLines = FileUtils.getInstance().readFile(btOutputFileName);
+		List<String> btOutputFileLines = FileUtils.getInstance().readFile(btOutputFileName);
 		System.out.println("Done reading [" + btOutputFileName + "]");
 		System.out.println("Reading [" + readFileName + "]");
 		List<String> readFileLines = FileUtils.getInstance().readFile(readFileName);
 		System.out.println("Done reading [" + readFileName + "]");
-		for (String line : fileLines) {
-			String[] splittedLine = StringUtils.split(line, SEPARATOR_TAB);
+		Map<String, Mappability> result = createMappability(btOutputFileLines, readFileLines, chr1FileLines);
+		FileUtils.getInstance().writeFile(result, outputFileName, fileTileLength);
+		stopWatch.stop();
+		System.out.println("[" + outputFileName + "] is done in [" + TimeUnit.MILLISECONDS.convert(stopWatch.getNanoTime(), TimeUnit.NANOSECONDS) + "] MILLISECONDS");
+	}
+
+	private Map<String, Mappability> createMappability(List<String> btOutputFileLines, List<String> readFileLines, List<String> chr1FileLines) throws IOException {
+		Map<String, Mappability> result = new HashMap<>();
+		for (String btOutputLine : btOutputFileLines) {
+			String[] splittedLine = StringUtils.split(btOutputLine, FileUtils.SEPARATOR_TAB);
 			Integer tileStart = getTileStartIndex(splittedLine);
 			Integer tileEnd = getTileEndIndex(splittedLine);
 			Gene gene = getGeneId(splittedLine);
 			String geneName = gene.getName();
 			if (!result.containsKey(geneName)) {
-				result.put(geneName, new Output(0, getTotalNumberOfTiles(geneName, readFileLines)));
+				result.put(geneName, new Mappability(0, getTotalNumberOfTiles(geneName, readFileLines)));
 			}
-			Output output = result.get(geneName);
+			Mappability output = result.get(geneName);
 			if (isTileWithinGene(tileStart, tileEnd, gene)) {
 				output.addNumberOfMatches();
 			}
 			result.put(geneName, output);
 		}
-		FileUtils.getInstance().writeFile(result, outputFileName, fileTileLength);
-		stopWatch.stop();
-		System.out.println("[" + outputFileName + "] is done in [" + TimeUnit.MILLISECONDS.convert(stopWatch.getNanoTime(), TimeUnit.NANOSECONDS) + "] MILLISECONDS");
+		// Add the missing tiles from output
+		for (int lineIndex = 0; lineIndex < chr1FileLines.size(); lineIndex++) {
+			if (lineIndex % 2 == 0) {
+				// Reading the first line
+				String geneName = StringUtils.substringAfter(chr1FileLines.get(lineIndex), FileUtils.CHR_INDICATOR);
+				if (!result.containsKey(geneName)) {
+					result.put(geneName, null);
+				}
+			}
+			chr1FileLines.get(lineIndex);
+		}
+		return result;
 	}
 
 	private Integer getTotalNumberOfTiles(String geneName, List<String> readFileLines) throws IOException {
@@ -74,8 +88,8 @@ public class MappabilityUtils {
 	}
 
 	private Gene getGeneId(String[] splittedLine) {
-		String[] geneSplittedStr = StringUtils.split(splittedLine[3], SEPARATOR_DOT);
-		return new Gene(Integer.valueOf(geneSplittedStr[1]), Integer.valueOf(geneSplittedStr[2]), geneSplittedStr[3]);
+		String[] geneSplittedStr = StringUtils.split(splittedLine[3], FileUtils.SEPARATOR_DOT);
+		return new Gene(Integer.valueOf(geneSplittedStr[1]), Integer.valueOf(geneSplittedStr[2]), StringUtils.substringBeforeLast(splittedLine[3], FileUtils.SEPARATOR_DOT));
 	}
 
 	private Integer getTileEndIndex(String[] splittedLine) {
