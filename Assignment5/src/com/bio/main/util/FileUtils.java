@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -99,6 +100,28 @@ public class FileUtils {
 			out.println(String.join("\t", geneName, output.getMappability()));
 		}
 		out.close();
+	}
+
+	public void merge(String outputFileName, String... inputFileNames) throws IOException {
+		List<Map<String, String>> files = new ArrayList<>();
+		// Reading the files
+		for (String fileName : inputFileNames) {
+			files.add(readFileIntoMap(fileName));
+		}
+
+		String path = FileUtils.IO_PATH + outputFileName;
+		Files.deleteIfExists(Paths.get(path));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(path, true)));
+
+	}
+
+	private Map<String, String> readFileIntoMap(String fileName) throws IOException {
+		List<String> lines = readFile(fileName);
+		Map<String,String> result = new HashMap<>();
+		for (String line : lines) {
+			
+		}
+		return null;
 	}
 
 }
