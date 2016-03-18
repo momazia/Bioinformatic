@@ -93,11 +93,10 @@ public class FileUtils {
 		Files.deleteIfExists(Paths.get(path));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(path, true)));
 		// Printing the header
-		String formatStr = "%-20s %-15s";
-		out.println(String.format(formatStr, "geneID", "readLen" + fileTileLength));
+		out.println(String.join("\t", "geneID", "readLen" + fileTileLength));
 		for (String geneName : result.keySet()) {
 			Output output = result.get(geneName);
-			out.println(String.format(formatStr, geneName, output.getMappability()));
+			out.println(String.join("\t", geneName, output.getMappability()));
 		}
 		out.close();
 	}

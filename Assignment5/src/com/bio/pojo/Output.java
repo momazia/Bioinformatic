@@ -1,9 +1,12 @@
 package com.bio.pojo;
 
+import java.text.DecimalFormat;
+
 public class Output {
 
 	private Integer numberOfMatches;
 	private Integer numberOfTiles;
+	private static final DecimalFormat df = new DecimalFormat("000.0000");
 
 	public Output(Integer numberOfMatches, Integer numberOfTiles) {
 		this.numberOfMatches = numberOfMatches;
@@ -31,7 +34,7 @@ public class Output {
 	}
 
 	public String getMappability() {
-		return String.format("%.2f", numberOfMatches.doubleValue() / numberOfTiles.doubleValue() * 100);
+		return df.format(numberOfMatches.doubleValue() / numberOfTiles.doubleValue() * 100);
 	}
 
 }

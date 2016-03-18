@@ -33,7 +33,12 @@ public class MappabilityUtils {
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 		Map<String, Output> result = new HashMap<>();
+		System.out.println("Reading [" + btOutputFileName + "]");
 		List<String> fileLines = FileUtils.getInstance().readFile(btOutputFileName);
+		System.out.println("Done reading [" + btOutputFileName + "]");
+		System.out.println("Reading [" + readFileName + "]");
+		List<String> readFileLines = FileUtils.getInstance().readFile(readFileName);
+		System.out.println("Done reading [" + readFileName + "]");
 		for (String line : fileLines) {
 			String[] splittedLine = StringUtils.split(line, SEPARATOR_TAB);
 			Integer tileStart = getTileStartIndex(splittedLine);
@@ -41,7 +46,7 @@ public class MappabilityUtils {
 			Gene gene = getGeneId(splittedLine);
 			String geneName = gene.getName();
 			if (!result.containsKey(geneName)) {
-				result.put(geneName, new Output(0, getTotalNumberOfTiles(geneName, readFileName)));
+				result.put(geneName, new Output(0, getTotalNumberOfTiles(geneName, readFileLines)));
 			}
 			Output output = result.get(geneName);
 			if (isTileWithinGene(tileStart, tileEnd, gene)) {
@@ -54,10 +59,9 @@ public class MappabilityUtils {
 		System.out.println("[" + outputFileName + "] is done in [" + TimeUnit.MILLISECONDS.convert(stopWatch.getNanoTime(), TimeUnit.NANOSECONDS) + "] MILLISECONDS");
 	}
 
-	private Integer getTotalNumberOfTiles(String geneName, String readFileName) throws IOException {
-		List<String> readFile = FileUtils.getInstance().readFile(readFileName);
+	private Integer getTotalNumberOfTiles(String geneName, List<String> readFileLines) throws IOException {
 		int counter = 0;
-		for (String line : readFile) {
+		for (String line : readFileLines) {
 			if (line.contains(geneName)) {
 				counter++;
 			}
