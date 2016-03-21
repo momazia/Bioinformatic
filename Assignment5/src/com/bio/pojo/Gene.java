@@ -1,13 +1,24 @@
 package com.bio.pojo;
 
+/**
+ * A POJO to hold gene information like start and end indexes.
+ * 
+ * @author Mohamad Mahdi Ziaee
+ *
+ */
 public class Gene {
-
 	private Integer startIndex;
 	private Integer endIndex;
 	private String name;
 
+	/**
+	 * The main constructor.
+	 * 
+	 * @param startIndex
+	 * @param endIndex
+	 * @param name
+	 */
 	public Gene(Integer startIndex, Integer endIndex, String name) {
-		super();
 		this.startIndex = startIndex;
 		this.endIndex = endIndex;
 		this.name = name;
@@ -35,9 +46,5 @@ public class Gene {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Integer getGeneSize() {
-		return endIndex - startIndex;
 	}
 }
