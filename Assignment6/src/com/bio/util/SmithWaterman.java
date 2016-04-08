@@ -1,11 +1,14 @@
 package com.bio.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.bio.pojo.AffineResult;
 import com.bio.pojo.Cell;
 import com.bio.pojo.Direction;
 
 public class SmithWaterman {
 
+	private static final char CHAR_DASH = '-';
 	private static final String SPACE = " ";
 	private static final int SCORE_GAP = -1;
 	private static final int SCORE_GAP_OPEN = -11;
@@ -145,5 +148,33 @@ public class SmithWaterman {
 
 	public AffineResult run(String query, String db) {
 		return run(query, db, null, null, null);
+	}
+
+	public void backTrace(String seq, String db, AffineResult affineResult) {
+		StringBuffer seqStr = new StringBuffer();
+		StringBuffer dbStr = new StringBuffer();
+		trace(addSpacePrefix(seq).toCharArray(), addSpacePrefix(db).toCharArray(), affineResult.getTable(), affineResult.getiIndex(), affineResult.getjIndex(), seqStr, dbStr);
+		affineResult.setSeqStr(StringUtils.reverse(seqStr.toString()));
+		affineResult.setDbStr(StringUtils.reverse(dbStr.toString()));
+	}
+
+	private void trace(char[] seqChrs, char[] dbChrs, Cell[][] table, int i, int j, StringBuffer seqStr, StringBuffer dbStr) {
+		if (table[i][j].getScore() == 0) {
+			return;
+		}
+		if (table[i][j].getDirection() == Direction.DIAGONAL) {
+			seqStr.append(seqChrs[i]);
+			dbStr.append(dbChrs[j]);
+			trace(seqChrs, dbChrs, table, i - 1, j - 1, seqStr, dbStr);
+		} else if (table[i][j].getDirection() == Direction.TOP) {
+			seqStr.append(seqChrs[i]);
+			dbStr.append(CHAR_DASH);
+			trace(seqChrs, dbChrs, table, i - 1, j, seqStr, dbStr);
+		} else if (table[i][j].getDirection() == Direction.LEFT) {
+			seqStr.append(CHAR_DASH);
+			dbStr.append(dbChrs[j]);
+			trace(seqChrs, dbChrs, table, i, j - 1, seqStr, dbStr);
+		}
+
 	}
 }

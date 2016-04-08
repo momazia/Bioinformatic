@@ -65,4 +65,13 @@ public class TestSmithWaterman {
 		assertEquals(17, result.getMaxScore());
 	}
 
+	@Test
+	public void testBackTrace() {
+		AffineResult result = SmithWaterman.getInstance().run(SEQ_3, SEQ_4, -1, 2, -1);
+		assertEquals(12, result.getMaxScore());
+		SmithWaterman.getInstance().backTrace(SEQ_3, SEQ_4, result);
+		assertEquals("A-CACACTA", result.getDbStr());
+		assertEquals("AGCACAC-A", result.getSeqStr());
+	}
+
 }

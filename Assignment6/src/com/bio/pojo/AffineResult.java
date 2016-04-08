@@ -6,6 +6,8 @@ public class AffineResult {
 	private int maxScore = 0;
 	private int iIndex;
 	private int jIndex;
+	private String dbStr;
+	private String seqStr;
 
 	public AffineResult(Cell[][] table, int maxScore, int iIndex, int jIndex) {
 		this.table = table;
@@ -44,6 +46,22 @@ public class AffineResult {
 
 	public void setjIndex(int jIndex) {
 		this.jIndex = jIndex;
+	}
+
+	public String getDbStr() {
+		return dbStr;
+	}
+
+	public void setDbStr(String dbStr) {
+		this.dbStr = dbStr;
+	}
+
+	public String getSeqStr() {
+		return seqStr;
+	}
+
+	public void setSeqStr(String seqStr) {
+		this.seqStr = seqStr;
 	}
 
 }
