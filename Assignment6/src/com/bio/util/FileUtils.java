@@ -1,6 +1,7 @@
 package com.bio.util;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -8,13 +9,15 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.bio.pojo.AffineResult;
 import com.bio.pojo.Sequence;
 
 public class FileUtils {
 	public static final String SWISSPROT_100_FA = "swissprot-100.fa";
 	public static final String E_COLI_QUERY1_FA = "EColi-query1.fa";
-	private static FileUtils instance = null;
 	public static final String IO_PATH = "../Assignment6/io/";
+	public static final String OUTPUT_TXT = "output.txt";
+	private static FileUtils instance = null;
 
 	/**
 	 * Private constructor for Singleton design pattern purpose. Declared private so it is not accessible from outside.
@@ -62,5 +65,17 @@ public class FileUtils {
 			}
 		}
 		return results;
+	}
+
+	public void deleteIfExists(String fileName) throws IOException {
+		Files.deleteIfExists(Paths.get(FileUtils.IO_PATH + fileName));
+	}
+
+	public void write(PrintWriter out, AffineResult affineResult, String name, int length) {
+		out.println(name.substring(0, 50) + " (len=" + length + ")");
+		out.println("SW_score = " + affineResult.getMaxScore() + " (i=" + affineResult.getiIndex() + ", j=" + affineResult.getjIndex() + ")");
+		out.println("Query: " + affineResult.getSeqStr());
+		out.println("DB: 	" + affineResult.getDbStr());
+		out.println();
 	}
 }
