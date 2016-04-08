@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.bio.pojo.Sequence;
+
 public class FileUtils {
 	public static final String SWISSPROT_100_FA = "swissprot-100.fa";
 	public static final String E_COLI_QUERY1_FA = "EColi-query1.fa";
@@ -48,12 +50,15 @@ public class FileUtils {
 		return Files.readAllLines(Paths.get(FileUtils.IO_PATH + fileName));
 	}
 
-	public List<String> readSequences(String seqFileName) throws IOException {
+	public List<Sequence> readSequences(String seqFileName) throws IOException {
+		List<Sequence> results = new ArrayList<>();
+		String header = null;
 		List<String> lines = readFile(seqFileName);
-		List<String> results = new ArrayList<>();
 		for (int i = 0; i < lines.size(); i++) {
 			if (i % 2 != 0) {
-				results.add(lines.get(i));
+				results.add(new Sequence(header, lines.get(i)));
+			} else {
+				header = lines.get(i);
 			}
 		}
 		return results;
