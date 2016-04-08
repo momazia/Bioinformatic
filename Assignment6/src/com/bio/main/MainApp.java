@@ -22,6 +22,7 @@ public class MainApp {
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(FileUtils.IO_PATH + FileUtils.OUTPUT_TXT, true)));
 			for (Sequence sequence : seqs) {
 				AffineResult affineResult = SmithWaterman.getInstance().run(sequence.getStr(), db);
+				SmithWaterman.getInstance().backTrace(sequence.getStr(), db, affineResult);
 				FileUtils.getInstance().write(out, affineResult, sequence.getName(), sequence.getStr().length());
 			}
 			out.close();

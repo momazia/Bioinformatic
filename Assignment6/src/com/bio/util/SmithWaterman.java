@@ -101,7 +101,7 @@ public class SmithWaterman {
 				return i;
 			}
 		}
-		return -1; // -1 means not found
+		return ALPHABETS.length - 1; // It will return the position of * character
 	}
 
 	private Cell populateCell(int diagScore, int horScore, int verScore) {

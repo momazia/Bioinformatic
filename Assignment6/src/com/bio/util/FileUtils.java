@@ -74,8 +74,8 @@ public class FileUtils {
 	public void write(PrintWriter out, AffineResult affineResult, String name, int length) {
 		out.println(name.substring(0, 50) + " (len=" + length + ")");
 		out.println("SW_score = " + affineResult.getMaxScore() + " (i=" + affineResult.getiIndex() + ", j=" + affineResult.getjIndex() + ")");
-		out.println("Query: " + affineResult.getSeqStr());
-		out.println("DB: 	" + affineResult.getDbStr());
+		out.println("Query:\t" + affineResult.getSeqStr());
+		out.println("DB:\t\t" + affineResult.getDbStr());
 		out.println();
 	}
 }
