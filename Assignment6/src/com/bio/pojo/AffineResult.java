@@ -1,5 +1,11 @@
 package com.bio.pojo;
 
+/**
+ * The main POJO to hold the output of the program.
+ * 
+ * @author Mohamad Mahdi Ziaee
+ *
+ */
 public class AffineResult {
 
 	private Cell[][] table;
@@ -9,6 +15,14 @@ public class AffineResult {
 	private String dbStr;
 	private String seqStr;
 
+	/**
+	 * Constructor which sets the values in the POJO.
+	 * 
+	 * @param table
+	 * @param maxScore
+	 * @param iIndex
+	 * @param jIndex
+	 */
 	public AffineResult(Cell[][] table, int maxScore, int iIndex, int jIndex) {
 		this.table = table;
 		this.maxScore = maxScore;

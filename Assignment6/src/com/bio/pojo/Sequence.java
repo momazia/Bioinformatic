@@ -1,5 +1,11 @@
 package com.bio.pojo;
 
+/**
+ * A POJO to hold the sequence name and its string value.
+ * 
+ * @author Mohamad Mahdi Ziaee
+ *
+ */
 public class Sequence {
 
 	private String name;

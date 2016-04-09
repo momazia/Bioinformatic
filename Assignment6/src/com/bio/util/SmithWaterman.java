@@ -6,6 +6,12 @@ import com.bio.pojo.AffineResult;
 import com.bio.pojo.Cell;
 import com.bio.pojo.Direction;
 
+/**
+ * This class is the utility class for all the operations related to Smith Waterman.
+ * 
+ * @author Mohamad Mahdi Ziaee
+ *
+ */
 public class SmithWaterman {
 
 	private static final char CHAR_DASH = '-';
@@ -42,10 +48,18 @@ public class SmithWaterman {
 			{ -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -4, 1 } //
 	};
 
+	/**
+	 * Private constructor to avoid this class being initialized by the client.
+	 */
 	private SmithWaterman() {
 		super();
 	}
 
+	/**
+	 * Gets the static instance of this class.
+	 * 
+	 * @return
+	 */
 	public static SmithWaterman getInstance() {
 		if (instance == null) {
 			instance = new SmithWaterman();
@@ -53,6 +67,17 @@ public class SmithWaterman {
 		return instance;
 	}
 
+	/**
+	 * The main method to be invoked to run Smith Waterman logic for the given DB and Query strings. If the scores are passed, they will be used,
+	 * otherwise it will use Affine gap scoring system.
+	 * 
+	 * @param query
+	 * @param db
+	 * @param gapScore
+	 * @param matchScore
+	 * @param misMatchScore
+	 * @return
+	 */
 	public AffineResult run(String query, String db, Integer gapScore, Integer matchScore, Integer misMatchScore) {
 
 		query = addSpacePrefix(query);
@@ -80,6 +105,17 @@ public class SmithWaterman {
 		return new AffineResult(table, maxScore, iIndex, jIndex);
 	}
 
+	/**
+	 * Gets the gap score for the position of i and j in table 2D array. If the gapScore is given, that will be used, otherwise it will check to see
+	 * if the gap was opened before or not. If the gap was opened before, it will just return the score gap, otherwise it will add gap opening score
+	 * together with a single gap score.
+	 * 
+	 * @param table
+	 * @param i
+	 * @param j
+	 * @param gapScore
+	 * @return
+	 */
 	private int getScoreGap(Cell[][] table, int i, int j, Integer gapScore) {
 		if (gapScore != null) {
 			return gapScore;
@@ -87,14 +123,33 @@ public class SmithWaterman {
 		return (isGapOpened(table[i][j].getDirection()) ? SCORE_GAP : SCORE_GAP_OPEN + SCORE_GAP);
 	}
 
+	/**
+	 * If the direction given is from LEFT or TOP, that means the gap was opened before.
+	 * 
+	 * @param direction
+	 * @return
+	 */
 	private boolean isGapOpened(Direction direction) {
 		return Direction.LEFT == direction || Direction.TOP == direction;
 	}
 
+	/**
+	 * For 2 given characters, it will find the match/mismatch score in the scoring matrix.
+	 * 
+	 * @param ch1
+	 * @param ch2
+	 * @return
+	 */
 	public int getScore(char ch1, char ch2) {
 		return SCORE_MATRIX[getAlphabetPosition(ch1)][getAlphabetPosition(ch2)];
 	}
 
+	/**
+	 * Finds the position of the given character in alphabet array. If the character is not found, it will return the position of * (last index).
+	 * 
+	 * @param ch
+	 * @return
+	 */
 	private int getAlphabetPosition(char ch) {
 		for (int i = 0; i < ALPHABETS.length; i++) {
 			if (ALPHABETS[i] == ch) {
@@ -104,6 +159,15 @@ public class SmithWaterman {
 		return ALPHABETS.length - 1; // It will return the position of * character
 	}
 
+	/**
+	 * Based on the maximum score coming from 3 different directions, it creates a cell which stores the direction the score was originated and the
+	 * value of the score. It will look into Diagonal, Top and lastly Left scores in order.
+	 * 
+	 * @param diagScore
+	 * @param horScore
+	 * @param verScore
+	 * @return
+	 */
 	private Cell populateCell(int diagScore, int horScore, int verScore) {
 		int maxScore = 0;
 		Direction dir = null;
@@ -122,6 +186,13 @@ public class SmithWaterman {
 		return new Cell(maxScore, dir);
 	}
 
+	/**
+	 * The method instantiates empty cells with zero score for the table.
+	 * 
+	 * @param queryChrs
+	 * @param dbChrs
+	 * @return
+	 */
 	private Cell[][] createEmptyTable(char[] queryChrs, char[] dbChrs) {
 		Cell[][] result = new Cell[queryChrs.length][dbChrs.length];
 		for (Cell[] cells : result) {
@@ -132,6 +203,16 @@ public class SmithWaterman {
 		return result;
 	}
 
+	/**
+	 * If both match and mismatch scores are given, they will be used to determine the score. If they are not provided (in case of Affine), it will
+	 * get the score from the scoring table.
+	 * 
+	 * @param seq
+	 * @param db
+	 * @param matchScore
+	 * @param misMatchScore
+	 * @return
+	 */
 	private int matchMisMatchScore(char seq, char db, Integer matchScore, Integer misMatchScore) {
 		if (matchScore != null && misMatchScore != null) {
 			if (seq == db) {
@@ -142,14 +223,34 @@ public class SmithWaterman {
 		return getScore(seq, db);
 	}
 
-	private String addSpacePrefix(String query) {
-		return SPACE + query;
+	/**
+	 * Adds an empty character to the beginning of the string passed.
+	 * 
+	 * @param str
+	 * @return
+	 */
+	private String addSpacePrefix(String str) {
+		return SPACE + str;
 	}
 
+	/**
+	 * The main method to be called for Smith Waterman if Affine gap is to be used.
+	 * 
+	 * @param query
+	 * @param db
+	 * @return
+	 */
 	public AffineResult run(String query, String db) {
 		return run(query, db, null, null, null);
 	}
 
+	/**
+	 * Back traces the final result by looking at maximum score i and j indexes. At the end, it will reverse the strings.
+	 * 
+	 * @param seq
+	 * @param db
+	 * @param affineResult
+	 */
 	public void backTrace(String seq, String db, AffineResult affineResult) {
 		StringBuffer seqStr = new StringBuffer();
 		StringBuffer dbStr = new StringBuffer();
@@ -158,6 +259,18 @@ public class SmithWaterman {
 		affineResult.setDbStr(StringUtils.reverse(dbStr.toString()));
 	}
 
+	/**
+	 * The main tracing back method which must be called recursively. The order of finding the single final result is diagonal, top and left. In case
+	 * of insertion or deletion, dash is added.
+	 * 
+	 * @param seqChrs
+	 * @param dbChrs
+	 * @param table
+	 * @param i
+	 * @param j
+	 * @param seqStr
+	 * @param dbStr
+	 */
 	private void trace(char[] seqChrs, char[] dbChrs, Cell[][] table, int i, int j, StringBuffer seqStr, StringBuffer dbStr) {
 		if (table[i][j].getScore() == 0) {
 			return;
@@ -175,6 +288,5 @@ public class SmithWaterman {
 			dbStr.append(dbChrs[j]);
 			trace(seqChrs, dbChrs, table, i, j - 1, seqStr, dbStr);
 		}
-
 	}
 }
