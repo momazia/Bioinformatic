@@ -1,5 +1,7 @@
 package com.bio.util;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
@@ -50,7 +52,7 @@ public class FileUtils {
 	 * @return
 	 * @throws IOException
 	 */
-	public String readQuery(String fileName) throws IOException {
+	public Sequence readQuery(String fileName) throws IOException {
 		StringBuffer str = new StringBuffer();
 		List<String> lines = readFile(fileName);
 		for (int i = 1; i < lines.size(); i++) {
@@ -59,7 +61,7 @@ public class FileUtils {
 				str.append(line);
 			}
 		}
-		return str.toString();
+		return new Sequence(lines.get(0), str.toString());
 	}
 
 	/**
@@ -113,10 +115,29 @@ public class FileUtils {
 	 * @param length
 	 */
 	public void write(PrintWriter out, AffineResult affineResult, String name, int length) {
-		out.println(name.substring(0, 50) + " (len=" + length + ")");
+		out.println(name + " (len=" + length + ")");
 		out.println("SW_score = " + affineResult.getMaxScore() + " (i=" + affineResult.getiIndex() + ", j=" + affineResult.getjIndex() + ")");
 		out.println("Query\t" + affineResult.getQueryStr());
 		out.println("Sbjct\t" + affineResult.getSeqStr());
 		out.println();
+	}
+
+	/**
+	 * Writes the header by printing the query name and string into the given output file name. If the file already exists, it will delete it first.
+	 * The method returns PrintWriter pointing the output file.
+	 * 
+	 * @param headerSequence
+	 * @param outputFileName
+	 * @return
+	 * @throws IOException
+	 */
+	public PrintWriter writeHeader(Sequence headerSequence, String outputFileName) throws IOException {
+		// Deleting the output file if it already exists
+		deleteIfExists(outputFileName);
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(FileUtils.IO_PATH + outputFileName, true)));
+		out.println(headerSequence.getName());
+		out.println(headerSequence.getStr());
+		out.println();
+		return out;
 	}
 }

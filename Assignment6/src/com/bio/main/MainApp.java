@@ -1,7 +1,5 @@
 package com.bio.main;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -28,16 +26,14 @@ public class MainApp {
 	public static void main(String[] args) {
 		try {
 			// Reading the query file
-			String query = FileUtils.getInstance().readQuery(FileUtils.E_COLI_QUERY1_FA);
+			Sequence query = FileUtils.getInstance().readQuery(FileUtils.E_COLI_QUERY1_FA);
 			// Reading the sequences from the file
 			List<Sequence> seqs = FileUtils.getInstance().readSequences(FileUtils.SWISSPROT_100_FA);
-			// Deleting the output file if it already exists
-			FileUtils.getInstance().deleteIfExists(FileUtils.OUTPUT_TXT);
-			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(FileUtils.IO_PATH + FileUtils.OUTPUT_TXT, true)));
+			PrintWriter out = FileUtils.getInstance().writeHeader(query, FileUtils.OUTPUT_TXT);
 			// Looping through each of the sequences and running SmithWaterman and printing the output into a file.
 			for (Sequence sequence : seqs) {
-				AffineResult affineResult = SmithWaterman.getInstance().run(sequence.getStr(), query);
-				SmithWaterman.getInstance().backTrace(sequence.getStr(), query, affineResult);
+				AffineResult affineResult = SmithWaterman.getInstance().run(sequence.getStr(), query.getStr());
+				SmithWaterman.getInstance().backTrace(sequence.getStr(), query.getStr(), affineResult);
 				FileUtils.getInstance().write(out, affineResult, sequence.getName(), sequence.getStr().length());
 			}
 			out.close();
