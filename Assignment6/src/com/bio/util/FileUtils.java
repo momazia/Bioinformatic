@@ -130,8 +130,8 @@ public class FileUtils {
 	public String formatOutput(AffineResult affineResult, String name, int seqLength) {
 		String queryStr = affineResult.getQueryStr();
 		int resultLength = queryStr.length();
-		int iIndex = affineResult.getiIndex();
-		int jIndex = affineResult.getjIndex();
+		int iIndex = affineResult.getiIndex() - 1; // Because we added a new white space prior to running SW algorithm
+		int jIndex = affineResult.getjIndex() - 1; // Because we added a new white space prior to running SW algorithm
 		String seqStr = affineResult.getSeqStr();
 		StringBuffer str = new StringBuffer();
 		str.append(name + " (len=" + seqLength + ")\n");

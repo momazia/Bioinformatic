@@ -176,10 +176,10 @@ Query:   336 DKLRKNYLE 344
 Sbjct:    45 DNMRNNYLK 53
 
 >gi|704000358|sp|C0HJM8.1|LEC_ALLCE RecName: Full=Lectin, partial [Allium cepa] (len=10)
-SW_score = 17 (i=8, j=223)
-Query:   221 NEG 223
-			 NEG
-Sbjct:     6 NEG 8
+SW_score = 19 (i=9, j=52)
+Query:    43 RSVTKVNESL 52
+			 R+V+++NE+L
+Sbjct:     0 RNVLLNNEGL 9
 
 >gi|704000357|sp|C0HJN0.1|KAX6V_HETLA RecName: Full=Potassium channel toxin alpha-KTx 6 hetlaxin [Heterometrus laoticus] (len=34)
 SW_score = 23 (i=19, j=332)
@@ -308,10 +308,10 @@ Query:    78 QAG 80
 Sbjct:     5 QAG 7
 
 >gi|694016529|sp|P86977.1|CHIT_STRVO RecName: Full=Chitinase, partial [Streptomyces violaceusniger] (len=10)
-SW_score = 16 (i=8, j=88)
-Query:    82 GFSAAPG 88
-			 G++++PG
-Sbjct:     2 GTGPGPG 8
+SW_score = 19 (i=8, j=88)
+Query:    80 GIGFSAAPG 88
+			 G+G++++PG
+Sbjct:     0 GDGTGPGPG 8
 
 >gi|693586058|sp|Q6ZMS4.4|ZN852_HUMAN RecName: Full=Zinc finger protein 852 [Homo sapiens] (len=543)
 SW_score = 30 (i=510, j=244)
@@ -338,16 +338,16 @@ Query:   191 KLIRSLKPGAILINAC 206
 Sbjct:    63 KILNQNLPETIFVRAC 78
 
 >gi|678019224|sp|C0HJK0.1|VP_DINQU RecName: Full=Venom peptides; Contains: RecName: Full=Peptide Dq-1984; Contains: RecName: Full=Peptide Dq-1897; Contains: RecName: Full=Peptide Dq-1839/Dq-1840/Dq-1856 [Dinoponera quadriceps] (len=20)
-SW_score = 19 (i=14, j=57)
-Query:    44 SVTKVNESLLAGKP 57
-			 S++K++++LL+++P
-Sbjct:     1 SLVKLVSTLLSLVP 14
+SW_score = 20 (i=8, j=63)
+Query:    55 GKPIKFVGT 63
+			 G+++K+V+T
+Sbjct:     0 GSLVKLVST 8
 
 >gi|678019209|sp|C0HJK2.1|VP987_DINQU RecName: Full=Peptide Dq-987; Contains: RecName: Full=Peptide Dq-761 [Dinoponera quadriceps] (len=9)
-SW_score = 17 (i=3, j=304)
-Query:   302 PLD 304
-			 PLD
-Sbjct:     1 PLD 3
+SW_score = 19 (i=7, j=36)
+Query:    29 IPVAQLAD 36
+			 +P+++L+D
+Sbjct:     0 LPLDDLSD 7
 
 >gi|678019205|sp|C0HJK4.1|VP88_DINQU RecName: Full=Peptide Dq-1288; Contains: RecName: Full=Peptide Dq-1061 [Dinoponera quadriceps] (len=11)
 SW_score = 14 (i=6, j=147)
@@ -362,10 +362,10 @@ Query:   146 PP 147
 Sbjct:     4 PP 5
 
 >gi|678019198|sp|C0HJK1.1|VP30_DINQU RecName: Full=Peptide Dq-1030 [Dinoponera quadriceps] (len=9)
-SW_score = 15 (i=4, j=322)
-Query:   319 RRDD 322
-			 R+DD
-Sbjct:     1 RPDD 4
+SW_score = 16 (i=4, j=322)
+Query:   318 VRRDD 322
+			 +R+DD
+Sbjct:     0 LRPDD 4
 
 >gi|678019123|sp|C0HJK5.1|TXHM3_HERML RecName: Full=Neurotoxin Hm-3 [Heriaeus melloteei] (len=35)
 SW_score = 18 (i=21, j=93)
@@ -512,10 +512,10 @@ Query:   304 TLKRLVHLVYDVRRD-DAPLRKVAGIPGE--FDKLR 339
 Sbjct:   233 TTSELVELLYEA---IPAPARRTGGHPAKRTFQALR 268
 
 >gi|677286735|sp|B2HGS5.2|RSMH_MYCMM RecName: Full=Ribosomal RNA small subunit methyltransferase H; AltName: Full=16S rRNA m(4)C1402 methyltransferase; AltName: Full=rRNA (cytosine-N(4)-)-methyltransferase RsmH [Mycobacterium marinum M] (len=395)
-SW_score = 32 (i=322, j=43)
-Query:     1 KILVDENMPYARDLFSRLGEVTAVPGRPIPVAQLADADALMVR 43
-			 +I+V+++++++R++++++++++AV+GR++++A+++++D++++R
-Sbjct:   280 RIAVNDELGSLRSAIPAAMDALAVGGRIVVMAYQSLEDRIVKR 322
+SW_score = 34 (i=322, j=43)
+Query:     0 MKILVDENMPYARDLFSRLGEVTAVPGRPIPVAQLADADALMVR 43
+			 ++I+V+++++++R++++++++++AV+GR++++A+++++D++++R
+Sbjct:   279 LRIAVNDELGSLRSAIPAAMDALAVGGRIVVMAYQSLEDRIVKR 322
 
 >gi|677286732|sp|B1MP29.2|RSMH_MYCA9 RecName: Full=Ribosomal RNA small subunit methyltransferase H; AltName: Full=16S rRNA m(4)C1402 methyltransferase; AltName: Full=rRNA (cytosine-N(4)-)-methyltransferase RsmH [Mycobacterium abscessus ATCC 19977] (len=384)
 SW_score = 34 (i=108, j=220)
@@ -524,10 +524,10 @@ Query:   199 GAILINACRGAVVDNTALLTCL 220
 Sbjct:    87 GAVLVDATLGAGGHTEHFLTML 108
 
 >gi|677286731|sp|A0QF44.2|RSMH_MYCA1 RecName: Full=Ribosomal RNA small subunit methyltransferase H; AltName: Full=16S rRNA m(4)C1402 methyltransferase; AltName: Full=rRNA (cytosine-N(4)-)-methyltransferase RsmH [Mycobacterium avium 104] (len=386)
-SW_score = 31 (i=95, j=209)
-Query:   199 GAILINACRGA 209
-			 GA+L++A++GA
-Sbjct:    85 GAVLLDATLGA 95
+SW_score = 32 (i=318, j=43)
+Query:     0 MKILVDENMPYARDLFSRLGEVTAVPGRPIPVAQLADADALMVR 43
+			 ++I+V+++++++R++++++++++AV+GR++++A+++++D++++R
+Sbjct:   275 LRIAVNDELDTLRCALPAALDALAVDGRIVVLAYQSLEDRIVKR 318
 
 >gi|677286728|sp|Q8NH95.2|O13C6_HUMAN RecName: Full=Putative olfactory receptor 13C6; AltName: Full=Olfactory receptor, family 13, subfamily C, member 6 pseudogene; AltName: Full=Olfactory receptor, family 13, subfamily C, member 7 pseudogene; AltName: Full=Putative olfactory receptor 13C7 [Homo sapiens] (len=151)
 SW_score = 23 (i=148, j=376)

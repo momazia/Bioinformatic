@@ -62,7 +62,7 @@ public class CabiosUtils {
 				last_nogap = NumberUtils.max(last_nogap, b_gap[j]);
 				prev_nogap = nogap[j];
 				nogap[j] = last_nogap;
-				if (score < last_nogap) {
+				if (score <= last_nogap) {
 					my_i = i;
 					my_j = j;
 				}

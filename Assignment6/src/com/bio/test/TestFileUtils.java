@@ -20,8 +20,8 @@ public class TestFileUtils {
 	public static final String SEQ_1 = "AQCGAQGGGATCPGGLCCSQWGWCGSTPKYCGAGCQSNCR";
 	private static final String QUERY_NAME = ">gi|1684788|gb|AAB36530.1| 4-phosphoerythronate dehydrogenase [Escherichia coli str. K-12 substr. W3110]";
 	public static final String QUERY_STR = "MKILVDENMPYARDLFSRLGEVTAVPGRPIPVAQLADADALMVRSVTKVNESLLAGKPIKFVGTATAGTDHVDEAWLKQAGIGFSAAPGCNAIAVVEYVFSSLLMLAERDGFSLYDRTVGIVGVGNVGRRLQARLEALGIKTLLCDPPRADRGDEGDFRSLDELVQRADILTFHTPLFKDGPYKTLHLADEKLIRSLKPGAILINACRGAVVDNTALLTCLNEGQKLSVVLDVWEGEPELNVELLKKVDIGTSHIAGYTLEGKARGTTQVFEAYSKFIGHEQHVALDTLLPAPEFGRITLHGPLDQPTLKRLVHLVYDVRRDDAPLRKVAGIPGEFDKLRKNYLERREWSSLYVICDDASAASLLCKLGFNAVHHPAR";
-	private static final String FORMAT_1 = "something (len=40)\nSW_score = 20 (i=5, j=10)\nQuery:     6 ABCDE 10\n\t\t\t ABC++\nSbjct:     1 ABC-- 5\n\n";
-	private static final Object FORMAT_2 = "something (len=40)\nSW_score = 20 (i=5, j=10)\nQuery:     6 -BC-D 10\n\t\t\t ++C+D\nSbjct:     1 A-CFD 5\n\n";
+	private static final String FORMAT_1 = "something (len=40)\nSW_score = 20 (i=4, j=9)\nQuery:     4 ABCDE 9\n\t\t\t ABC++\nSbjct:    -1 ABC-- 4\n\n";
+	private static final Object FORMAT_2 = "something (len=40)\nSW_score = 20 (i=4, j=9)\nQuery:     4 -BC-D 9\n\t\t\t ++C+D\nSbjct:    -1 A-CFD 4\n\n";
 
 	@Test
 	public void testReadQuery() throws IOException {
