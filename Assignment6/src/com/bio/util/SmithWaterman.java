@@ -272,7 +272,7 @@ public class SmithWaterman {
 	 * @param queryStr
 	 */
 	private void trace(char[] queryChrs, char[] seqChrs, Cell[][] table, int i, int j, StringBuffer seqStr, StringBuffer queryStr) {
-		if (table[i][j].getScore() == 0) {
+		if (table[i][j].getScore() == 0 || table[i][j].getDirection() == null) {
 			return;
 		}
 		if (table[i][j].getDirection() == Direction.DIAGONAL) {

@@ -55,9 +55,9 @@ public class CabiosUtils {
 			last_nogap = prev_nogap = 0;
 			a_gap = -gap_open;
 			for (int j = 0; j < lena; j++) {
-				last_nogap = NumberUtils.max((prev_nogap + SmithWaterman.getInstance().getScore(seqA[j], seqB[i])), 0);
-				b_gap[j] = NumberUtils.max((nogap[j] - gap_open - gap_ext), (b_gap[j] - gap_ext));
 				a_gap = NumberUtils.max((last_nogap - gap_open - gap_ext), (a_gap - gap_ext));
+				b_gap[j] = NumberUtils.max((nogap[j] - gap_open - gap_ext), (b_gap[j] - gap_ext));
+				last_nogap = NumberUtils.max((prev_nogap + SmithWaterman.getInstance().getScore(seqA[j], seqB[i])), 0);
 				last_nogap = NumberUtils.max(last_nogap, a_gap);
 				last_nogap = NumberUtils.max(last_nogap, b_gap[j]);
 				prev_nogap = nogap[j];
