@@ -136,9 +136,9 @@ public class FileUtils {
 		StringBuffer str = new StringBuffer();
 		str.append(name + " (len=" + seqLength + ")\n");
 		str.append("SW_score = " + affineResult.getMaxScore() + " (i=" + iIndex + ", j=" + jIndex + ")\n");
-		str.append(String.format("Query: %5s %s %s\n", jIndex - resultLength + 1, queryStr, jIndex));
+		str.append(String.format("Query: %5s %s %s\n", iIndex - resultLength + 1, queryStr, iIndex));
 		str.append(String.format("\t\t\t %s\n", getSimilarityString(queryStr.toCharArray(), seqStr.toCharArray())));
-		str.append(String.format("Sbjct: %5s %s %s\n\n", iIndex - resultLength + 1, seqStr, iIndex));
+		str.append(String.format("Sbjct: %5s %s %s\n\n", jIndex - resultLength + 1, seqStr, jIndex));
 		return str.toString();
 	}
 

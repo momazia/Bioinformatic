@@ -89,9 +89,9 @@ public class SmithWaterman {
 		int iIndex = 0;
 		int jIndex = 0;
 
-		for (int i = 1; i < seqChrs.length; i++) {
-			for (int j = 1; j < queryChrs.length; j++) {
-				int diagScore = table[i - 1][j - 1].getScore() + matchMisMatchScore(seqChrs[i], queryChrs[j], matchScore, misMatchScore);
+		for (int i = 1; i < queryChrs.length; i++) {
+			for (int j = 1; j < seqChrs.length; j++) {
+				int diagScore = table[i - 1][j - 1].getScore() + matchMisMatchScore(seqChrs[j], queryChrs[i], matchScore, misMatchScore);
 				int horScore = table[i][j - 1].getScore() + getScoreGap(table, i, j - 1, gapScore);
 				int verScore = table[i - 1][j].getScore() + getScoreGap(table, i - 1, j, gapScore);
 				table[i][j] = populateCell(diagScore, horScore, verScore);
@@ -194,7 +194,7 @@ public class SmithWaterman {
 	 * @return
 	 */
 	private Cell[][] createEmptyTable(char[] seqChrs, char[] queryChrs) {
-		Cell[][] result = new Cell[seqChrs.length][queryChrs.length];
+		Cell[][] result = new Cell[queryChrs.length][seqChrs.length];
 		for (Cell[] cells : result) {
 			for (int j = 0; j < cells.length; j++) {
 				cells[j] = new Cell();
@@ -263,30 +263,30 @@ public class SmithWaterman {
 	 * The main tracing back method which must be called recursively. The order of finding the single final result is diagonal, top and left. In case
 	 * of insertion or deletion, dash is added.
 	 * 
-	 * @param seqChrs
 	 * @param queryChrs
+	 * @param seqChrs
 	 * @param table
 	 * @param i
 	 * @param j
 	 * @param seqStr
 	 * @param queryStr
 	 */
-	private void trace(char[] seqChrs, char[] queryChrs, Cell[][] table, int i, int j, StringBuffer seqStr, StringBuffer queryStr) {
+	private void trace(char[] queryChrs, char[] seqChrs, Cell[][] table, int i, int j, StringBuffer seqStr, StringBuffer queryStr) {
 		if (table[i][j].getScore() == 0) {
 			return;
 		}
 		if (table[i][j].getDirection() == Direction.DIAGONAL) {
-			seqStr.append(seqChrs[i]);
-			queryStr.append(queryChrs[j]);
-			trace(seqChrs, queryChrs, table, i - 1, j - 1, seqStr, queryStr);
+			seqStr.append(queryChrs[j]);
+			queryStr.append(seqChrs[i]);
+			trace(queryChrs, seqChrs, table, i - 1, j - 1, seqStr, queryStr);
 		} else if (table[i][j].getDirection() == Direction.TOP) {
-			seqStr.append(seqChrs[i]);
+			seqStr.append(queryChrs[j]);
 			queryStr.append(CHAR_DASH);
-			trace(seqChrs, queryChrs, table, i - 1, j, seqStr, queryStr);
+			trace(queryChrs, seqChrs, table, i - 1, j, seqStr, queryStr);
 		} else if (table[i][j].getDirection() == Direction.LEFT) {
 			seqStr.append(CHAR_DASH);
-			queryStr.append(queryChrs[j]);
-			trace(seqChrs, queryChrs, table, i, j - 1, seqStr, queryStr);
+			queryStr.append(seqChrs[i]);
+			trace(queryChrs, seqChrs, table, i, j - 1, seqStr, queryStr);
 		}
 	}
 }
