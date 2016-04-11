@@ -95,14 +95,14 @@ public class SmithWaterman {
 				int horScore = table[i][j - 1].getScore() + getScoreGap(table, i, j - 1, gapScore);
 				int verScore = table[i - 1][j].getScore() + getScoreGap(table, i - 1, j, gapScore);
 				table[i][j] = populateCell(diagScore, horScore, verScore);
-				if (maxScore < table[i][j].getScore()) {
+				if (maxScore <= table[i][j].getScore()) {
 					iIndex = i;
 					jIndex = j;
 					maxScore = table[i][j].getScore();
 				}
 			}
 		}
-		return new AffineResult(table, maxScore, iIndex, jIndex);
+		return new AffineResult(table, maxScore, iIndex-1, jIndex-1); // Reducing the indexes by 1 because of the space added to the strings
 	}
 
 	/**
@@ -171,15 +171,15 @@ public class SmithWaterman {
 	private Cell populateCell(int diagScore, int horScore, int verScore) {
 		int maxScore = 0;
 		Direction dir = null;
-		if (maxScore < diagScore) {
+		if (maxScore <= diagScore) {
 			maxScore = diagScore;
 			dir = Direction.DIAGONAL;
 		}
-		if (maxScore < verScore) {
+		if (maxScore <= verScore) {
 			maxScore = verScore;
 			dir = Direction.TOP;
 		}
-		if (maxScore < horScore) {
+		if (maxScore <= horScore) {
 			maxScore = horScore;
 			dir = Direction.LEFT;
 		}
@@ -254,7 +254,7 @@ public class SmithWaterman {
 	public void backTrace(String seq, String query, AffineResult affineResult) {
 		StringBuffer seqStr = new StringBuffer();
 		StringBuffer queryStr = new StringBuffer();
-		trace(addSpacePrefix(seq).toCharArray(), addSpacePrefix(query).toCharArray(), affineResult.getTable(), affineResult.getiIndex(), affineResult.getjIndex(), seqStr, queryStr);
+		trace(seq.toCharArray(), query.toCharArray(), affineResult.getTable(), affineResult.getiIndex(), affineResult.getjIndex(), seqStr, queryStr);
 		affineResult.setSeqStr(StringUtils.reverse(seqStr.toString()));
 		affineResult.setQueryStr(StringUtils.reverse(queryStr.toString()));
 	}
