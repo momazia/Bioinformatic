@@ -68,30 +68,30 @@ public class SmithWaterman {
 	}
 
 	/**
-	 * The main method to be invoked to run Smith Waterman logic for the given DB and Query strings. If the scores are passed, they will be used,
-	 * otherwise it will use Affine gap scoring system.
+	 * The main method to be invoked to run Smith Waterman logic for the given sequence and query strings. If the scores are passed, they will be
+	 * used, otherwise it will use Affine gap scoring system.
 	 * 
+	 * @param sequence
 	 * @param query
-	 * @param db
 	 * @param gapScore
 	 * @param matchScore
 	 * @param misMatchScore
 	 * @return
 	 */
-	public AffineResult run(String query, String db, Integer gapScore, Integer matchScore, Integer misMatchScore) {
+	public AffineResult run(String sequence, String query, Integer gapScore, Integer matchScore, Integer misMatchScore) {
 
+		sequence = addSpacePrefix(sequence);
 		query = addSpacePrefix(query);
-		db = addSpacePrefix(db);
+		char[] seqChrs = sequence.toCharArray();
 		char[] queryChrs = query.toCharArray();
-		char[] dbChrs = db.toCharArray();
-		Cell[][] table = createEmptyTable(queryChrs, dbChrs);
+		Cell[][] table = createEmptyTable(seqChrs, queryChrs);
 		int maxScore = 0;
 		int iIndex = 0;
 		int jIndex = 0;
 
-		for (int i = 1; i < queryChrs.length; i++) {
-			for (int j = 1; j < dbChrs.length; j++) {
-				int diagScore = table[i - 1][j - 1].getScore() + matchMisMatchScore(queryChrs[i], dbChrs[j], matchScore, misMatchScore);
+		for (int i = 1; i < seqChrs.length; i++) {
+			for (int j = 1; j < queryChrs.length; j++) {
+				int diagScore = table[i - 1][j - 1].getScore() + matchMisMatchScore(seqChrs[i], queryChrs[j], matchScore, misMatchScore);
 				int horScore = table[i][j - 1].getScore() + getScoreGap(table, i, j - 1, gapScore);
 				int verScore = table[i - 1][j].getScore() + getScoreGap(table, i - 1, j, gapScore);
 				table[i][j] = populateCell(diagScore, horScore, verScore);
@@ -189,12 +189,12 @@ public class SmithWaterman {
 	/**
 	 * The method instantiates empty cells with zero score for the table.
 	 * 
+	 * @param seqChrs
 	 * @param queryChrs
-	 * @param dbChrs
 	 * @return
 	 */
-	private Cell[][] createEmptyTable(char[] queryChrs, char[] dbChrs) {
-		Cell[][] result = new Cell[queryChrs.length][dbChrs.length];
+	private Cell[][] createEmptyTable(char[] seqChrs, char[] queryChrs) {
+		Cell[][] result = new Cell[seqChrs.length][queryChrs.length];
 		for (Cell[] cells : result) {
 			for (int j = 0; j < cells.length; j++) {
 				cells[j] = new Cell();
@@ -208,19 +208,19 @@ public class SmithWaterman {
 	 * get the score from the scoring table.
 	 * 
 	 * @param seq
-	 * @param db
+	 * @param query
 	 * @param matchScore
 	 * @param misMatchScore
 	 * @return
 	 */
-	private int matchMisMatchScore(char seq, char db, Integer matchScore, Integer misMatchScore) {
+	private int matchMisMatchScore(char seq, char query, Integer matchScore, Integer misMatchScore) {
 		if (matchScore != null && misMatchScore != null) {
-			if (seq == db) {
+			if (seq == query) {
 				return matchScore;
 			}
 			return misMatchScore;
 		}
-		return getScore(seq, db);
+		return getScore(seq, query);
 	}
 
 	/**
@@ -236,27 +236,27 @@ public class SmithWaterman {
 	/**
 	 * The main method to be called for Smith Waterman if Affine gap is to be used.
 	 * 
+	 * @param sequence
 	 * @param query
-	 * @param db
 	 * @return
 	 */
-	public AffineResult run(String query, String db) {
-		return run(query, db, null, null, null);
+	public AffineResult run(String sequence, String query) {
+		return run(sequence, query, null, null, null);
 	}
 
 	/**
 	 * Back traces the final result by looking at maximum score i and j indexes. At the end, it will reverse the strings.
 	 * 
 	 * @param seq
-	 * @param db
+	 * @param query
 	 * @param affineResult
 	 */
-	public void backTrace(String seq, String db, AffineResult affineResult) {
+	public void backTrace(String seq, String query, AffineResult affineResult) {
 		StringBuffer seqStr = new StringBuffer();
-		StringBuffer dbStr = new StringBuffer();
-		trace(addSpacePrefix(seq).toCharArray(), addSpacePrefix(db).toCharArray(), affineResult.getTable(), affineResult.getiIndex(), affineResult.getjIndex(), seqStr, dbStr);
+		StringBuffer queryStr = new StringBuffer();
+		trace(addSpacePrefix(seq).toCharArray(), addSpacePrefix(query).toCharArray(), affineResult.getTable(), affineResult.getiIndex(), affineResult.getjIndex(), seqStr, queryStr);
 		affineResult.setSeqStr(StringUtils.reverse(seqStr.toString()));
-		affineResult.setDbStr(StringUtils.reverse(dbStr.toString()));
+		affineResult.setQueryStr(StringUtils.reverse(queryStr.toString()));
 	}
 
 	/**
@@ -264,29 +264,29 @@ public class SmithWaterman {
 	 * of insertion or deletion, dash is added.
 	 * 
 	 * @param seqChrs
-	 * @param dbChrs
+	 * @param queryChrs
 	 * @param table
 	 * @param i
 	 * @param j
 	 * @param seqStr
-	 * @param dbStr
+	 * @param queryStr
 	 */
-	private void trace(char[] seqChrs, char[] dbChrs, Cell[][] table, int i, int j, StringBuffer seqStr, StringBuffer dbStr) {
+	private void trace(char[] seqChrs, char[] queryChrs, Cell[][] table, int i, int j, StringBuffer seqStr, StringBuffer queryStr) {
 		if (table[i][j].getScore() == 0) {
 			return;
 		}
 		if (table[i][j].getDirection() == Direction.DIAGONAL) {
 			seqStr.append(seqChrs[i]);
-			dbStr.append(dbChrs[j]);
-			trace(seqChrs, dbChrs, table, i - 1, j - 1, seqStr, dbStr);
+			queryStr.append(queryChrs[j]);
+			trace(seqChrs, queryChrs, table, i - 1, j - 1, seqStr, queryStr);
 		} else if (table[i][j].getDirection() == Direction.TOP) {
 			seqStr.append(seqChrs[i]);
-			dbStr.append(CHAR_DASH);
-			trace(seqChrs, dbChrs, table, i - 1, j, seqStr, dbStr);
+			queryStr.append(CHAR_DASH);
+			trace(seqChrs, queryChrs, table, i - 1, j, seqStr, queryStr);
 		} else if (table[i][j].getDirection() == Direction.LEFT) {
 			seqStr.append(CHAR_DASH);
-			dbStr.append(dbChrs[j]);
-			trace(seqChrs, dbChrs, table, i, j - 1, seqStr, dbStr);
+			queryStr.append(queryChrs[j]);
+			trace(seqChrs, queryChrs, table, i, j - 1, seqStr, queryStr);
 		}
 	}
 }

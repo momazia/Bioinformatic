@@ -58,10 +58,10 @@ public class TestSmithWaterman {
 
 	@Test
 	public void testAfineGap() {
-		AffineResult result = SmithWaterman.getInstance().run(TestFileUtils.SEQ_0, TestFileUtils.DB_STR);
+		AffineResult result = SmithWaterman.getInstance().run(TestFileUtils.SEQ_0, TestFileUtils.QUERY_STR);
 		assertEquals(20, result.getMaxScore());
 
-		result = SmithWaterman.getInstance().run(TestFileUtils.SEQ_1, TestFileUtils.DB_STR);
+		result = SmithWaterman.getInstance().run(TestFileUtils.SEQ_1, TestFileUtils.QUERY_STR);
 		assertEquals(17, result.getMaxScore());
 	}
 
@@ -70,7 +70,7 @@ public class TestSmithWaterman {
 		AffineResult result = SmithWaterman.getInstance().run(SEQ_3, SEQ_4, -1, 2, -1);
 		assertEquals(12, result.getMaxScore());
 		SmithWaterman.getInstance().backTrace(SEQ_3, SEQ_4, result);
-		assertEquals("A-CACACTA", result.getDbStr());
+		assertEquals("A-CACACTA", result.getQueryStr());
 		assertEquals("AGCACAC-A", result.getSeqStr());
 	}
 

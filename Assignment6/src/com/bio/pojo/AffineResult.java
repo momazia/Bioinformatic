@@ -12,7 +12,7 @@ public class AffineResult {
 	private int maxScore = 0;
 	private int iIndex;
 	private int jIndex;
-	private String dbStr;
+	private String queryStr;
 	private String seqStr;
 
 	/**
@@ -62,12 +62,12 @@ public class AffineResult {
 		this.jIndex = jIndex;
 	}
 
-	public String getDbStr() {
-		return dbStr;
+	public String getQueryStr() {
+		return queryStr;
 	}
 
-	public void setDbStr(String dbStr) {
-		this.dbStr = dbStr;
+	public void setQueryStr(String queryStr) {
+		this.queryStr = queryStr;
 	}
 
 	public String getSeqStr() {

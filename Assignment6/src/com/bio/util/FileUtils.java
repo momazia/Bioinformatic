@@ -44,13 +44,13 @@ public class FileUtils {
 	}
 
 	/**
-	 * Read the DB file and returns the DB string by putting the whole sequence into one single line.
+	 * Read the query file and returns the query string by putting the whole sequence into one single line.
 	 * 
 	 * @param fileName
 	 * @return
 	 * @throws IOException
 	 */
-	public String readDb(String fileName) throws IOException {
+	public String readQuery(String fileName) throws IOException {
 		StringBuffer str = new StringBuffer();
 		List<String> lines = readFile(fileName);
 		for (int i = 1; i < lines.size(); i++) {
@@ -115,8 +115,8 @@ public class FileUtils {
 	public void write(PrintWriter out, AffineResult affineResult, String name, int length) {
 		out.println(name.substring(0, 50) + " (len=" + length + ")");
 		out.println("SW_score = " + affineResult.getMaxScore() + " (i=" + affineResult.getiIndex() + ", j=" + affineResult.getjIndex() + ")");
-		out.println("Query:\t" + affineResult.getSeqStr());
-		out.println("DB:\t\t" + affineResult.getDbStr());
+		out.println("Query\t" + affineResult.getQueryStr());
+		out.println("Sbjct\t" + affineResult.getSeqStr());
 		out.println();
 	}
 }
