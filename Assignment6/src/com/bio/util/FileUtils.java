@@ -119,6 +119,14 @@ public class FileUtils {
 		out.print(formatOutput(affineResult, name, seqLength));
 	}
 
+	/**
+	 * Formats the output to look like BlastN output.
+	 * 
+	 * @param affineResult
+	 * @param name
+	 * @param seqLength
+	 * @return
+	 */
 	public String formatOutput(AffineResult affineResult, String name, int seqLength) {
 		String queryStr = affineResult.getQueryStr();
 		int resultLength = queryStr.length();
@@ -134,6 +142,13 @@ public class FileUtils {
 		return str.toString();
 	}
 
+	/**
+	 * Generates similarity string. If the characters are the same, it will be printed as it is, otherwise '+' will be used.
+	 * 
+	 * @param chr1s
+	 * @param chr2s
+	 * @return
+	 */
 	private String getSimilarityString(char[] chr1s, char[] chr2s) {
 		StringBuffer str = new StringBuffer();
 		for (int i = 0; i < chr1s.length; i++) {
