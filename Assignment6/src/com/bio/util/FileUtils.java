@@ -21,6 +21,7 @@ import com.bio.pojo.Sequence;
  *
  */
 public class FileUtils {
+	private static final String PLUS = "+";
 	public static final String SWISSPROT_100_FA = "swissprot-100.fa";
 	public static final String E_COLI_QUERY1_FA = "EColi-query1.fa";
 	public static final String IO_PATH = "../Assignment6/io/";
@@ -112,14 +113,37 @@ public class FileUtils {
 	 * @param out
 	 * @param affineResult
 	 * @param name
-	 * @param length
+	 * @param seqLength
 	 */
-	public void write(PrintWriter out, AffineResult affineResult, String name, int length) {
-		out.println(name + " (len=" + length + ")");
-		out.println("SW_score = " + affineResult.getMaxScore() + " (i=" + affineResult.getiIndex() + ", j=" + affineResult.getjIndex() + ")");
-		out.println("Query\t" + affineResult.getQueryStr());
-		out.println("Sbjct\t" + affineResult.getSeqStr());
-		out.println();
+	public void write(PrintWriter out, AffineResult affineResult, String name, int seqLength) {
+		out.print(formatOutput(affineResult, name, seqLength));
+	}
+
+	public String formatOutput(AffineResult affineResult, String name, int seqLength) {
+		String queryStr = affineResult.getQueryStr();
+		int resultLength = queryStr.length();
+		int iIndex = affineResult.getiIndex();
+		int jIndex = affineResult.getjIndex();
+		String seqStr = affineResult.getSeqStr();
+		StringBuffer str = new StringBuffer();
+		str.append(name + " (len=" + seqLength + ")\n");
+		str.append("SW_score = " + affineResult.getMaxScore() + " (i=" + iIndex + ", j=" + jIndex + ")\n");
+		str.append(String.format("Query: %5s %s %s\n", jIndex - resultLength + 1, queryStr, jIndex));
+		str.append(String.format("\t\t\t %s\n", getSimilarityString(queryStr.toCharArray(), seqStr.toCharArray())));
+		str.append(String.format("Sbjct: %5s %s %s\n\n", iIndex - resultLength + 1, seqStr, iIndex));
+		return str.toString();
+	}
+
+	private String getSimilarityString(char[] chr1s, char[] chr2s) {
+		StringBuffer str = new StringBuffer();
+		for (int i = 0; i < chr1s.length; i++) {
+			if (chr1s[i] == chr2s[i]) {
+				str.append(chr1s[i]);
+			} else {
+				str.append(PLUS);
+			}
+		}
+		return str.toString();
 	}
 
 	/**
