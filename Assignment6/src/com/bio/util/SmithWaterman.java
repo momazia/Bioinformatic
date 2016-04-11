@@ -15,7 +15,6 @@ import com.bio.pojo.Direction;
 public class SmithWaterman {
 
 	private static final char CHAR_DASH = '-';
-	private static final String SPACE = " ";
 	private static final int SCORE_GAP = -1;
 	private static final int SCORE_GAP_OPEN = -11;
 	private static SmithWaterman instance = null;
@@ -79,16 +78,12 @@ public class SmithWaterman {
 	 * @return
 	 */
 	public AffineResult run(String sequence, String query, Integer gapScore, Integer matchScore, Integer misMatchScore) {
-
-		sequence = addSpacePrefix(sequence);
-		query = addSpacePrefix(query);
 		char[] seqChrs = sequence.toCharArray();
 		char[] queryChrs = query.toCharArray();
 		Cell[][] table = createEmptyTable(seqChrs, queryChrs);
 		int maxScore = 0;
 		int iIndex = 0;
 		int jIndex = 0;
-
 		for (int i = 1; i < seqChrs.length; i++) {
 			for (int j = 1; j < queryChrs.length; j++) {
 				int diagScore = table[i - 1][j - 1].getScore() + matchMisMatchScore(seqChrs[i], queryChrs[j], matchScore, misMatchScore);
@@ -224,16 +219,6 @@ public class SmithWaterman {
 	}
 
 	/**
-	 * Adds an empty character to the beginning of the string passed.
-	 * 
-	 * @param str
-	 * @return
-	 */
-	private String addSpacePrefix(String str) {
-		return SPACE + str;
-	}
-
-	/**
 	 * The main method to be called for Smith Waterman if Affine gap is to be used.
 	 * 
 	 * @param sequence
@@ -254,7 +239,7 @@ public class SmithWaterman {
 	public void backTrace(String seq, String query, AffineResult affineResult) {
 		StringBuffer seqStr = new StringBuffer();
 		StringBuffer queryStr = new StringBuffer();
-		trace(addSpacePrefix(seq).toCharArray(), addSpacePrefix(query).toCharArray(), affineResult.getTable(), affineResult.getiIndex(), affineResult.getjIndex(), seqStr, queryStr);
+		trace(seq.toCharArray(), query.toCharArray(), affineResult.getTable(), affineResult.getiIndex(), affineResult.getjIndex(), seqStr, queryStr);
 		affineResult.setSeqStr(StringUtils.reverse(seqStr.toString()));
 		affineResult.setQueryStr(StringUtils.reverse(queryStr.toString()));
 	}

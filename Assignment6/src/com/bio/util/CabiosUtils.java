@@ -43,6 +43,7 @@ public class CabiosUtils {
 	 * @return
 	 */
 	public int sw(char[] seqA, int lena, char[] seqB, int lenb, int gap_open, int gap_ext) {
+		int my_i = 0, my_j = 0;
 		int[] nogap = new int[lena];
 		int[] b_gap = new int[lena];
 		int last_nogap, prev_nogap;
@@ -61,9 +62,14 @@ public class CabiosUtils {
 				last_nogap = NumberUtils.max(last_nogap, b_gap[j]);
 				prev_nogap = nogap[j];
 				nogap[j] = last_nogap;
+				if (score < last_nogap) {
+					my_i = i;
+					my_j = j;
+				}
 				score = NumberUtils.max(score, last_nogap);
 			}
 		}
+		System.out.println("my_i:" + my_i + "my_j:" + my_j);
 		return score;
 	}
 
