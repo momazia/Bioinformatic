@@ -78,4 +78,26 @@ public class AffineResult {
 		this.seqStr = seqStr;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof AffineResult) {
+			return ((AffineResult) obj).getiIndex() == getiIndex() && ((AffineResult) obj).getjIndex() == getjIndex() && ((AffineResult) obj).getMaxScore() == getMaxScore();
+		}
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return String.format("MaxScore: %s, i: %s, j: %s", getMaxScore(), getiIndex(), getjIndex());
+	}
 }
