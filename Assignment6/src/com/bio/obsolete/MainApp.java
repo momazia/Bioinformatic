@@ -1,4 +1,4 @@
-package com.bio.main;
+package com.bio.obsolete;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -7,7 +7,6 @@ import java.util.List;
 import com.bio.pojo.AffineResult;
 import com.bio.pojo.Sequence;
 import com.bio.util.FileUtils;
-import com.bio.util.SmithWatermanUtils;
 
 /**
  * This is the main program to be executed in order to run Smith Waterman logic using Affine gap, on a query file and a set of sequences. Both these

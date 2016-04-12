@@ -1,4 +1,4 @@
-package com.bio.util;
+package com.bio.obsolete;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -123,28 +123,13 @@ public class SmithWatermanUtils {
 		}
 		switch (direction) {
 		case LEFT:
-			return direction == table[i][j - 1].getDirection() ? SCORE_GAP_EXT : SCORE_GAP_OPEN + SCORE_GAP_EXT;
+			return direction.equals(table[i][j - 1].getDirection()) ? SCORE_GAP_EXT : SCORE_GAP_OPEN + SCORE_GAP_EXT;
 		case TOP:
-			return direction == table[i - 1][j].getDirection() ? SCORE_GAP_EXT : SCORE_GAP_OPEN + SCORE_GAP_EXT;
+			return direction.equals(table[i - 1][j].getDirection()) ? SCORE_GAP_EXT : SCORE_GAP_OPEN + SCORE_GAP_EXT;
 		default:
 			break;
 		}
-		return 0;
-		// if (isGapOpened(table[i][j].getDirection())) {
-		// return SCORE_GAP_EXT;
-		// }
-		// return SCORE_GAP_OPEN + SCORE_GAP_EXT;
-		// return (isGapOpened(table[i][j].getDirection()) ? SCORE_GAP_EXT : SCORE_GAP_OPEN + SCORE_GAP_EXT);
-	}
-
-	/**
-	 * If the direction given is from LEFT or TOP or it was not set(in case most top and most left rows), that means the gap was opened before.
-	 * 
-	 * @param direction
-	 * @return
-	 */
-	private boolean isGapOpened(Direction direction) {
-		return Direction.LEFT == direction || Direction.TOP == direction;
+		return 0; // Cannot happen
 	}
 
 	/**
@@ -182,7 +167,7 @@ public class SmithWatermanUtils {
 	 * @param verScore
 	 * @return
 	 */
-	private Cell populateCell(int diagScore, int horScore, int verScore) {
+	public Cell populateCell(int diagScore, int horScore, int verScore) {
 		int maxScore = 0;
 		Direction dir = null;
 		if (maxScore <= diagScore) {
@@ -207,7 +192,7 @@ public class SmithWatermanUtils {
 	 * @param queryChrs
 	 * @return
 	 */
-	private Cell[][] createEmptyTable(char[] seqChrs, char[] queryChrs) {
+	public Cell[][] createEmptyTable(char[] seqChrs, char[] queryChrs) {
 		Cell[][] result = new Cell[queryChrs.length][seqChrs.length];
 		for (Cell[] cells : result) {
 			for (int j = 0; j < cells.length; j++) {
