@@ -22,6 +22,7 @@ import com.bio.pojo.Sequence;
  */
 public class FileUtils {
 	private static final String PLUS = "+";
+	private static final String SPACE = " ";
 	public static final String SWISSPROT_100_FA = "swissprot-100.fa";
 	public static final String E_COLI_QUERY1_FA = "EColi-query1.fa";
 	public static final String IO_PATH = "../Assignment6/io/";
@@ -130,8 +131,8 @@ public class FileUtils {
 	public String formatOutput(AffineResult affineResult, String name, int seqLength) {
 		String queryStr = affineResult.getQueryStr();
 		int resultLength = queryStr.length();
-		int iIndex = affineResult.getiIndex() ;
-		int jIndex = affineResult.getjIndex() ;
+		int iIndex = affineResult.getiIndex();
+		int jIndex = affineResult.getjIndex();
 		String seqStr = affineResult.getSeqStr();
 		StringBuffer str = new StringBuffer();
 		str.append(name + " (len=" + seqLength + ")\n");
@@ -143,7 +144,8 @@ public class FileUtils {
 	}
 
 	/**
-	 * Generates similarity string. If the characters are the same, it will be printed as it is, otherwise '+' will be used.
+	 * Generates similarity string. If the characters are the same, it will be printed as it is. Otherwise, it looks up into scoring matrix and if the
+	 * score is zero or a positive number, it will print +, otherwise a space will be used.
 	 * 
 	 * @param chr1s
 	 * @param chr2s
@@ -155,7 +157,7 @@ public class FileUtils {
 			if (chr1s[i] == chr2s[i]) {
 				str.append(chr1s[i]);
 			} else {
-				str.append(PLUS);
+				str.append(CabiosUtils.getInstance().getScore(chr1s[i], chr2s[i]) >= 0 ? PLUS : SPACE);
 			}
 		}
 		return str.toString();

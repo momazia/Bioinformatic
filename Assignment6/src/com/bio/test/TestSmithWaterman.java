@@ -94,46 +94,54 @@ public class TestSmithWaterman {
 		assertEquals("A-CACACTA", result.getQueryStr());
 	}
 
-//	@Test
-//	public void testSpecialCase() throws IOException {
-//		// Reading the query file
-//		Sequence query = FileUtils.getInstance().readQuery(FileUtils.E_COLI_QUERY1_FA);
-//		// Reading the sequences from the file
-//		List<Sequence> seqs = FileUtils.getInstance().readSequences(FileUtils.SWISSPROT_100_FA);
-//		for (Sequence sequence : seqs) {
-//			AffineResult mine = SmithWatermanUtils.getInstance().run(sequence.getStr(), query.getStr());
-//			AffineResult cabios = CabiosUtils.getInstance().sw(sequence.getStr().toCharArray(), sequence.getStr().length(), query.getStr().toCharArray(), query.getStr().length(), 11, 1);
-//			StringBuffer str = new StringBuffer();
-//			if (!mine.equals(cabios)) {
-//				str.append(sequence.getName() + '\n');
-//				str.append("Length=" + sequence.getStr().length() + '\n');
-//				str.append("Mine: " + mine + '\n');
-//				str.append("Cabi: " + cabios + '\n');
-//				str.append("Table Mine:" + '\n');
-//				for (int i = 0; i < mine.getTable().length; i++) {
-//					str.append("{}");
-//					for (int j = 0; j < mine.getTable()[i].length; j++) {
-//						str.append(String.format("%2s, ", mine.getTable()[i][j].getScore()));
-//					}
-//					str.append('\n');
-//				}
-//
-//				str.append("\nTable Cabios:" + '\n');
-//				for (int i = 0; i < cabios.getTable().length; i++) {
-//					str.append("{}");
-//					for (int j = 0; j < cabios.getTable()[i].length; j++) {
-//						str.append(String.format("%2s, ", cabios.getTable()[i][j].getScore()));
-//					}
-//					str.append('\n');
-//				}
-//
-//				String fileName = "testFile" + Math.random() + ".txt";
-//				FileUtils.getInstance().deleteIfExists(fileName);
-//				PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(FileUtils.IO_PATH + fileName, true)));
-//				out.println(str.toString());
-//				out.close();
-//			}
-//		}
-//	}
+	@Test
+	public void testScore() {
+		assertEquals(0, CabiosUtils.getInstance().getScore('A', 'T'));
+		assertEquals(1, CabiosUtils.getInstance().getScore('V', 'L'));
+		assertEquals(-3, CabiosUtils.getInstance().getScore('F', 'G'));
+	}
+
+	// @Test
+	// public void testSpecialCase() throws IOException {
+	// // Reading the query file
+	// Sequence query = FileUtils.getInstance().readQuery(FileUtils.E_COLI_QUERY1_FA);
+	// // Reading the sequences from the file
+	// List<Sequence> seqs = FileUtils.getInstance().readSequences(FileUtils.SWISSPROT_100_FA);
+	// for (Sequence sequence : seqs) {
+	// AffineResult mine = SmithWatermanUtils.getInstance().run(sequence.getStr(), query.getStr());
+	// AffineResult cabios = CabiosUtils.getInstance().sw(sequence.getStr().toCharArray(), sequence.getStr().length(), query.getStr().toCharArray(),
+	// query.getStr().length(), 11, 1);
+	// StringBuffer str = new StringBuffer();
+	// if (!mine.equals(cabios)) {
+	// str.append(sequence.getName() + '\n');
+	// str.append("Length=" + sequence.getStr().length() + '\n');
+	// str.append("Mine: " + mine + '\n');
+	// str.append("Cabi: " + cabios + '\n');
+	// str.append("Table Mine:" + '\n');
+	// for (int i = 0; i < mine.getTable().length; i++) {
+	// str.append("{}");
+	// for (int j = 0; j < mine.getTable()[i].length; j++) {
+	// str.append(String.format("%2s, ", mine.getTable()[i][j].getScore()));
+	// }
+	// str.append('\n');
+	// }
+	//
+	// str.append("\nTable Cabios:" + '\n');
+	// for (int i = 0; i < cabios.getTable().length; i++) {
+	// str.append("{}");
+	// for (int j = 0; j < cabios.getTable()[i].length; j++) {
+	// str.append(String.format("%2s, ", cabios.getTable()[i][j].getScore()));
+	// }
+	// str.append('\n');
+	// }
+	//
+	// String fileName = "testFile" + Math.random() + ".txt";
+	// FileUtils.getInstance().deleteIfExists(fileName);
+	// PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(FileUtils.IO_PATH + fileName, true)));
+	// out.println(str.toString());
+	// out.close();
+	// }
+	// }
+	// }
 
 }
