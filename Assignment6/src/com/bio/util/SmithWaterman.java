@@ -102,7 +102,7 @@ public class SmithWaterman {
 				}
 			}
 		}
-		return new AffineResult(table, maxScore, iIndex-1, jIndex-1); // Reducing the indexes by 1 because of the space added to the strings
+		return new AffineResult(table, maxScore, iIndex - 1, jIndex - 1); // Reducing the indexes by 1 because of the space added to the strings
 	}
 
 	/**
@@ -254,7 +254,7 @@ public class SmithWaterman {
 	public void backTrace(String seq, String query, AffineResult affineResult) {
 		StringBuffer seqStr = new StringBuffer();
 		StringBuffer queryStr = new StringBuffer();
-		trace(seq.toCharArray(), query.toCharArray(), affineResult.getTable(), affineResult.getiIndex(), affineResult.getjIndex(), seqStr, queryStr);
+		trace(query.toCharArray(), seq.toCharArray(), affineResult.getTable(), affineResult.getiIndex(), affineResult.getjIndex(), seqStr, queryStr);
 		affineResult.setSeqStr(StringUtils.reverse(seqStr.toString()));
 		affineResult.setQueryStr(StringUtils.reverse(queryStr.toString()));
 	}
@@ -272,20 +272,20 @@ public class SmithWaterman {
 	 * @param queryStr
 	 */
 	private void trace(char[] queryChrs, char[] seqChrs, Cell[][] table, int i, int j, StringBuffer seqStr, StringBuffer queryStr) {
-		if (table[i][j].getScore() == 0 || table[i][j].getDirection() == null) {
+		if (table[i][j].getScore() == 0) {
 			return;
 		}
 		if (table[i][j].getDirection() == Direction.DIAGONAL) {
-			seqStr.append(queryChrs[j]);
-			queryStr.append(seqChrs[i]);
+			queryStr.append(queryChrs[i]);
+			seqStr.append(seqChrs[j]);
 			trace(queryChrs, seqChrs, table, i - 1, j - 1, seqStr, queryStr);
 		} else if (table[i][j].getDirection() == Direction.TOP) {
-			seqStr.append(queryChrs[j]);
-			queryStr.append(CHAR_DASH);
+			seqStr.append(CHAR_DASH);
+			queryStr.append(queryChrs[i]);
 			trace(queryChrs, seqChrs, table, i - 1, j, seqStr, queryStr);
 		} else if (table[i][j].getDirection() == Direction.LEFT) {
-			seqStr.append(CHAR_DASH);
-			queryStr.append(seqChrs[i]);
+			seqStr.append(seqChrs[j]);
+			queryStr.append(CHAR_DASH);
 			trace(queryChrs, seqChrs, table, i, j - 1, seqStr, queryStr);
 		}
 	}

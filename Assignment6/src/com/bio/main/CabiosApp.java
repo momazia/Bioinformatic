@@ -23,8 +23,7 @@ public class CabiosApp {
 			List<Sequence> seqs = FileUtils.getInstance().readSequences(FileUtils.SWISSPROT_100_FA);
 			for (Sequence sequence : seqs) {
 				System.out.println(sequence.getName());
-				int score = CabiosUtils.getInstance().sw(sequence.getStr().toCharArray(), sequence.getStr().length(), query.getStr().toCharArray(), query.getStr().length(), 11, 1);
-				System.out.println(score);
+				CabiosUtils.getInstance().sw(sequence.getStr().toCharArray(), sequence.getStr().length(), query.getStr().toCharArray(), query.getStr().length(), 11, 1);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

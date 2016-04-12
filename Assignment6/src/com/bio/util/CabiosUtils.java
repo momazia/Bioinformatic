@@ -16,7 +16,6 @@ public class CabiosUtils {
 	 * Private constructor for Singleton design pattern purpose. Declared private so it is not accessible from outside.
 	 */
 	private CabiosUtils() {
-		super();
 	}
 
 	/**
@@ -42,8 +41,9 @@ public class CabiosUtils {
 	 * @param gap_ext
 	 * @return
 	 */
-	public int sw(char[] seqA, int lena, char[] seqB, int lenb, int gap_open, int gap_ext) {
-		int my_i = 0, my_j = 0;
+	public void sw(char[] seqA, int lena, char[] seqB, int lenb, int gap_open, int gap_ext) {
+		int my_i = 0;
+		int my_j = 0;
 		int[] nogap = new int[lena];
 		int[] b_gap = new int[lena];
 		int last_nogap, prev_nogap;
@@ -69,8 +69,7 @@ public class CabiosUtils {
 				score = NumberUtils.max(score, last_nogap);
 			}
 		}
-		System.out.println("my_i:" + my_i + "my_j:" + my_j);
-		return score;
+		System.out.println("score: " + score + " i: " + my_i + " j: " + my_j);
 	}
 
 	/**
