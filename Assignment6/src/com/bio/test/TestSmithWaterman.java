@@ -13,7 +13,7 @@ import com.bio.pojo.Direction;
 import com.bio.pojo.Sequence;
 import com.bio.util.CabiosUtils;
 import com.bio.util.FileUtils;
-import com.bio.util.SmithWaterman;
+import com.bio.util.SmithWatermanUtils;
 
 public class TestSmithWaterman {
 
@@ -33,7 +33,7 @@ public class TestSmithWaterman {
 
 	@Test
 	public void testScoreTable() {
-		AffineResult result = SmithWaterman.getInstance().run(SEQ_2, SEQ_1, -4, 5, -3);
+		AffineResult result = SmithWatermanUtils.getInstance().run(SEQ_2, SEQ_1, -4, 5, -3);
 		for (int i = 0; i < result.getTable().length; i++) {
 			Cell[] cells = result.getTable()[i];
 			for (int j = 0; j < cells.length; j++) {
@@ -44,7 +44,7 @@ public class TestSmithWaterman {
 
 	@Test
 	public void testDirectionTable() {
-		AffineResult result = SmithWaterman.getInstance().run(SEQ_3, SEQ_4, -1, 2, -1);
+		AffineResult result = SmithWatermanUtils.getInstance().run(SEQ_3, SEQ_4, -1, 2, -1);
 		assertEquals(Direction.DIAGONAL, result.getTable()[1][1].getDirection());
 		assertEquals(Direction.TOP, result.getTable()[2][1].getDirection());
 		assertEquals(Direction.LEFT, result.getTable()[3][2].getDirection());
@@ -53,21 +53,21 @@ public class TestSmithWaterman {
 
 	@Test
 	public void testGetScore() {
-		assertEquals(4, SmithWaterman.getInstance().getScore('A', 'A'));
+		assertEquals(4, SmithWatermanUtils.getInstance().getScore('A', 'A'));
 
-		assertEquals(-4, SmithWaterman.getInstance().getScore('C', 'E'));
-		assertEquals(-4, SmithWaterman.getInstance().getScore('E', 'C'));
+		assertEquals(-4, SmithWatermanUtils.getInstance().getScore('C', 'E'));
+		assertEquals(-4, SmithWatermanUtils.getInstance().getScore('E', 'C'));
 
-		assertEquals(0, SmithWaterman.getInstance().getScore('N', 'R'));
-		assertEquals(0, SmithWaterman.getInstance().getScore('R', 'N'));
+		assertEquals(0, SmithWatermanUtils.getInstance().getScore('N', 'R'));
+		assertEquals(0, SmithWatermanUtils.getInstance().getScore('R', 'N'));
 	}
 
 	@Test
 	public void testAfineGap() {
-		AffineResult result = SmithWaterman.getInstance().run(TestFileUtils.SEQ_0, TestFileUtils.QUERY_STR);
+		AffineResult result = SmithWatermanUtils.getInstance().run(TestFileUtils.SEQ_0, TestFileUtils.QUERY_STR);
 		assertEquals(20, result.getMaxScore());
 
-		result = SmithWaterman.getInstance().run(TestFileUtils.SEQ_1, TestFileUtils.QUERY_STR);
+		result = SmithWatermanUtils.getInstance().run(TestFileUtils.SEQ_1, TestFileUtils.QUERY_STR);
 		assertEquals(17, result.getMaxScore());
 	}
 
@@ -75,39 +75,30 @@ public class TestSmithWaterman {
 	public void testBackTrace2() {
 		String db = "ATGCATCCCATGAC";
 		String query = "TCTATATCCGT";
-		AffineResult result = SmithWaterman.getInstance().run(db, query, -2, 2, -3);
+		AffineResult result = SmithWatermanUtils.getInstance().run(db, query, -2, 2, -3);
 		assertEquals(8, result.getMaxScore());
-		SmithWaterman.getInstance().backTrace(db, query, result);
+		SmithWatermanUtils.getInstance().backTrace(db, query, result);
 		assertEquals("ATCC", result.getSeqStr());
 		assertEquals("ATCC", result.getQueryStr());
 	}
 
 	@Test
 	public void testBackTrace1() {
-		AffineResult result = SmithWaterman.getInstance().run(SEQ_3, SEQ_4, -1, 2, -1);
+		AffineResult result = SmithWatermanUtils.getInstance().run(SEQ_3, SEQ_4, -1, 2, -1);
 		assertEquals(12, result.getMaxScore());
-		SmithWaterman.getInstance().backTrace(SEQ_3, SEQ_4, result);
+		SmithWatermanUtils.getInstance().backTrace(SEQ_3, SEQ_4, result);
 		assertEquals("AGCACAC-A", result.getSeqStr());
 		assertEquals("A-CACACTA", result.getQueryStr());
 	}
 
 	@Test
 	public void testSpecialCase() throws IOException {
-		// String db =
-		// "KSNGMVSEGHAYFSQQLNFETPIRTENGTEISMIKMTVKSRVLLXGTVALIYPSPESIDFQGLFVKLFLSKPSPPVLSLNETTDAGQFSLNDTNEDPFAPLSRSRRAVSNSXNANASLVSEILERIGPVCLFFDRQFQLYSLNVNSVNLTLSASVSVQIDGPHTSRIDVSLVLSVGQNLTSVVIQKFVRMVSLQELSDVNLNFPPIFRFLRGSTSFLESNTDVRGRLVVLARFRLSLPLQNNSVDPPRLNLKIEPYAVIVVRRLIVAMSVBXIQQXVXARXVVXXSGPKVTLSFNDDQLCVTVSDRVIGPDVPVTFFRRLRVCRRIPRVGRLWVRTRRGWRLRRIFTFSRRCFWVIISGFRGRLSPTVTQEGFVRVCNITKAANPSILLPTPTSQIAQSISTAQMVSSTSASIFATPVLALQSSSLRISPASTAPTSATVSSPVASIS";
-
-		List<Sequence> seqs = FileUtils.getInstance().readSequences(FileUtils.SWISSPROT_100_FA);
-		String db = null;
-		for (Sequence sequence : seqs) {
-			if (sequence.getName().contains("gi|667467192|sp|B3EX00.1|USOM1_ACRMI RecName: Full=Uncharacterized skeletal organic matrix protein 1; Short=Uncharacterized SOMP-1, partial [Acropora millepora]")) {
-				db = sequence.getStr();
-			}
-		}
-		Sequence query = FileUtils.getInstance().readQuery(FileUtils.E_COLI_QUERY1_FA);
-		AffineResult affine = SmithWaterman.getInstance().run(db, query.getStr());
+		String sequence = "NBCCBS";
+		String query = "RCS";
+		AffineResult affine = SmithWatermanUtils.getInstance().run(sequence, query);
 		System.out.println("score: " + affine.getMaxScore() + " i: " + affine.getiIndex() + " j: " + affine.getjIndex());
-		CabiosUtils.getInstance().sw(db.toCharArray(), db.length(), query.getStr().toCharArray(), query.getStr().length(), 11, 1);
-
+		CabiosUtils.getInstance().sw(sequence.toCharArray(), sequence.length(), query.toCharArray(), query.length(), 11, 1);
+		System.out.println(SmithWatermanUtils.getInstance().getScore('S', 'C'));
 	}
 
 }

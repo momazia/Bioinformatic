@@ -7,7 +7,7 @@ import java.util.List;
 import com.bio.pojo.AffineResult;
 import com.bio.pojo.Sequence;
 import com.bio.util.FileUtils;
-import com.bio.util.SmithWaterman;
+import com.bio.util.SmithWatermanUtils;
 
 /**
  * This is the main program to be executed in order to run Smith Waterman logic using Affine gap, on a query file and a set of sequences. Both these
@@ -32,8 +32,8 @@ public class MainApp {
 			PrintWriter out = FileUtils.getInstance().writeHeader(query, FileUtils.OUTPUT_TXT);
 			// Looping through each of the sequences and running SmithWaterman and printing the output into a file.
 			for (Sequence sequence : seqs) {
-				AffineResult affineResult = SmithWaterman.getInstance().run(sequence.getStr(), query.getStr());
-				SmithWaterman.getInstance().backTrace(sequence.getStr(), query.getStr(), affineResult);
+				AffineResult affineResult = SmithWatermanUtils.getInstance().run(sequence.getStr(), query.getStr());
+				SmithWatermanUtils.getInstance().backTrace(sequence.getStr(), query.getStr(), affineResult);
 				FileUtils.getInstance().write(out, affineResult, sequence.getName(), sequence.getStr().length());
 			}
 			out.close();

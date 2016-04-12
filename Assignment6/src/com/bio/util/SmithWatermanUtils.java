@@ -12,13 +12,13 @@ import com.bio.pojo.Direction;
  * @author Mohamad Mahdi Ziaee
  *
  */
-public class SmithWaterman {
+public class SmithWatermanUtils {
 
 	private static final char CHAR_DASH = '-';
 	private static final String SPACE = " ";
-	private static final int SCORE_GAP = -1;
+	private static final int SCORE_GAP_EXT = -1;
 	private static final int SCORE_GAP_OPEN = -11;
-	private static SmithWaterman instance = null;
+	private static SmithWatermanUtils instance = null;
 	private static char[] ALPHABETS = new char[] { 'A', 'R', 'N', 'D', 'C', 'Q', 'E', 'G', 'H', 'I', 'L', 'K', 'M', 'F', 'P', 'S', 'T', 'W', 'Y', 'V', 'B', 'J', 'Z', 'X', '*' };
 	public static int[][] SCORE_MATRIX = new int[][] { //
 			{ 4, -1, -2, -2, 0, -1, -1, 0, -2, -1, -1, -1, -1, -2, -1, 1, 0, -3, -2, 0, -2, -1, -1, -1, -4 }, //
@@ -51,7 +51,7 @@ public class SmithWaterman {
 	/**
 	 * Private constructor to avoid this class being initialized by the client.
 	 */
-	private SmithWaterman() {
+	private SmithWatermanUtils() {
 		super();
 	}
 
@@ -60,9 +60,9 @@ public class SmithWaterman {
 	 * 
 	 * @return
 	 */
-	public static SmithWaterman getInstance() {
+	public static SmithWatermanUtils getInstance() {
 		if (instance == null) {
-			instance = new SmithWaterman();
+			instance = new SmithWatermanUtils();
 		}
 		return instance;
 	}
@@ -92,8 +92,8 @@ public class SmithWaterman {
 		for (int i = 1; i < queryChrs.length; i++) {
 			for (int j = 1; j < seqChrs.length; j++) {
 				int diagScore = table[i - 1][j - 1].getScore() + matchMisMatchScore(seqChrs[j], queryChrs[i], matchScore, misMatchScore);
-				int horScore = table[i][j - 1].getScore() + getScoreGap(table, i, j - 1, gapScore);
-				int verScore = table[i - 1][j].getScore() + getScoreGap(table, i - 1, j, gapScore);
+				int horScore = table[i][j - 1].getScore() + getScoreGap(table, i, j, Direction.LEFT, gapScore);
+				int verScore = table[i - 1][j].getScore() + getScoreGap(table, i, j, Direction.TOP, gapScore);
 				table[i][j] = populateCell(diagScore, horScore, verScore);
 				if (maxScore <= table[i][j].getScore()) {
 					iIndex = i;
@@ -113,18 +113,32 @@ public class SmithWaterman {
 	 * @param table
 	 * @param i
 	 * @param j
+	 * @param left
 	 * @param gapScore
 	 * @return
 	 */
-	private int getScoreGap(Cell[][] table, int i, int j, Integer gapScore) {
+	private int getScoreGap(Cell[][] table, int i, int j, Direction direction, Integer gapScore) {
 		if (gapScore != null) {
 			return gapScore;
 		}
-		return (isGapOpened(table[i][j].getDirection()) ? SCORE_GAP : SCORE_GAP_OPEN + SCORE_GAP);
+		switch (direction) {
+		case LEFT:
+			return direction == table[i][j - 1].getDirection() ? SCORE_GAP_EXT : SCORE_GAP_OPEN + SCORE_GAP_EXT;
+		case TOP:
+			return direction == table[i - 1][j].getDirection() ? SCORE_GAP_EXT : SCORE_GAP_OPEN + SCORE_GAP_EXT;
+		default:
+			break;
+		}
+		return 0;
+		// if (isGapOpened(table[i][j].getDirection())) {
+		// return SCORE_GAP_EXT;
+		// }
+		// return SCORE_GAP_OPEN + SCORE_GAP_EXT;
+		// return (isGapOpened(table[i][j].getDirection()) ? SCORE_GAP_EXT : SCORE_GAP_OPEN + SCORE_GAP_EXT);
 	}
 
 	/**
-	 * If the direction given is from LEFT or TOP, that means the gap was opened before.
+	 * If the direction given is from LEFT or TOP or it was not set(in case most top and most left rows), that means the gap was opened before.
 	 * 
 	 * @param direction
 	 * @return
