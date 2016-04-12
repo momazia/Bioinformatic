@@ -254,7 +254,7 @@ public class SmithWaterman {
 	public void backTrace(String seq, String query, AffineResult affineResult) {
 		StringBuffer seqStr = new StringBuffer();
 		StringBuffer queryStr = new StringBuffer();
-		trace(query.toCharArray(), seq.toCharArray(), affineResult.getTable(), affineResult.getiIndex(), affineResult.getjIndex(), seqStr, queryStr);
+		trace(query.toCharArray(), seq.toCharArray(), affineResult.getTable(), affineResult.getiIndex() + 1, affineResult.getjIndex() + 1, seqStr, queryStr);
 		affineResult.setSeqStr(StringUtils.reverse(seqStr.toString()));
 		affineResult.setQueryStr(StringUtils.reverse(queryStr.toString()));
 	}
@@ -276,15 +276,15 @@ public class SmithWaterman {
 			return;
 		}
 		if (table[i][j].getDirection() == Direction.DIAGONAL) {
-			queryStr.append(queryChrs[i]);
-			seqStr.append(seqChrs[j]);
+			queryStr.append(queryChrs[i - 1]);
+			seqStr.append(seqChrs[j - 1]);
 			trace(queryChrs, seqChrs, table, i - 1, j - 1, seqStr, queryStr);
 		} else if (table[i][j].getDirection() == Direction.TOP) {
 			seqStr.append(CHAR_DASH);
-			queryStr.append(queryChrs[i]);
+			queryStr.append(queryChrs[i - 1]);
 			trace(queryChrs, seqChrs, table, i - 1, j, seqStr, queryStr);
 		} else if (table[i][j].getDirection() == Direction.LEFT) {
-			seqStr.append(seqChrs[j]);
+			seqStr.append(seqChrs[j - 1]);
 			queryStr.append(CHAR_DASH);
 			trace(queryChrs, seqChrs, table, i, j - 1, seqStr, queryStr);
 		}

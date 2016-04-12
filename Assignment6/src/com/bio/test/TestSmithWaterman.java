@@ -72,7 +72,18 @@ public class TestSmithWaterman {
 	}
 
 	@Test
-	public void testBackTrace() {
+	public void testBackTrace2() {
+		String db = "ATGCATCCCATGAC";
+		String query = "TCTATATCCGT";
+		AffineResult result = SmithWaterman.getInstance().run(db, query, -2, 2, -3);
+		assertEquals(8, result.getMaxScore());
+		SmithWaterman.getInstance().backTrace(db, query, result);
+		assertEquals("ATCC", result.getSeqStr());
+		assertEquals("ATCC", result.getQueryStr());
+	}
+
+	@Test
+	public void testBackTrace1() {
 		AffineResult result = SmithWaterman.getInstance().run(SEQ_3, SEQ_4, -1, 2, -1);
 		assertEquals(12, result.getMaxScore());
 		SmithWaterman.getInstance().backTrace(SEQ_3, SEQ_4, result);
