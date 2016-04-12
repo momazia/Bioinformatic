@@ -1,12 +1,6 @@
 package com.bio.test;
 
-import static org.junit.Assert.*;
-
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
@@ -14,9 +8,7 @@ import com.bio.obsolete.SmithWatermanUtils;
 import com.bio.pojo.AffineResult;
 import com.bio.pojo.Cell;
 import com.bio.pojo.Direction;
-import com.bio.pojo.Sequence;
 import com.bio.util.CabiosUtils;
-import com.bio.util.FileUtils;
 
 public class TestSmithWaterman {
 
