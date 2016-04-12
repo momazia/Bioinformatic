@@ -92,7 +92,7 @@ public class CabiosUtils {
 	 * @param queryStr
 	 */
 	private void trace(char[] queryChrs, char[] seqChrs, Cell[][] table, int i, int j, StringBuffer seqStr, StringBuffer queryStr) {
-		if (table[i][j].getScore() == 0) {
+		if (table[i][j].getScore() == 0 || i <= 0 || j <= 0) {
 			return;
 		}
 		if (table[i][j].getDirection() == Direction.DIAGONAL) {
@@ -136,14 +136,24 @@ public class CabiosUtils {
 			last_nogap = prev_nogap = 0;
 			a_gap = -gap_open;
 			for (int j = 0; j < lena; j++) {
+				Direction dir = null;
 				a_gap = NumberUtils.max((last_nogap - gap_open - gap_ext), (a_gap - gap_ext));
 				b_gap[j] = NumberUtils.max((nogap[j] - gap_open - gap_ext), (b_gap[j] - gap_ext));
-				last_nogap = NumberUtils.max((prev_nogap + getScore(seqA[j], seqB[i])), 0);
-				int diagScore = last_nogap;
+				int diagScore = (prev_nogap + getScore(seqA[j], seqB[i]));
+				last_nogap = NumberUtils.max(diagScore, 0);
+				if (diagScore > 0) {
+					dir = Direction.DIAGONAL;
+				}
+				int horScore = a_gap;
+				if (last_nogap < horScore) {
+					dir = Direction.LEFT;
+				}
 				last_nogap = NumberUtils.max(last_nogap, a_gap);
-				int horScore = last_nogap;
+				int verScore = b_gap[j];
+				if (last_nogap < verScore) {
+					dir = Direction.TOP;
+				}
 				last_nogap = NumberUtils.max(last_nogap, b_gap[j]);
-				int verScore = last_nogap;
 				prev_nogap = nogap[j];
 				nogap[j] = last_nogap;
 				if (score <= last_nogap) {
@@ -151,37 +161,10 @@ public class CabiosUtils {
 					my_j = j;
 				}
 				score = NumberUtils.max(score, last_nogap);
-				table[i][j] = populateCell(diagScore, horScore, verScore);
+				table[i][j] = new Cell(score, dir);
 			}
 		}
 		return new AffineResult(table, score, my_i, my_j);
-	}
-
-	/**
-	 * Based on the maximum score coming from 3 different directions, it creates a cell which stores the direction the score was originated and the
-	 * value of the score. It will look into Diagonal, Top and lastly Left scores in order.
-	 * 
-	 * @param diagScore
-	 * @param horScore
-	 * @param verScore
-	 * @return
-	 */
-	public Cell populateCell(int diagScore, int horScore, int verScore) {
-		int maxScore = 0;
-		Direction dir = null;
-		if (maxScore <= diagScore) {
-			maxScore = diagScore;
-			dir = Direction.DIAGONAL;
-		}
-		if (maxScore <= verScore) {
-			maxScore = verScore;
-			dir = Direction.TOP;
-		}
-		if (maxScore <= horScore) {
-			maxScore = horScore;
-			dir = Direction.LEFT;
-		}
-		return new Cell(maxScore, dir);
 	}
 
 	/**
