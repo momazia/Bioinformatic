@@ -10,13 +10,13 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.bio.obsolete.SmithWatermanUtils;
 import com.bio.pojo.AffineResult;
 import com.bio.pojo.Cell;
 import com.bio.pojo.Direction;
 import com.bio.pojo.Sequence;
 import com.bio.util.CabiosUtils;
 import com.bio.util.FileUtils;
+import com.bio.util.SmithWatermanUtils;
 
 public class TestSmithWaterman {
 

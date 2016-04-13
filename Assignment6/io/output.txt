@@ -40,8 +40,8 @@ Sbjct:   315 PTTPQEYILKGVVNAALGQEIGSRDHLKIAQQFFQLVGGSAS-ECDTIPGRQCMASCFFLLKQFEDV
 >gi|728048777|sp|I1JLC8.1|SLE2_SOYBN RecName: Full=Protein SLE2; AltName: Full=Em protein; AltName: Full=Protein Glycine max physiologically mature 11; AltName: Full=Protein GmD-19; AltName: Full=Soybean group-1 late embryogenesis abundant protein 2; AltName: Full=Soybean group-1 lea protein 2; Short=Sle2 [Glycine max] (len=105)
 SW_score = 26 (i=286, j=84)
 Query:   245 LKKVDIGTSHIAGYTLEGKARGTTQVFEAYSKFIGHEQHVAL 286
-			  +K ++G +   GY   G+  G +   E  ++  ++E+ +++
-Sbjct:    43 TRKEQLG-T--EGYQEMGRKGGLST-VEKSGEERAQEEGIGI 84
+			  +K ++GT    GY   G+  G +   E  ++  ++E+ +++
+Sbjct:    43 TRKEQLGT---EGYQEMGRKGGLST-VEKSGEERAQEEGIGI 84
 
 >gi|728048695|sp|P0CT50.1|SDC_TRIMF RecName: Full=Salicylate decarboxylase; AltName: Full=Salicylic acid decarboxylase [Trichosporon moniliiforme] (len=350)
 SW_score = 30 (i=259, j=59)
@@ -52,8 +52,8 @@ Sbjct:    46 NRLELSNKHGIGYT 59
 >gi|728048647|sp|F1QEG2.1|KL41B_DANRE RecName: Full=Kelch-like protein 41b; AltName: Full=Kelch repeat and BTB domain-containing protein 10b [Danio rerio] (len=605)
 SW_score = 35 (i=264, j=269)
 Query:   231 LDVWEGEPELNVELLKKVDIGTSHIAGYTLEGKA 264
-			  D+ +G+     ELLKK+++  + + G   E K 
-Sbjct:   236 DDIIKGD----PELLKKLQLVKDAFKGKLPEKKP 269
+			  D+ +G+PE    LLKK+++  + + G   E K 
+Sbjct:   236 DDIIKGDPE----LLKKLQLVKDAFKGKLPEKKP 269
 
 >gi|728048573|sp|C0HJB3.1|MANA_CANEN RecName: Full=Alpha-mannosidase; Short=JBM; Short=Jbalpha-man; Contains: RecName: Full=Alpha-mannosidase, heavy subunit; Contains: RecName: Full=Alpha-mannosidase, light subunit, partial [Canavalia ensiformis] (len=981)
 SW_score = 48 (i=109, j=61)
@@ -68,10 +68,10 @@ Query:    99 VFSSLLMLAERDGFS 113
 Sbjct:     5 GFSCLLLVISEIDLS 19
 
 >gi|727863585|sp|Q6ZM89.3|RH42A_DANRE RecName: Full=Rho GTPase-activating protein 42; AltName: Full=Rho GTPase-activating protein 10-like; AltName: Full=Rho-type GTPase-activating protein 42 [Danio rerio] (len=805)
-SW_score = 33 (i=180, j=785)
-Query:   149 DRGDEGDFRSLDELVQRADILTFHT-PL-FKD 180
-			  R+ +G+++SL +  QR ++ ++H   L  KD
-Sbjct:   754 FRSCHGSIQSLVSRSQRDSLKSLHMPDLPPKD 785
+SW_score = 33 (i=175, j=778)
+Query:   151 DRGDEGDFRSLDELVQRADILTFHT 175
+			  R+ +G+++SL +  QR ++ ++H 
+Sbjct:   754 FRSCHGSIQSLVSRSQRDSLKSLHM 778
 
 >gi|728047640|sp|D6REC4.1|CFA99_HUMAN RecName: Full=Cilia- and flagella-associated protein 99 [Homo sapiens] (len=459)
 SW_score = 33 (i=262, j=238)
@@ -94,8 +94,8 @@ Sbjct:   146 PILSCQFSPVSSSRLA--TGSGDNTARIWDTDSGTPKFTL 185
 >gi|704045435|sp|Q9SX54.2|SCRK8_ARATH RecName: Full=Putative fructokinase-8 [Arabidopsis thaliana] (len=210)
 SW_score = 28 (i=232, j=175)
 Query:   180 DGPYKTLHLADEKLIRSLKPGAILINACRGAVVDNTALLTCLNEGQKLSVVLD 232
-			  G  +T+H      + +   G  +++A  + +VD+      L+E ++L  VL 
-Sbjct:   123 HGSVETFH---VDAVDTTGAGDSFVGALLNQIVDDQ-S--VLEEEERLRKVLR 175
+			  G  +T+H      + +   G  +++A  + +VD+ ++   L+E ++L  VL 
+Sbjct:   123 HGSVETFH---VDAVDTTGAGDSFVGALLNQIVDDQSV---LEEEERLRKVLR 175
 
 >gi|704044129|sp|P0DMQ3.1|TO1D_HADMO RecName: Full=Omega-hexatoxin-Hmo1d; Flags: Precursor [Hadronyche modesta] (len=84)
 SW_score = 24 (i=115, j=36)
@@ -134,10 +134,10 @@ Query:   245 LKKVDIGT 252
 Sbjct:    35 GKRVELGC 42
 
 >gi|704045556|sp|Q9SUC3.2|MS5_ARATH RecName: Full=Protein POLLENLESS 3; AltName: Full=Protein MALE STERILE 5; AltName: Full=Protein THREE-DIVISION MUTANT 1 [Arabidopsis thaliana] (len=434)
-SW_score = 34 (i=165, j=272)
-Query:   144 C-DPPRADRGDEGDFRSLDELV 165
-			   +P +++ GDE   +S D+ V
-Sbjct:   251 RDSPAESECGDEPFAKSYDRAV 272
+SW_score = 32 (i=165, j=272)
+Query:   146 DPPRADRGDEGDFRSLDELV 165
+			 +P +++ GDE   +S D+ V
+Sbjct:   253 SPAESECGDEPFAKSYDRAV 272
 
 >gi|704044187|sp|C0HJM7.1|TXL1_PHOPT RecName: Full=Toxin Tx1; Short=PpTx1, partial [Phoneutria pertyi] (len=10)
 SW_score = 15 (i=223, j=9)
@@ -158,10 +158,10 @@ Query:   291 PAPEFGRITLHGPLDQPTLKRLVHLVYDVRRDDAPLRKV 329
 Sbjct:   160 SSPSSQKSCLQGACQKPRKKKLTQASESQTRTPKPRRSL 198
 
 >gi|704000365|sp|B2NI93.2|GEDH_CARLC RecName: Full=Geraniol dehydrogenase; Short=GeDH; AltName: Full=Farnesol dehydrogenase; AltName: Full=NAD(+)-farnesol dehydrogenase [Carpoglyphus lactis] (len=378)
-SW_score = 35 (i=98, j=83)
-Query:    54 PIKFVGTATAGT-D-H-VDEAWLK-QAGIGFSAAPGCNAIAVVEY 98
-			  +K+V+++ ++T       E  ++  +GIG  A  G ++ ++VE 
-Sbjct:    39 RVKMVSSGLCATDAHLVWGEQKISDLGGIGCPAIAGHEGAGIVES 83
+SW_score = 31 (i=98, j=83)
+Query:    80 AGIGFSAAPGCNAIAVVEY 98
+			 +GIG  A  G ++ ++VE 
+Sbjct:    65 GGIGCPAIAGHEGAGIVES 83
 
 >gi|704000364|sp|K7N5M5.2|HBA1_ELEMC RecName: Full=Hemoglobin subunit alpha 1; AltName: Full=Alpha-1-globin; AltName: Full=Hemoglobin alpha-1 chain [Eleginops maclovinus] (len=142)
 SW_score = 30 (i=289, j=129)
@@ -177,9 +177,9 @@ Sbjct:    45 VDNMRNNYL 53
 
 >gi|704000358|sp|C0HJM8.1|LEC_ALLCE RecName: Full=Lectin, partial [Allium cepa] (len=10)
 SW_score = 19 (i=52, j=9)
-Query:    44 RSVTKVNES 52
-			 R+V   NE+
-Sbjct:     1 RNVLLNNEG 9
+Query:    43 VRSVTKVNES 52
+			  R+V   NE+
+Sbjct:     0  RNVLLNNEG 9
 
 >gi|704000357|sp|C0HJN0.1|KAX6V_HETLA RecName: Full=Potassium channel toxin alpha-KTx 6 hetlaxin [Heterometrus laoticus] (len=34)
 SW_score = 23 (i=333, j=20)
@@ -200,10 +200,10 @@ Query:    14 DLFSRLGEVTAVPGRPIPVAQLADADALM 42
 Sbjct:     2 TLEEKIGQMSQIDARRIGAATALEVRGFL 30
 
 >gi|704000316|sp|W5EP13.1|CA1P_WHEAT RecName: Full=2-carboxy-D-arabinitol-1-phosphatase; Flags: Precursor [Triticum aestivum] (len=495)
-SW_score = 32 (i=66, j=331)
-Query:    18 RLGEVTAVPGRPIPVAQLADADALMVRSVTKVNESLLAGKPIKFVGTAT 66
-			  LG V  +P + + V   A+  A ++    KV +S++++  +  V TAT
-Sbjct:   283 SLGGVGYAPLNMLGVI-QAQKTAELLL-DLKV-NSIICSPQVAAVDTAT 331
+SW_score = 32 (i=42, j=54)
+Query:    16 FSRLGEVTAVPGRPIPVAQLADADALM 42
+			  S + E+   P+R  P+  LA+A  ++
+Sbjct:    28 CSSVRELDRSPSR-PPLPPLAEAKRVV 54
 
 >gi|746590800|sp|P0CT51.1|BLP1_CANAL RecName: Full=Blood-induced peptide 1 [Candida albicans SC5314] (len=77)
 SW_score = 29 (i=197, j=66)
@@ -238,8 +238,8 @@ Sbjct:    83 LGANLASVHSSAEYQFLQEVVASKTGGF 110
 >gi|728048788|sp|C9J7I0.1|UMAD1_HUMAN RecName: Full=UBAP1-MVB12-associated (UMA)-domain containing protein 1; AltName: Full=RPA3 antisense RNA 1; AltName: Full=RPA3 opposite strand [Homo sapiens] (len=102)
 SW_score = 27 (i=71, j=75)
 Query:     4 LVDENMPYARDLFSRLGEVTAVPGRPIPVAQLADADALMVRSVTKVNESLLAGKPIKFVGTATAGTDH 71
-			  ++ N+P   +  +  + +++ P     ++Q  + ++LM++ ++      LA   +   GT T   DH
-Sbjct:     8 DIEANQPLETNKENSSSVTVSDPEMENKAGQTLENSSLMAELLSD-VPFTLAPHVLAVQGTITDLPDH 75
+			  ++ N+P   +  +  + +++ P     ++Q  + ++LM++ ++ V  + LA   +   GT T   DH
+Sbjct:     8 DIEANQPLETNKENSSSVTVSDPEMENKAGQTLENSSLMAELLSDVPFT-LAPHVLAVQGTITDLPDH 75
 
 >gi|694016595|sp|Q5TYJ0.4|OBP71_ANOGA RecName: Full=General odorant-binding protein 71; Flags: Precursor [Anopheles gambiae] (len=228)
 SW_score = 26 (i=235, j=221)
@@ -261,9 +261,9 @@ Sbjct:   133 CRDVGIETVGGGGRRYL 149
 
 >gi|694016584|sp|C0HJL9.1|TAN_BACIU RecName: Full=Tannase; AltName: Full=Tannin acylhydrolase, partial [Bacillus subtilis] (len=15)
 SW_score = 15 (i=154, j=9)
-Query:   147 PPRADRGD 154
-			  P  ++GD
-Sbjct:     2 QPPHSHGD 9
+Query:   146 DPPRADRGD 154
+			 +PP+ ++GD
+Sbjct:     1 QPPH-SHGD 9
 
 >gi|694016581|sp|P0DKH2.1|RI2BC_ARATH RecName: Full=Putative ribonucleoside-diphosphate reductase small chain B; AltName: Full=Ribonucleoside-diphosphate reductase R2B subunit; AltName: Full=Ribonucleotide reductase small subunit B [Arabidopsis thaliana] (len=158)
 SW_score = 25 (i=275, j=32)
@@ -309,14 +309,14 @@ Sbjct:     5 SQA 7
 
 >gi|694016529|sp|P86977.1|CHIT_STRVO RecName: Full=Chitinase, partial [Streptomyces violaceusniger] (len=10)
 SW_score = 19 (i=88, j=8)
-Query:    81 GIGFSAAP 88
-			 G G + +P
-Sbjct:     1 GDGTGPGP 8
+Query:    80 AGIGFSAAP 88
+			  G G + +P
+Sbjct:     0  GDGTGPGP 8
 
 >gi|693586058|sp|Q6ZMS4.4|ZN852_HUMAN RecName: Full=Zinc finger protein 852 [Homo sapiens] (len=543)
 SW_score = 32 (i=244, j=510)
-Query:   201 INACRGAVVDNTA-LL-TCLNEGQ-KLSVVLDVWEGEPELNVEL 244
-			  N+C  A  D++   +   ++ G+ +L  VL+   G+P ++V L
+Query:   201 INACRGAVVDNTALLT--CLNEGQ-KLSVVLDVWEGEPELNVEL 244
+			  N+C  A  D++ L +   ++ G+ +L  VL+   G+P ++V L
 Sbjct:   467 CNSCGKAFSDSSQLTVHQRVHTGEKNLMNVLS--VGKPLVSVPL 510
 
 >gi|694016571|sp|P0DL37.1|KAX6L_UROYA RecName: Full=Potassium channel toxin alpha-KTx 6.21; AltName: Full=Urotoxin; Flags: Precursor [Urodacus yaschenkoi] (len=62)
@@ -339,15 +339,15 @@ Sbjct:   240 VKACNAYKAGAPLGSMVKGGVQ 261
 
 >gi|678019224|sp|C0HJK0.1|VP_DINQU RecName: Full=Venom peptides; Contains: RecName: Full=Peptide Dq-1984; Contains: RecName: Full=Peptide Dq-1897; Contains: RecName: Full=Peptide Dq-1839/Dq-1840/Dq-1856 [Dinoponera quadriceps] (len=20)
 SW_score = 20 (i=63, j=8)
-Query:    56 GKPIKFVG 63
-			 G+ +K+V+
-Sbjct:     1 GSLVKLVS 8
+Query:    55 AGKPIKFVG 63
+			  G+ +K+V+
+Sbjct:     0  GSLVKLVS 8
 
 >gi|678019209|sp|C0HJK2.1|VP987_DINQU RecName: Full=Peptide Dq-987; Contains: RecName: Full=Peptide Dq-761 [Dinoponera quadriceps] (len=9)
 SW_score = 19 (i=37, j=8)
-Query:    30 IPVAQLAD 37
-			 +P+ +L+D
-Sbjct:     1 LPLDDLSD 8
+Query:    29 PIPVAQLAD 37
+			  +P+ +L+D
+Sbjct:     0  LPLDDLSD 8
 
 >gi|678019205|sp|C0HJK4.1|VP88_DINQU RecName: Full=Peptide Dq-1288; Contains: RecName: Full=Peptide Dq-1061 [Dinoponera quadriceps] (len=11)
 SW_score = 14 (i=147, j=6)
@@ -363,9 +363,9 @@ Sbjct:     4 LP 5
 
 >gi|678019198|sp|C0HJK1.1|VP30_DINQU RecName: Full=Peptide Dq-1030 [Dinoponera quadriceps] (len=9)
 SW_score = 16 (i=322, j=4)
-Query:   319 VRRD 322
-			 +R D
-Sbjct:     1 LRPD 4
+Query:   318 DVRRD 322
+			  +R D
+Sbjct:     0  LRPD 4
 
 >gi|678019123|sp|C0HJK5.1|TXHM3_HERML RecName: Full=Neurotoxin Hm-3 [Heriaeus melloteei] (len=35)
 SW_score = 18 (i=321, j=29)
@@ -496,26 +496,26 @@ Sbjct:    14 EIGTLLGTELDKTTLSLCI 32
 >gi|677286739|sp|A1UI62.2|RSMH_MYCSK RecName: Full=Ribosomal RNA small subunit methyltransferase H; AltName: Full=16S rRNA m(4)C1402 methyltransferase; AltName: Full=rRNA (cytosine-N(4)-)-methyltransferase RsmH [Mycobacterium sp. KMS]gi|677286740|sp|Q1B6W3.2|RSMH_MYCSS RecName: Full=Ribosomal RNA small subunit methyltransferase H; AltName: Full=16S rRNA m(4)C1402 methyltransferase; AltName: Full=rRNA (cytosine-N(4)-)-methyltransferase RsmH [Mycobacterium sp. MCS] (len=370)
 SW_score = 40 (i=339, j=258)
 Query:   305 PTLKRLVHLVYDVRRDDAPLRKVAGIPG--EFDKL 339
-			  T  +LV+L+YD     AP R+++G P+   F+ L
-Sbjct:   224 NTTGELVELLYD--AIPAPARRTGGHPAKRTFQAL 258
+			  T  +LV+L+YD+    AP R+++G P+   F+ L
+Sbjct:   224 NTTGELVELLYDA--IPAPARRTGGHPAKRTFQAL 258
 
 >gi|677286738|sp|A3Q1M6.2|RSMH_MYCSJ RecName: Full=Ribosomal RNA small subunit methyltransferase H; AltName: Full=16S rRNA m(4)C1402 methyltransferase; AltName: Full=rRNA (cytosine-N(4)-)-methyltransferase RsmH [Mycobacterium sp. JLS] (len=370)
 SW_score = 40 (i=339, j=258)
 Query:   305 PTLKRLVHLVYDVRRDDAPLRKVAGIPG--EFDKL 339
-			  T  +LV+L+YD     AP R+++G P+   F+ L
-Sbjct:   224 NTTGELVELLYD--AIPAPARRTGGHPAKRTFQAL 258
+			  T  +LV+L+YD+    AP R+++G P+   F+ L
+Sbjct:   224 NTTGELVELLYDA--IPAPARRTGGHPAKRTFQAL 258
 
 >gi|677286737|sp|A0R024.2|RSMH_MYCS2 RecName: Full=Ribosomal RNA small subunit methyltransferase H; AltName: Full=16S rRNA m(4)C1402 methyltransferase; AltName: Full=rRNA (cytosine-N(4)-)-methyltransferase RsmH [Mycobacterium smegmatis str. MC2 155] (len=373)
 SW_score = 38 (i=339, j=268)
 Query:   305 PTLKRLVHLVYDVRRDDAPLRKVAGIPG--EFDKL 339
-			  T ++LV+L+Y+     AP R+++G P+   F+ L
-Sbjct:   234 TTTSELVELLYE--AIPAPARRTGGHPAKRTFQAL 268
+			  T ++LV+L+Y++    AP R+++G P+   F+ L
+Sbjct:   234 TTTSELVELLYEA--IPAPARRTGGHPAKRTFQAL 268
 
 >gi|677286735|sp|B2HGS5.2|RSMH_MYCMM RecName: Full=Ribosomal RNA small subunit methyltransferase H; AltName: Full=16S rRNA m(4)C1402 methyltransferase; AltName: Full=rRNA (cytosine-N(4)-)-methyltransferase RsmH [Mycobacterium marinum M] (len=395)
 SW_score = 34 (i=43, j=322)
-Query:     1 MKILVDENMPYARDLFSRLGEVTAVPGRPIPVAQLADADALMV 43
-			 ++I V++++   R+ +    ++ AV GR + +A  +  D ++ 
-Sbjct:   280 LRIAVNDELGSLRSAIPAAMDALAVGGRIVVMAYQSLEDRIVK 322
+Query:     0  MKILVDENMPYARDLFSRLGEVTAVPGRPIPVAQLADADALMV 43
+			  ++I V++++   R+ +    ++ AV GR + +A  +  D ++ 
+Sbjct:   279 ALRIAVNDELGSLRSAIPAAMDALAVGGRIVVMAYQSLEDRIVK 322
 
 >gi|677286732|sp|B1MP29.2|RSMH_MYCA9 RecName: Full=Ribosomal RNA small subunit methyltransferase H; AltName: Full=16S rRNA m(4)C1402 methyltransferase; AltName: Full=rRNA (cytosine-N(4)-)-methyltransferase RsmH [Mycobacterium abscessus ATCC 19977] (len=384)
 SW_score = 34 (i=220, j=108)
@@ -525,9 +525,9 @@ Sbjct:    87 SGAVLVDATLGAGGHTEHFLTM 108
 
 >gi|677286731|sp|A0QF44.2|RSMH_MYCA1 RecName: Full=Ribosomal RNA small subunit methyltransferase H; AltName: Full=16S rRNA m(4)C1402 methyltransferase; AltName: Full=rRNA (cytosine-N(4)-)-methyltransferase RsmH [Mycobacterium avium 104] (len=386)
 SW_score = 32 (i=43, j=318)
-Query:     1 MKILVDENMPYARDLFSRLGEVTAVPGRPIPVAQLADADALMV 43
-			 ++I V++++   R  +    ++ AV GR + +A  +  D ++ 
-Sbjct:   276 LRIAVNDELDTLRCALPAALDALAVDGRIVVLAYQSLEDRIVK 318
+Query:     0  MKILVDENMPYARDLFSRLGEVTAVPGRPIPVAQLADADALMV 43
+			  ++I V++++   R  +    ++ AV GR + +A  +  D ++ 
+Sbjct:   275 ALRIAVNDELDTLRCALPAALDALAVDGRIVVLAYQSLEDRIVK 318
 
 >gi|677286728|sp|Q8NH95.2|O13C6_HUMAN RecName: Full=Putative olfactory receptor 13C6; AltName: Full=Olfactory receptor, family 13, subfamily C, member 6 pseudogene; AltName: Full=Olfactory receptor, family 13, subfamily C, member 7 pseudogene; AltName: Full=Putative olfactory receptor 13C7 [Homo sapiens] (len=151)
 SW_score = 23 (i=376, j=148)
@@ -536,10 +536,10 @@ Query:   354 VICDDASAASLLCKLGFNAVHHP 376
 Sbjct:   126 AICNPLRYPVVMSKAAYMPIRLP 148
 
 >gi|677286723|sp|P20303.2|GTR1_PIG RecName: Full=Solute carrier family 2, facilitated glucose transporter member 1; AltName: Full=Glucose transporter type 1, erythrocyte/brain; Short=GLUT-1 [Sus scrofa] (len=492)
-SW_score = 26 (i=122, j=373)
-Query:    81 GIGFSAAPGCNAIAVVEYVFSSLLMLAERDGFSLYDRTVGIV 122
-			  IG+++  G    AV+       L L E+  +  Y   V+I 
-Sbjct:   332 LIGLAGMAG---CAVLMT---IALALLEQLPWMSYLSIVAIF 373
+SW_score = 26 (i=97, j=408)
+Query:    83 GFSAAPGCNAIAVVE 97
+			  FS +P   AIAV+ 
+Sbjct:   394 LFSQGPRPAAIAVAG 408
 
 >gi|694016578|sp|C0HJE6.1|PORA_CORAY RecName: Full=Porin PorA; Flags: Precursor [Corynebacterium amycolatum] (len=386)
 SW_score = 29 (i=60, j=257)
@@ -568,8 +568,8 @@ Sbjct:   205 SVEENMQALRNFLPSQSEAMDL 226
 >gi|667467196|sp|B8VIU6.1|USOM5_ACRMI RecName: Full=Uncharacterized skeletal organic matrix protein 5; Short=Uncharacterized SOMP-5; Flags: Precursor [Acropora millepora] (len=256)
 SW_score = 35 (i=368, j=122)
 Query:   320 RRDDAPLRKVAGIPGEFDKLRKNYLERREWSSLYVICDDASAASLLCKL 368
-			  R +AP+ ++++   +F        ++ + S++Y +   ++++ + C +
-Sbjct:    74 PRHSAPVASISSCKEQF---D---KNNSSPSQVYELTFGSQVVPVYCHM 122
+			  R +AP+ ++++   +FD       ++ + S++Y +   ++++ + C +
+Sbjct:    74 PRHSAPVASISSCKEQFD------KNNSSPSQVYELTFGSQVVPVYCHM 122
 
 >gi|667467195|sp|B8UU74.1|USOM4_ACRMI RecName: Full=Uncharacterized skeletal organic matrix protein 4; Short=Uncharacterized SOMP-4, partial [Acropora millepora] (len=204)
 SW_score = 31 (i=55, j=66)
@@ -590,10 +590,10 @@ Query:   353 YVICDDASAASLLCKLGFNAVH 374
 Sbjct:   197 CISCEDKKSACALLAGSFKFRK 218
 
 >gi|667467192|sp|B3EX00.1|USOM1_ACRMI RecName: Full=Uncharacterized skeletal organic matrix protein 1; Short=Uncharacterized SOMP-1, partial [Acropora millepora] (len=448)
-SW_score = 30 (i=113, j=200)
-Query:    44 RSVTKVNESLLAGKPIKFVGTATAGTDHVDEAWLKQAGIGFSAAPGCNAIAVVEYVFSSLLMLAERDGFS 113
-			  +V++VN +L A+  +++ G      +++         +++  + G N  +VV   F  ++ L E +  +
-Sbjct:   131 LNVNSVNLTLSASVSVQIDGPH--T-SRI--------DVSLVLSVGQNLTSVVIQKFVRMVSLQELSDVN 200
+SW_score = 29 (i=69, j=167)
+Query:    44 RSVTKVNESLLAGKPIKFVGTATAGT 69
+			  +V++VN +L A+  +++ G  T+  
+Sbjct:   142 LNVNSVNLTLSASVSVQIDGPHTSRI 167
 
 >gi|667467190|sp|B3EWZ7.1|TRP_ACRMI RecName: Full=Threonine-rich protein; Flags: Precursor, partial [Acropora millepora] (len=288)
 SW_score = 36 (i=92, j=115)

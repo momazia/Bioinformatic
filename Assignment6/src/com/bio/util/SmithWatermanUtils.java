@@ -1,4 +1,4 @@
-package com.bio.obsolete;
+package com.bio.util;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -252,8 +252,10 @@ public class SmithWatermanUtils {
 	 */
 	public void backTrace(String seq, String query, AffineResult affineResult) {
 		StringBuffer seqStr = new StringBuffer();
+		query = addSpacePrefix(query);
+		seq = addSpacePrefix(seq);
 		StringBuffer queryStr = new StringBuffer();
-		trace(query.toCharArray(), seq.toCharArray(), affineResult.getTable(), affineResult.getiIndex() + 1, affineResult.getjIndex() + 1, seqStr, queryStr);
+		trace(query.toCharArray(), seq.toCharArray(), affineResult.getTable(), affineResult.getiIndex()+1, affineResult.getjIndex()+1, seqStr, queryStr);
 		affineResult.setSeqStr(StringUtils.reverse(seqStr.toString()));
 		affineResult.setQueryStr(StringUtils.reverse(queryStr.toString()));
 	}
