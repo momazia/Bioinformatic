@@ -14,8 +14,8 @@ import com.bio.pojo.Direction;
  */
 public class SmithWatermanUtils {
 
-	private static final char CHAR_DASH = '-';
-	private static final String SPACE = " ";
+	public static final char CHAR_DASH = '-';
+	public static final String SPACE = " ";
 	private static final int SCORE_GAP_EXT = -1;
 	private static final int SCORE_GAP_OPEN = -11;
 	private static SmithWatermanUtils instance = null;

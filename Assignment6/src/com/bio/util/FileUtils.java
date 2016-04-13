@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class FileUtils {
 	public static final String IO_PATH = "../Assignment6/io/";
 	public static final String OUTPUT_TXT = "output.txt";
 	private static FileUtils instance = null;
+	private static final DecimalFormat df = new DecimalFormat("#");
 
 	/**
 	 * Private constructor for Singleton design pattern purpose. Declared private so it is not accessible from outside.
@@ -136,11 +138,83 @@ public class FileUtils {
 		String seqStr = affineResult.getSeqStr();
 		StringBuffer str = new StringBuffer();
 		str.append(name + " (len=" + seqLength + ")\n");
-		str.append("SW_score = " + affineResult.getMaxScore() + " (i=" + iIndex + ", j=" + jIndex + ")\n");
+		str.append("Score = " + affineResult.getMaxScore() + " (i=" + iIndex + ", j=" + jIndex + ")\n");
+		String similarityString = getSimilarityString(queryStr.toCharArray(), seqStr.toCharArray());
+		int identity = getIdentity(similarityString);
+		int positives = getPositive(similarityString);
+		int queryStrLength = queryStr.length();
+		int gaps = getGaps(queryStr, seqStr);
+		str.append(String.format("Identities = %s/%s (%s%%), Positives = %s/%s (%s%%), Gaps = %s/%s (%s%%)\n", identity, queryStrLength, getPerc(identity, queryStrLength), positives, queryStrLength, getPerc(positives, queryStrLength), gaps,
+				queryStrLength, getPerc(gaps, queryStrLength)));
 		str.append(String.format("Query: %5s %s %s\n", iIndex - resultLength + 1, queryStr, iIndex));
-		str.append(String.format("\t\t\t %s\n", getSimilarityString(queryStr.toCharArray(), seqStr.toCharArray())));
+		str.append(String.format("\t\t\t %s\n", similarityString));
 		str.append(String.format("Sbjct: %5s %s %s\n\n", jIndex - resultLength + 1, seqStr, jIndex));
 		return str.toString();
+	}
+
+	/**
+	 * Counts number of gaps in both query and DB sequence
+	 * 
+	 * @param queryStr
+	 * @param seqStr
+	 * @return
+	 */
+	private int getGaps(String queryStr, String seqStr) {
+		int counter = 0;
+		for (int i = 0; i < queryStr.length(); i++) {
+			if (queryStr.charAt(i) == '-') {
+				counter++;
+			}
+		}
+		for (int i = 0; i < seqStr.length(); i++) {
+			if (seqStr.charAt(i) == '-') {
+				counter++;
+			}
+		}
+		return counter;
+	}
+
+	/**
+	 * Returns number of characters in similarity String which are not spaces.
+	 * 
+	 * @param str
+	 * @return
+	 */
+	private int getPositive(String str) {
+		int counter = 0;
+		for (int i = 0; i < str.length(); i++) {
+			if (str.charAt(i) != ' ') {
+				counter++;
+			}
+		}
+		return counter;
+	}
+
+	/**
+	 * Calculates percentage by following formula: (val1/val2) * 100
+	 * 
+	 * @param val1
+	 * @param val2
+	 * @return
+	 */
+	private String getPerc(int val1, int val2) {
+		return df.format((val1 / Double.valueOf(val2)) * 100.0);
+	}
+
+	/**
+	 * Returns identity by looking at the similarity String and counting all the characters that are not space or plus.
+	 * 
+	 * @param str
+	 * @return
+	 */
+	private int getIdentity(String str) {
+		int counter = 0;
+		for (int i = 0; i < str.length(); i++) {
+			if (!(str.charAt(i) == '+' || str.charAt(i) == ' ')) {
+				counter++;
+			}
+		}
+		return counter;
 	}
 
 	/**
