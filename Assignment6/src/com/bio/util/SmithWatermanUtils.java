@@ -79,7 +79,6 @@ public class SmithWatermanUtils {
 	 * @return
 	 */
 	public AffineResult run(String sequence, String query, Integer gapScore, Integer matchScore, Integer misMatchScore) {
-
 		sequence = addSpacePrefix(sequence);
 		query = addSpacePrefix(query);
 		char[] seqChrs = sequence.toCharArray();
@@ -88,7 +87,6 @@ public class SmithWatermanUtils {
 		int maxScore = 0;
 		int iIndex = 0;
 		int jIndex = 0;
-
 		for (int i = 1; i < queryChrs.length; i++) {
 			for (int j = 1; j < seqChrs.length; j++) {
 				int diagScore = table[i - 1][j - 1].getScore() + matchMisMatchScore(seqChrs[j], queryChrs[i], matchScore, misMatchScore);
