@@ -11,6 +11,12 @@ public class Sequence {
 	private String name;
 	private String str;
 
+	/**
+	 * Default constructor for Sequence object.
+	 * 
+	 * @param name
+	 * @param str
+	 */
 	public Sequence(String name, String str) {
 		this.name = name;
 		this.str = str;

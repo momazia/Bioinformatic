@@ -78,10 +78,11 @@ public class AffineResult {
 		this.seqStr = seqStr;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Overriding equals method to compare two affineResults together by checking their i, j indexes and the max score. This is used in Unit test to
+	 * figure out how MainApp's result is different from CabiosApp. It can be ignored.
 	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
+	 * @param obj
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -91,10 +92,8 @@ public class AffineResult {
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * Overriding toString to pretty print the content of Affine result class.
 	 */
 	@Override
 	public String toString() {
