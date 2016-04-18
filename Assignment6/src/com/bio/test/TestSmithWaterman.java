@@ -2,10 +2,7 @@ package com.bio.test;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import org.junit.Test;
