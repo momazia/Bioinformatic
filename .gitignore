@@ -64,6 +64,7 @@ Assignment4/io/
 Assignment5/io/*
 !Assignment5/io/Test*
 !Assignment5/io/*.zip
+Assignment7/io/
 
 ### Maven ###
 target/
