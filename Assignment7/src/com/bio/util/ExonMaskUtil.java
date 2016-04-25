@@ -61,7 +61,7 @@ public class ExonMaskUtil {
 	public void maskNonExons(List<RefSeq> collapsedExons, String chr1FileName, String maskedChr1FileName) throws IOException {
 		// Deleting the output file if it already exists
 		FileUtils.getInstance().deleteIfExists(maskedChr1FileName);
-		int chr1Index = 0; // Chr1 file index.
+		int chr1Index = -1; // Chr1 file index.
 		List<String> chr1Lines = FileUtils.getInstance().readFile(chr1FileName);
 		PrintWriter out = FileUtils.getInstance().getPrinterWriter(maskedChr1FileName);
 		out.println(chr1Lines.get(0));
@@ -75,7 +75,7 @@ public class ExonMaskUtil {
 			for (char ch : chr1LineChars) {
 				chr1Index++;
 				// If we are within the Exon start and end indexes, copy the same character, otherwise print N.
-				if (startIndex <= chr1Index && chr1Index <= endIndex) {
+				if (startIndex <= chr1Index && chr1Index < endIndex) {
 					resultLine.append(ch);
 				} else {
 					resultLine.append(CHAR_N);
