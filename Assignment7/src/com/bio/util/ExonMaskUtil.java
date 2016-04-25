@@ -27,15 +27,21 @@ public class ExonMaskUtil {
 
 	public void run(String exonAnnotationFileName, String chr1FileName, String maskedChr1FileName, String collapsedExonFileName) throws IOException {
 		// Reading the Exon annotation file
+		System.out.println("Reading the Exon annotation file...");
 		List<String> exonAnnotLines = FileUtils.getInstance().readFile(exonAnnotationFileName);
 		// Converting the file lines into RefSeq
+		System.out.println("Converting Exon annotations...");
 		List<RefSeq> refSeqs = toRefSeq(exonAnnotLines);
 		// Collapsing the Exons
+		System.out.println("Collapsing Exons...");
 		List<RefSeq> collapsedExons = collapseExons(refSeqs);
 		// Save collapsed Exons into a file
+		System.out.println("Saving collapsed Exons into output file...");
 		saveCollapsedExons(collapsedExonFileName, collapsedExons);
 		// Creating masked Chr1 file
+		System.out.println("Masking non-Exon regions and saving it into output file...");
 		maskNonExons(collapsedExons, chr1FileName, maskedChr1FileName);
+		System.out.println("Done!");
 	}
 
 	private void saveCollapsedExons(String collapsedExonFileName, List<RefSeq> collapsedExons) throws IOException {
