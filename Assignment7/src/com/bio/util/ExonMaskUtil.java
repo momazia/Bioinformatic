@@ -1,6 +1,7 @@
 package com.bio.util;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -10,6 +11,7 @@ import com.bio.pojo.RefSeq;
 
 public class ExonMaskUtil {
 
+	private static final char CHAR_N = 'N';
 	private static final String TAB = "\t";
 	private static ExonMaskUtil instance = null;
 
@@ -23,13 +25,51 @@ public class ExonMaskUtil {
 		return instance;
 	}
 
-	public void run(String fileName) throws IOException {
-		// Reading the file
-		List<String> lines = FileUtils.getInstance().readFile(fileName);
+	public void run(String exonAnnotationFileName, String chr1FileName, String maskedChr1FileName) throws IOException {
+		// Reading the Exon annotation file
+		List<String> exonAnnotLines = FileUtils.getInstance().readFile(exonAnnotationFileName);
 		// Converting the file lines into RefSeq
-		List<RefSeq> refSeqs = toRefSeq(lines);
+		List<RefSeq> refSeqs = toRefSeq(exonAnnotLines);
 		// Collapsing the Exons
 		List<RefSeq> collapsedExons = collapseExons(refSeqs);
+		// Creating masked Chr1 file
+		maskNonExons(collapsedExons, chr1FileName, maskedChr1FileName);
+	}
+
+	public void maskNonExons(List<RefSeq> collapsedExons, String chr1FileName, String maskedChr1FileName) throws IOException {
+		// Deleting the output file if it already exists
+		FileUtils.getInstance().deleteIfExists(maskedChr1FileName);
+		int chr1Index = 0; // Chr1 file index.
+		List<String> chr1Lines = FileUtils.getInstance().readFile(chr1FileName);
+		PrintWriter out = FileUtils.getInstance().getPrinterWriter(maskedChr1FileName);
+		out.print(chr1Lines.get(0));
+		int collapsedExonsIndex = 0;
+		StringBuffer resultLine = null;
+		for (int i = 1; i < chr1Lines.size(); i++) {
+			resultLine = new StringBuffer();
+			char[] chr1LineChars = chr1Lines.get(i).toCharArray();
+			for (char ch : chr1LineChars) {
+				chr1Index++;
+				int startIndex = collapsedExons.get(collapsedExonsIndex).getStartIndex();
+				if ()
+//				if (isWithinExons(collapsedExons, chr1Index)) {
+					resultLine.append(ch);
+//				} else {
+//					resultLine.append(CHAR_N);
+//				}
+			}
+			out.println(resultLine.toString());
+		}
+		out.close();
+	}
+
+	public boolean isWithinExons(List<RefSeq> collapsedExons, int chr1Index) {
+		for (RefSeq refSeq : collapsedExons) {
+			if (refSeq.getStartIndex() <= chr1Index && chr1Index <= refSeq.getEndIndex()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public List<RefSeq> collapseExons(List<RefSeq> refSeqs) {
@@ -75,4 +115,5 @@ public class ExonMaskUtil {
 		}
 		return result;
 	}
+
 }

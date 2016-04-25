@@ -1,6 +1,8 @@
 package com.bio.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,7 +39,7 @@ public class TestExonMaskUtil {
 
 	@Test
 	public void testRun() throws IOException {
-		ExonMaskUtil.getInstance().run(FileUtils.HG19_REFSEQ_EXON_ANNOT);
+		ExonMaskUtil.getInstance().run(FileUtils.HG19_REFSEQ_EXON_ANNOT, FileUtils.CHR1, FileUtils.MASKED_CHR1);
 	}
 
 	@Test
@@ -69,6 +71,33 @@ public class TestExonMaskUtil {
 
 		assertEquals(55, collapsedExons.get(2).getStartIndex());
 		assertEquals(70, collapsedExons.get(2).getEndIndex());
+	}
+
+	@Test
+	public void isWithinExon() {
+
+		List<RefSeq> refSeqs = new ArrayList<>();
+
+		refSeqs.add(new RefSeq(1, 50, "+"));
+		refSeqs.add(new RefSeq(75, 80, "A"));
+		refSeqs.add(new RefSeq(100, 110, "1"));
+
+		assertTrue(ExonMaskUtil.getInstance().isWithinExons(refSeqs, 2));
+		assertFalse(ExonMaskUtil.getInstance().isWithinExons(refSeqs, 60));
+		assertTrue(ExonMaskUtil.getInstance().isWithinExons(refSeqs, 105));
+		assertTrue(ExonMaskUtil.getInstance().isWithinExons(refSeqs, 50));
+		assertTrue(ExonMaskUtil.getInstance().isWithinExons(refSeqs, 100));
+	}
+
+	@Test
+	public void testMaskNonExons() throws IOException {
+		List<RefSeq> collapsedExons = new ArrayList<>();
+
+		collapsedExons.add(new RefSeq(1, 50, "+"));
+		collapsedExons.add(new RefSeq(101, 150, "A"));
+		collapsedExons.add(new RefSeq(200, 260, "1"));
+
+		ExonMaskUtil.getInstance().maskNonExons(collapsedExons, "simple_chr1.fa", "simple_masked_chr1.fa");
 	}
 
 }
