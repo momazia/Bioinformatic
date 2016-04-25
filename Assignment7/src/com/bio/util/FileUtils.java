@@ -21,6 +21,7 @@ public class FileUtils {
 	public static final String HG19_REFSEQ_EXON_ANNOT = "HG19-refseq-exon-annot-chr1-2016";
 	public static final String CHR1 = "chr1.fa";
 	public static final String MASKED_CHR1 = "chr1_masked.fa";
+	public static final String COLLAPSED_EXON = "collapsed_exon.txt";
 
 	/**
 	 * Private constructor for Singleton design pattern purpose. Declared private so it is not accessible from outside.
