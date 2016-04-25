@@ -12,7 +12,6 @@ import com.bio.pojo.RefSeq;
 public class ExonMaskUtils {
 
 	private static final char CHAR_N = 'N';
-	private static final String TAB = "\t";
 	private static ExonMaskUtils instance = null;
 
 	private ExonMaskUtils() {
@@ -27,11 +26,7 @@ public class ExonMaskUtils {
 
 	public void run(String exonAnnotationFileName, String chr1FileName, String maskedChr1FileName, String collapsedExonFileName) throws IOException {
 		// Reading the Exon annotation file
-		System.out.println("Reading the Exon annotation file...");
-		List<String> exonAnnotLines = FileUtils.getInstance().readFile(exonAnnotationFileName);
-		// Converting the file lines into RefSeq
-		System.out.println("Converting Exon annotations...");
-		List<RefSeq> refSeqs = toRefSeq(exonAnnotLines);
+		List<RefSeq> refSeqs = readRefSeqs(exonAnnotationFileName);
 		// Collapsing the Exons
 		System.out.println("Collapsing Exons...");
 		List<RefSeq> collapsedExons = collapseExons(refSeqs);
@@ -42,6 +37,14 @@ public class ExonMaskUtils {
 		System.out.println("Masking non-Exon regions and saving it into output file...");
 		maskNonExons(collapsedExons, chr1FileName, maskedChr1FileName);
 		System.out.println("Done!");
+	}
+
+	public List<RefSeq> readRefSeqs(String exonAnnotationFileName) throws IOException {
+		System.out.println("Reading the Exon annotation file...");
+		List<String> exonAnnotLines = FileUtils.getInstance().readFile(exonAnnotationFileName);
+		// Converting the file lines into RefSeq
+		System.out.println("Converting Exon annotations...");
+		return toRefSeq(exonAnnotLines);
 	}
 
 	private void saveCollapsedExons(String collapsedExonFileName, List<RefSeq> collapsedExons) throws IOException {
@@ -55,7 +58,7 @@ public class ExonMaskUtils {
 	}
 
 	private String format(RefSeq refSeq) {
-		return String.join(TAB, "chr1", Integer.toString(refSeq.getStartIndex()), Integer.toString(refSeq.getEndIndex()), refSeq.getId(), "0", "+");
+		return String.join(FileUtils.TAB, "chr1", Integer.toString(refSeq.getStartIndex()), Integer.toString(refSeq.getEndIndex()), refSeq.getId(), "0", "+");
 	}
 
 	public void maskNonExons(List<RefSeq> collapsedExons, String chr1FileName, String maskedChr1FileName) throws IOException {
@@ -130,7 +133,7 @@ public class ExonMaskUtils {
 	public List<RefSeq> toRefSeq(List<String> lines) {
 		List<RefSeq> result = new ArrayList<>();
 		for (String line : lines) {
-			String[] columns = line.split(TAB);
+			String[] columns = line.split(FileUtils.TAB);
 			result.add(new RefSeq(Integer.valueOf(columns[1]), Integer.valueOf(columns[2]), columns[3]));
 		}
 		return result;
