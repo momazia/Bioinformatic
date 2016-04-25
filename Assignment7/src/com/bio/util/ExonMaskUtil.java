@@ -55,7 +55,7 @@ public class ExonMaskUtil {
 	}
 
 	private String format(RefSeq refSeq) {
-		return String.join(TAB, refSeq.getId(), Integer.toString(refSeq.getStartIndex()), Integer.toString(refSeq.getEndIndex()));
+		return String.join(TAB, "chr1", Integer.toString(refSeq.getStartIndex()), Integer.toString(refSeq.getEndIndex()), refSeq.getId(), "0", "+");
 	}
 
 	public void maskNonExons(List<RefSeq> collapsedExons, String chr1FileName, String maskedChr1FileName) throws IOException {
