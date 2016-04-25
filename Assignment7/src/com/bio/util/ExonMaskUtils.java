@@ -9,18 +9,18 @@ import java.util.List;
 
 import com.bio.pojo.RefSeq;
 
-public class ExonMaskUtil {
+public class ExonMaskUtils {
 
 	private static final char CHAR_N = 'N';
 	private static final String TAB = "\t";
-	private static ExonMaskUtil instance = null;
+	private static ExonMaskUtils instance = null;
 
-	private ExonMaskUtil() {
+	private ExonMaskUtils() {
 	}
 
-	public static ExonMaskUtil getInstance() {
+	public static ExonMaskUtils getInstance() {
 		if (instance == null) {
-			instance = new ExonMaskUtil();
+			instance = new ExonMaskUtils();
 		}
 		return instance;
 	}

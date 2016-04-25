@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.bio.pojo.RefSeq;
-import com.bio.util.ExonMaskUtil;
+import com.bio.util.ExonMaskUtils;
 import com.bio.util.FileUtils;
 
 public class TestExonMaskUtil {
@@ -22,7 +22,7 @@ public class TestExonMaskUtil {
 		lines.add("chr1	67091529	67091593	NM_032291_exon_1_0_chr1_67091530_f	0	+");
 		lines.add("chr1	66999251	66999355	NM_001308203_exon_0_0_chr1_66999252_f	0	+");
 
-		List<RefSeq> refSeqs = ExonMaskUtil.getInstance().toRefSeq(lines);
+		List<RefSeq> refSeqs = ExonMaskUtils.getInstance().toRefSeq(lines);
 
 		assertEquals(3, refSeqs.size());
 
@@ -37,7 +37,7 @@ public class TestExonMaskUtil {
 
 	@Test
 	public void testRun() throws IOException {
-		ExonMaskUtil.getInstance().run(FileUtils.HG19_REFSEQ_EXON_ANNOT, FileUtils.CHR1, FileUtils.MASKED_CHR1, FileUtils.COLLAPSED_EXON);
+		ExonMaskUtils.getInstance().run(FileUtils.HG19_REFSEQ_EXON_ANNOT, FileUtils.CHR1, FileUtils.MASKED_CHR1, FileUtils.COLLAPSED_EXON);
 	}
 
 	@Test
@@ -57,7 +57,7 @@ public class TestExonMaskUtil {
 		refSeqs.add(new RefSeq(25, 40, "7"));
 		refSeqs.add(new RefSeq(59, 70, "/"));
 
-		List<RefSeq> collapsedExons = ExonMaskUtil.getInstance().collapseExons(refSeqs);
+		List<RefSeq> collapsedExons = ExonMaskUtils.getInstance().collapseExons(refSeqs);
 
 		assertEquals(3, collapsedExons.size());
 
@@ -80,7 +80,7 @@ public class TestExonMaskUtil {
 		collapsedExons.add(new RefSeq(200, 260, "1"));
 		collapsedExons.add(new RefSeq(450, 455, "1"));
 
-		ExonMaskUtil.getInstance().maskNonExons(collapsedExons, "simple_chr1.fa", "simple_masked_chr1.fa");
+		ExonMaskUtils.getInstance().maskNonExons(collapsedExons, "simple_chr1.fa", "simple_masked_chr1.fa");
 	}
 
 }
