@@ -9,14 +9,27 @@ import java.util.List;
 
 import com.bio.pojo.RefSeq;
 
+/**
+ * The main utility class for Exon Mask.
+ * 
+ * @author Mohamad Mahdi Ziaee
+ *
+ */
 public class ExonMaskUtils {
-
 	private static final char CHAR_N = 'N';
 	private static ExonMaskUtils instance = null;
 
+	/**
+	 * Private constructor for Singleton design pattern purpose. Declared private so it is not accessible from outside.
+	 */
 	private ExonMaskUtils() {
 	}
 
+	/**
+	 * Gets instance of this class. It will instantiate it if it is not done yet, once.
+	 * 
+	 * @return
+	 */
 	public static ExonMaskUtils getInstance() {
 		if (instance == null) {
 			instance = new ExonMaskUtils();
@@ -24,6 +37,16 @@ public class ExonMaskUtils {
 		return instance;
 	}
 
+	/**
+	 * The method reads the Exon annotation file, collapses the overlapping Exon regions into one and save it into collapsedExonFileName file. Later
+	 * it will use the collapsed Exons to replace non Exon regions with N.
+	 * 
+	 * @param exonAnnotationFileName
+	 * @param chr1FileName
+	 * @param maskedChr1FileName
+	 * @param collapsedExonFileName
+	 * @throws IOException
+	 */
 	public void run(String exonAnnotationFileName, String chr1FileName, String maskedChr1FileName, String collapsedExonFileName) throws IOException {
 		// Reading the Exon annotation file
 		List<RefSeq> refSeqs = readRefSeqs(exonAnnotationFileName);
@@ -39,6 +62,13 @@ public class ExonMaskUtils {
 		System.out.println("Done!");
 	}
 
+	/**
+	 * Reads the Exon annotation file name given and convert it into RefSeq.
+	 * 
+	 * @param exonAnnotationFileName
+	 * @return
+	 * @throws IOException
+	 */
 	public List<RefSeq> readRefSeqs(String exonAnnotationFileName) throws IOException {
 		System.out.println("Reading the Exon annotation file...");
 		List<String> exonAnnotLines = FileUtils.getInstance().readFile(exonAnnotationFileName);
@@ -47,6 +77,13 @@ public class ExonMaskUtils {
 		return toRefSeq(exonAnnotLines);
 	}
 
+	/**
+	 * Saves the list of given RefSeqs into a file using collapsedExonFileName file name.
+	 * 
+	 * @param collapsedExonFileName
+	 * @param collapsedExons
+	 * @throws IOException
+	 */
 	private void saveCollapsedExons(String collapsedExonFileName, List<RefSeq> collapsedExons) throws IOException {
 		// Deleting the output file if it already exists
 		FileUtils.getInstance().deleteIfExists(collapsedExonFileName);
@@ -57,10 +94,26 @@ public class ExonMaskUtils {
 		out.close();
 	}
 
+	/**
+	 * Formats the RefSeq given by harcoding chr1 as prefix, start index, end index and the refseq ID. It will also add 0 and + at the end of the
+	 * string. Each of the mentioned columns will be separated with a tab.
+	 * 
+	 * @param refSeq
+	 * @return
+	 */
 	private String format(RefSeq refSeq) {
 		return String.join(FileUtils.TAB, "chr1", Integer.toString(refSeq.getStartIndex()), Integer.toString(refSeq.getEndIndex()), refSeq.getId(), "0", "+");
 	}
 
+	/**
+	 * The method uses the collapsedExons regions and those which are not within the region in chr1FileName will be replaced with N. The result will
+	 * be saved in maskedChr1FileName method.
+	 * 
+	 * @param collapsedExons
+	 * @param chr1FileName
+	 * @param maskedChr1FileName
+	 * @throws IOException
+	 */
 	public void maskNonExons(List<RefSeq> collapsedExons, String chr1FileName, String maskedChr1FileName) throws IOException {
 		// Deleting the output file if it already exists
 		FileUtils.getInstance().deleteIfExists(maskedChr1FileName);
@@ -95,6 +148,12 @@ public class ExonMaskUtils {
 		out.close();
 	}
 
+	/**
+	 * Goes through the list of RefSeqs and combines those which are overlapping.
+	 * 
+	 * @param refSeqs
+	 * @return
+	 */
 	public List<RefSeq> collapseExons(List<RefSeq> refSeqs) {
 		// Sorting the refSeqs based on their startIndex
 		sortRefSeqs(refSeqs);
@@ -120,6 +179,11 @@ public class ExonMaskUtils {
 		return result;
 	}
 
+	/**
+	 * Sorts the given RefSeqs based on their start indexes.
+	 * 
+	 * @param refSeqs
+	 */
 	private void sortRefSeqs(List<RefSeq> refSeqs) {
 		Collections.sort(refSeqs, new Comparator<RefSeq>() {
 			@Override
@@ -130,6 +194,12 @@ public class ExonMaskUtils {
 		});
 	}
 
+	/**
+	 * Converts the lines read from a file into Refseq, given each of the elements are separated by \t.
+	 * 
+	 * @param lines
+	 * @return
+	 */
 	public List<RefSeq> toRefSeq(List<String> lines) {
 		List<RefSeq> result = new ArrayList<>();
 		for (String line : lines) {
@@ -138,5 +208,4 @@ public class ExonMaskUtils {
 		}
 		return result;
 	}
-
 }

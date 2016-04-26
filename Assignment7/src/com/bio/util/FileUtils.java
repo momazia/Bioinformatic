@@ -1,8 +1,6 @@
 package com.bio.util;
 
 import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,6 +8,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+/**
+ * The utility class for all the file related operations.
+ * 
+ * @author Mohamad Mahdi Ziaee
+ *
+ */
 public class FileUtils {
 
 	private static FileUtils instance = null;
@@ -62,12 +66,14 @@ public class FileUtils {
 		Files.deleteIfExists(Paths.get(FileUtils.IO_PATH + fileName));
 	}
 
-	public FileInputStream getFileInputStream(String fileName) throws FileNotFoundException {
-		return new FileInputStream(FileUtils.IO_PATH + fileName);
-	}
-
+	/**
+	 * Creates a Printer Writer for the given file name by setting the append = true.
+	 * 
+	 * @param fileName
+	 * @return
+	 * @throws IOException
+	 */
 	public PrintWriter getPrinterWriter(String fileName) throws IOException {
 		return new PrintWriter(new BufferedWriter(new FileWriter(FileUtils.IO_PATH + fileName, true)));
 	}
-
 }
